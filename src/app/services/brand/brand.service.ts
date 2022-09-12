@@ -12,6 +12,6 @@ export class BrandService {
   constructor(private httpClient: HttpClient) {}
 
   getBrand(): Observable<BrandResponseModel> {
-    return this.httpClient.get<BrandResponseModel>(this.apiUrl);
+    return this.httpClient.get<BrandResponseModel>(this.apiUrl );
   }
 }
