@@ -9,6 +9,9 @@ import { ColorComponent } from './component/color/color.component';
 import { CustomerComponent } from './component/customer/customer.component';
 import { CarComponent } from './component/car/car.component';
 import { RentalComponent } from './component/rental/rental.component';
+import { NaviComponent } from './component/navi/navi.component';
+import { CarDetailsComponent } from './component/car-details/car-details.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -18,12 +21,15 @@ import { RentalComponent } from './component/rental/rental.component';
     ColorComponent,
     CustomerComponent,
     CarComponent,
-    RentalComponent
+    RentalComponent,
+    NaviComponent,
+    CarDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

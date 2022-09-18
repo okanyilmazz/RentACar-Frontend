@@ -1,7 +1,8 @@
+import { RentalDetail } from './../../models/rental/rentalDetail';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RentalDetailResponseModel } from 'src/app/models/rental/rentalDetailResponseModel';
+import { ListResponseModel } from 'src/app/models/listResponseModel';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class RentalDetailService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getRentalDetails(): Observable<RentalDetailResponseModel> {
-    return this.httpClient.get<RentalDetailResponseModel>(this.apiUrl);
+  getRentalDetails(): Observable<ListResponseModel<RentalDetail>> {
+    return this.httpClient.get<ListResponseModel<RentalDetail>>(this.apiUrl);
   }
 }
