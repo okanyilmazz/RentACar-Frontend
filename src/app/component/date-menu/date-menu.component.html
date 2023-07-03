@@ -1,0 +1,162 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<div class="date-menu-content">
+  <form #reservationInfo="ngForm">
+    <div class="rent-date">
+      <div class="form-group rent-location">
+        <label for="rentLocation">Nereden alacaksınız?</label>
+        <input
+          type="search"
+          [(ngModel)]="filterRentalText"
+          [ngModelOptions]="{ standalone: true }"
+          class="form-control"
+          id="rentLocation"
+          aria-describedby="deliveredLocationHelp"
+          placeholder="Teslim alma ofisi seç"
+          (input)="rentalValueCheck()"
+          (click)="rentalLocationClickX()"
+          (change)="checkAllInfo()"
+
+        />
+
+        <div class="dropdown mt-2" *ngIf="isRentalText">
+          <div
+            class="dropdown-location px-2"
+            *ngFor="let location of locations | filterPipe : filterRentalText"
+          >
+            <i class="fa-solid fa-location-dot mt-2"></i>
+            <div class="mt-2" (click)="selectRentalLocation(location)">
+              <span>{{ location.countyName }}</span>
+            </div>
+            <div class="seperator border-top my-1 mt-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group rent-date-time">
+        <label for="rentalDate">Alış Tarihi - Saati</label>
+        <div class="input-group">
+          <!-- onfocus="(this.type='date')"  -->
+          <!-- <input type="date" class="form-control" id="rentalDate" [value]="rentalDate" placeholder="Tarih Seçiniz" [(ngModel)]="rentalDate"
+            [ngModelOptions]="{standalone: true}" > -->
+
+          <input
+            type="text"
+            ngbDatepicker
+            #rentDatePicker="ngbDatepicker"
+            (dateSelect)="onRentDateSelect($event)"
+            (change)="checkAllInfo()"
+            class="form-control"
+            id="rentalDate"
+            [minDate]="rentMinDate"
+            placeholder="Tarih seçiniz"
+            (click)="rentDatePicker.toggle()"
+            [value]="rentalDate"
+            readonly
+          />
+          <div id="date-icon" (click)="rentDatePicker.toggle()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52a12,12,0,0,0,24,0h72a12,12,0,0,0,24,0h16V76H52V52ZM52,204V100H204V204Z"></path></svg>
+          </div>
+          <div class="input-group-append">
+            <!-- <div class="input-group-text" id="time-append" step="10">
+              <input type="time" class="timepicker-input" id="rentalTime" [(ngModel)]="rentalTime" (change)="checkAllInfo()"
+                [ngModelOptions]="{standalone: true}">
+            </div> -->
+
+            <select
+              class="form-select"
+              id="rentalTime"
+              [(ngModel)]="rentalTime"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option selected>--:--</option>
+              <option *ngFor="let time of loadTimes">
+                {{ time }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="rent-arrow mt-4">
+        <div class="icon">
+          <fa-icon [icon]="arrowIcon"></fa-icon>
+        </div>
+      </div>
+
+      <div class="form-group return-location">
+        <div class="form-group return-location">
+          <label for="returnLocation">Nereye teslim edeceksiniz?</label>
+          <input
+            type="search"
+            [(ngModel)]="filterReturnText"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control"
+            id="returnLocation"
+            aria-describedby="returnLocation"
+            placeholder="Teslim etme ofisini seç"
+            (input)="returnValueCheck()"
+            (click)="returnLocationClickX()"
+            (change)="checkAllInfo()"
+            
+          />
+          <div class="dropdown mt-2" *ngIf="isReturnText">
+            <div
+              class="dropdown-location px-2"
+              *ngFor="let location of locations | filterPipe : filterReturnText"
+            >
+              <i class="fa-solid fa-location-dot mt-2"></i>
+              <div class="mt-2" (click)="selectReturnLocation(location)">
+                <span>{{ location.countyName }}</span>
+              </div>
+              <div class="seperator border-top my-1 mt-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group return-date-time">
+        <label for="returnDate">Teslim Tarihi - Saati</label>
+        <div class="input-group">
+          <!-- onfocus="(this.type='date')"  -->
+          <input
+            type="text"
+            ngbDatepicker
+            #returnDatePicker="ngbDatepicker"
+            [minDate]="returnMinDate"
+            (dateSelect)="onReturnDateSelect($event)"
+            class="form-control"
+            id="returnDate"
+            (change)="checkAllInfo()"
+            placeholder="Tarih seçiniz"
+            (click)="returnDatePicker.toggle()"
+            [value]="returnDate"
+          />
+          <div id="date-icon" (click)="returnDatePicker.toggle()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52a12,12,0,0,0,24,0h72a12,12,0,0,0,24,0h16V76H52V52ZM52,204V100H204V204Z"></path></svg>
+          </div>
+
+          <div class="input-group-append">
+            <select
+              class="form-select"
+              id="returnTime"
+              [(ngModel)]="returnTime"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="checkAllInfo()"
+            >
+              <option value="" selected>--:--</option>
+              <option *ngFor="let time of loadTimes">
+                {{ time }}
+              </option>
+            </select>
+            <!-- <div class="input-group-text" id="time-append" step="10">
+              <input  type="time" id="returnTime" class="timepicker-input" [(ngModel)]="returnTime"
+                [ngModelOptions]="{standalone: true}" (change)="checkAllInfo()">
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

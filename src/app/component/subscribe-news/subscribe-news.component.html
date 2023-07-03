@@ -1,0 +1,27 @@
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="subscribe">
+   <div class="subscribe-content container">
+    <div class="subscribe-text">
+      <span>HABERLERE <strong>ABONE OL</strong></span>
+    </div>
+    <form [formGroup]="subscribeAddForm">
+      <div class="input-group">
+        <input type="email" class="form-control" id="mail" formControlName="mail" aria-describedby="mailHelp"
+          placeholder="Mail Adresiniz">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <fa-icon [icon]="mailIcon"></fa-icon>
+          </span>
+        </div>
+      </div>
+  </form>
+    <div class="text-center">
+      <button type="submit" id="submit-mail" class="btn" (click)="addMailToSubscribe()">
+        ABONE OL
+      </button>
+    </div>
+  </div>
+</div>

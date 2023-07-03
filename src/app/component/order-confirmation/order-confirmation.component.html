@@ -1,0 +1,341 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="order-confirmation">
+  <form class="order-confirmation-content">
+    <div class="content-left">
+      <div class="left-title">
+        <fa-icon [icon]="cardIcon"></fa-icon> <span>Fatura Bilgileri </span>
+      </div>
+
+      <div class="info-center">
+        <div class="bill-type">
+          <label class="custom-control-label radio-inline">
+            <input type="radio" name="bill-type" checked class="bill-personal custom-control-input" (change)="testA()"
+              onclick="startRow()">
+            Bireysel
+          </label>
+          <label class="custom-control-label radio-inline">
+            <input type="radio" name="bill-type" class="bill-corporate custom-control-input" (change)="testB()"
+              onclick="startRow()">
+            Kurumsal
+          </label>
+        </div>
+
+        <div class="select-content">
+          <div [(ngbCollapse)]="isCollapsed">
+            <span>Şirket Unvanı</span>
+            <input type="text" [(ngModel)]="companyTitle" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div [(ngbCollapse)]="isCollapsed">
+            <span>Vergi Dairesi</span>
+            <input type="text" [(ngModel)]="taxAdministration" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div [(ngbCollapse)]="isCollapsed">
+            <span>Vergi No</span>
+            <input type="text" [(ngModel)]="taxNumber" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div>
+            <span>Ülke Seçimi</span>
+            <select class="form-select" [(ngModel)]="selectedCountryId" (change)="changeCountry($event)"
+              [ngModelOptions]="{standalone: true}">
+              <option value="" selected>Ülke seç</option>
+              <option *ngFor="let country of countries" [value]="country.Id">{{country.countryName}}</option>
+            </select>
+          </div>
+          <div>
+            <span>Şehir Seçimi</span>
+            <select class="form-select" [disabled]="isCitySelected" [(ngModel)]="selectedCityId"
+              (change)="changeCity($event)" [ngModelOptions]="{standalone: true}">
+              <option value="" selected>Şehir seç</option>
+              <option *ngFor="let city of cities" [value]="city.Id">{{city.cityName}}</option>
+            </select>
+          </div>
+          <div>
+            <span>İlçe Seçimi</span>
+            <select class="form-select" [disabled]="isCountySelected" [(ngModel)]="selectedCountieId"
+              [ngModelOptions]="{standalone: true}">
+              <option value="">İlçe seç</option>
+              <option *ngFor="let county of counties" [value]="county.Id">{{county.countyName}}</option>
+            </select>
+          </div>
+          <div class="payment-options">
+            <div class="form-group content">
+              <label for="address">Adres</label>
+              <textarea maxlength="255" class="form-control" id="address" rows="3" [(ngModel)]="billingAddress"
+                [ngModelOptions]="{standalone: true}"></textarea>
+            </div>
+          </div>
+          <div class="mobile-btn">
+            <button type="button" (click)="finishTheOrder(content)" routerLinkActive="active">Siparişi Bitir <fa-icon
+              [icon]="rightArrowIcon"></fa-icon></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-bottom p-2">
+        <div class="payment-type">
+          <img src="./assets/image/payment-type/maximum.png">
+          <img src="./assets/image/payment-type/axess.png">
+          <img src="./assets/image/payment-type/bonus.png">
+          <img src="./assets/image/payment-type/world.png">
+          <img src="./assets/image/payment-type/paypal.png">
+        </div>
+      </div>
+    </div>
+    <div class="seperator"></div>
+    <div class="info-right" *ngFor="let car of carDetails">
+      <div class="title">
+        <span>{{car.carName}}</span>
+      </div>
+      <div class="feature">
+        <div class="content">
+          <div class="feature-top">
+            <div id="icon"><img src="assets/image/icon-fuel.png">
+              <span>{{car.fuelType}}</span></div>
+            <div>
+              <div id="icon"><img src="assets/image/icon-group.png">
+                <span>{{car.numberOfPassengers}} Kişi</span></div>
+            </div>
+            <div>
+              <div id="icon"><img src="assets/image/icon-gearbox.png">
+                <span>{{car.transmissionType}}</span></div>
+            </div>
+          </div>
+          <div class="feature-bottom">
+            <div id="icon"><img src="assets/image/icon-suv.png">
+              <span>{{car.bodyType}}</span></div>
+            <div>
+              <div id="icon"><img src="assets/image/icon-color.png">
+                <span>{{car.colorName}}</span></div>
+            </div>
+            <div>
+              <div id="icon"><img src="assets/image/air-conditioner.png">
+                <span>{{isExistAirConditioner(car.airConditioning)}}</span></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="car-img">
+          <div class="right"> <img [src]="getImagePath(car.carImages[0].imagePath)"> </div>
+        </div>
+      </div>
+      <div class="rental-info">
+        <div>
+          <div><span id="title">Teslimat Türü </span></div>
+          <div><span>:</span></div>
+          <div><span>Lorem ipsum</span></div>
+        </div>
+        <div>
+          <div><span id="title">Yaş Gerekliliği</span></div>
+          <div><span>:</span></div>
+          <div><span>24</span></div>
+        </div>
+        <div>
+          <div><span id="title">Ehliyet Gerekliliği</span></div>
+          <div><span>:</span></div>
+          <div><span>4 Yıl</span></div>
+        </div>
+        <div>
+          <div><span id="title">Depozito Tutarı</span></div>
+          <div><span>:</span></div>
+          <div><span>{{car.deposit | currency:"TRY":"₺"}} </span></div>
+        </div>
+        <div>
+          <div><span id="title">KM Sınırı</span></div>
+          <div><span>:</span></div>
+          <div><span>{{car.kilometerLimit}} KM</span></div>
+        </div>
+      </div>
+      <div class="location mt-3 container-fluid ">
+        <div class="rent">
+          <div><span id="title">Alış Yeri</span></div>
+          <div>
+            <div id="seperator-top"></div>
+            <div id="seperator-bottom" class="mt-2"></div>
+          </div>
+          <div class="info">
+            <div><span>{{rentalLocationTitle}}</span></div>
+            <div><span>{{rentDetail.rentDate}} - {{rentDetail.rentTime}}</span></div>
+          </div>
+        </div>
+        <div class="return ">
+          <div><span id="title">Teslim Yeri</span></div>
+          <div>
+            <div id="seperator-top"></div>
+            <div id="seperator-bottom" class="mt-2"></div>
+          </div>
+          <div class="info">
+            <div><span>{{returnLocationTitle}}</span></div>
+            <div><span>{{rentDetail.returnDate}} - {{rentDetail.returnTime}}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="rent-day-price mt-3">
+        <div>
+          <div><span id="title">Kiralama Süresi</span></div>
+          <div><span>:</span></div>
+          <div><span>{{rentDetail.rentDay}} Gün</span></div>
+        </div>
+        <div>
+          <div><span id="title">Günlük Fiyatı</span></div>
+          <div><span>:</span></div>
+          <div><span>{{car.dailyPrice | currency:"TRY":"₺"}}</span></div>
+        </div>
+        <div>
+          <div><span id="title">Toplam Fiyat</span></div>
+          <div><span>:</span></div>
+          <div><span>{{totalPrice(car.dailyPrice) | currency:"TRY":"₺"}} </span></div>
+        </div>
+      </div>
+
+      <div class="submit-form mt-3">
+        <button type="button" id="btnFinish" routerLinkActive="active" (click)="finishTheOrder(content)">Siparişi Bitir
+          <fa-icon [icon]="rightArrowIcon"></fa-icon></button>
+      </div>
+    </div>
+
+  </form>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <img src="assets/image/congratulations.svg">
+      <h3 class="modal-title" id="modal-basic-title">Rezervasyonunuz Tamamlandı!</h3>
+
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="info-right" *ngFor="let car of carDetails">
+        <div class="title">
+          <span>{{car.brandName}} - {{car.carName}}</span>
+        </div>
+        <div class="modal-feature mt-4">
+          <div >
+            <div class="right"> <img [src]="getImagePath(car.carImages[0].imagePath)"> </div>
+          </div>
+          <div class="content mt-3">
+            <div class="modal-feature-top">
+              <div id="icon"><img src="assets/image/icon-fuel.png">
+                <span>{{car.fuelType}}</span></div>
+
+              <div id="icon">
+                <i class="fa-solid fa-users fa-xl"></i>
+
+                <span>{{car.numberOfPassengers}} Kişi</span></div>
+
+
+              <div id="icon"><img src="assets/image/icon-gearbox.png">
+                <span>{{car.transmissionType}}</span></div>
+
+            </div>
+            <div class="modal-feature-bottom">
+              <div id="icon"><img src="assets/image/icon-suv.png">
+                <span>{{car.bodyType}}</span></div>
+              <div id="icon"><img src="assets/image/icon-color.png">
+                <span>{{car.colorName}}</span></div>
+              <div id="icon"><img src="assets/image/air-conditioner.png">
+                <span>{{isExistAirConditioner(car.airConditioning)}}</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="location mt-3 container-fluid ">
+          <div class="rent">
+            <div><span id="title">Alış Yeri</span></div>
+            <div>
+              <div id="seperator-top"></div>
+              <div id="seperator-bottom" class="mt-2"></div>
+            </div>
+            <div class="info">
+              <div><span>{{rentalLocationTitle}}</span></div>
+              <div><span>{{rentDetail.rentDate}} - {{rentDetail.rentTime}}</span></div>
+            </div>
+          </div>
+          <div class="return ">
+            <div><span id="title">Teslim Yeri</span></div>
+            <div>
+              <div id="seperator-top"></div>
+              <div id="seperator-bottom" class="mt-2"></div>
+            </div>
+            <div class="info">
+              <div><span>{{returnLocationTitle}}</span></div>
+              <div><span>{{rentDetail.returnDate}} - {{rentDetail.returnTime}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="rent-day-price mt-3">
+          <div>
+            <div><span id="title">Kiralama Süresi</span></div>
+            <div><span>:</span></div>
+            <div><span>{{rentDetail.rentDay}} Gün</span></div>
+          </div>
+          <div>
+            <div><span id="title">Günlük Fiyatı</span></div>
+            <div><span>:</span></div>
+            <div><span>{{car.dailyPrice | currency:"TRY":"₺"}}</span></div>
+          </div>
+          <div>
+            <div><span id="title">Toplam Fiyat</span></div>
+            <div><span>:</span></div>
+            <div><span>{{totalPrice(car.dailyPrice) | currency:"TRY":"₺"}} </span></div>
+          </div>
+        </div>
+        <div class="deposit rental-policy">
+          <span id="title"><strong>Depozito</strong></span>
+          <span id="subtitle"><strong>2000 TL</strong> </span>
+          <span id="content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus
+            omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias, ullam perspiciatis optio
+            aliquid aperiam.
+            Hic vitae accusantium quod commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure.
+          </span>
+        </div>
+        <div class="delivery rental-policy">
+          <span id="title"><strong>Teslimat</strong></span>
+          <span id="subtitle"><strong>Elden Teslimat</strong> </span>
+          <span id="content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus
+            omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias.
+          </span>
+        </div>
+        <div class="kilometer-limit rental-policy">
+          <span id="title"><strong>Kilometre Sınırı</strong></span>
+          <span id="subtitle"><strong>Maksimum 350 km</strong> </span>
+          <span id="content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus
+            omnis quae.
+          </span>
+        </div>
+        <div class="driving-license rental-policy">
+          <span id="title"><strong>Sürücü Ehliyeti</strong></span>
+          <span id="content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus
+            omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias, ullam perspiciatis optio
+            aliquid aperiam.
+          </span>
+        </div>
+        <div class="driver-age rental-policy">
+          <span id="title"><strong>Sürücü Yaşı</strong></span>
+          <span id="content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus
+            omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias.
+          </span>
+        </div>
+        <div class="cancellation-policy rental-policy">
+          <span id="title"><strong>İptal Politikası</strong></span>
+          <span id="content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus
+            omnis quae. Cupiditate quae dolorum, ipsam porro.
+          </span>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn" (click)="c('Save click')">Anlaşıldı!</button>
+    </div>
+  </ng-template>
+
+  <script src="startRow.js" type="text/javascript"></script>
+  <script src="testo.js" type="text/javascript"></script>

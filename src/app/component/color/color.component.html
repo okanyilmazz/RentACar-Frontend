@@ -1,0 +1,26 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="color-filter">
+  <div class="color ">
+    <div class="color-title">
+      <span>Renkler</span>
+    </div>
+    <div class="color-content">
+      <div class="content-search">
+        <form>
+          <div class="input-group">
+            <i class="fa-solid fa-magnifying-glass input-group-text"></i>
+            <input class="form-control" type="search" placeholder="Renk adı giriniz..." aria-label="Search">
+          </div>
+        </form>
+      </div>
+      <div class="content-list">
+        <li class="list-group-item p-2 show-all" type="button" (click)="clearCurrentColor()" routerLink="/cars"
+          [class]="getAllColorClass()">Tümünü gör</li>
+        <li *ngFor="let color of colors" type="button" routerLink="/cars/color/{{color.id}}"
+          (click)="setCurrentColor(color)" class="p-2" [class]="getCurrentColorClass(color)">{{color.colorName}}</li>
+      </div>
+    </div>
+  </div>
+</div>

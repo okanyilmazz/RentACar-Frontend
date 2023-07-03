@@ -1,0 +1,44 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="cars container">
+  <div class="car-content">
+    <div class="card p-0" *ngFor="let car of carDetails">
+      <div class="card-img">
+        <img [src]="imageBaseUrl+car.carImages[0].imagePath" class="card-img-top" alt="...">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title text-center" >{{car.carName}}</h5>
+        <div class="line">
+          <div class="row" class="line-top"></div>
+          <div class="row" class="line-bottom"></div>
+        </div>
+        <div class="container ">
+          <div class="row card-body-center">
+            <div class="card-body-icon">
+              <div><img src="assets/image/icon-suv.png" id="card-body-icon"></div>
+              <div><img src="assets/image/icon-fuel-b.png" id="card-body-icon"></div>
+              <div><img src="assets/image/icon-gearbox.png" id="card-body-icon"></div>
+            </div>
+            <div class="card-body-text">
+              <div class="body text-center">
+                <span class="cardDetail">{{car.bodyType}}</span>
+              </div>
+              <div class="fuel text-center">
+                <span class="cardDetail">{{car.fuelType}}</span>
+              </div>
+              <div class="transmission text-center">
+                <span class="cardDetail">{{car.transmissionType}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shape" (click)="[goToVehicles(car.carId)]">
+        <div class="daily-price text-center">
+          <span>{{car.dailyPrice | currency:"TRY":"₺"}} /</span><span class="daily-text">günlük</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

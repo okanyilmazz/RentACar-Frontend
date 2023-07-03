@@ -1,0 +1,32 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="car-filter container">
+  <div class="car-filter-content">
+    <div class="filter-title"><span>Filtreleme</span></div>
+    <div class="filter-select">
+      <select #selectBrand class="form-select" (change)="onSelectedBrand(selectBrand.value)"
+        aria-label="...">
+        <option selected value="default">Tüm markalar</option>
+        <option *ngFor="let brand of brands, let i = index" type="button" value="{{brand.id}}">
+          {{brand.name}}</option>
+      </select>
+    </div>
+    <div class="filter-select">
+      <select #selectColor class="form-select" (change)="onSelectedColor(selectColor.value)" aria-label="...">
+        <option selected value="default">Tüm renkler</option>
+        <option *ngFor="let color of colors let i=index" type="button" value="{{color.id}}">
+          {{color.colorName}}</option>
+      </select>
+    </div>
+    <div class="filter-select">
+      <select #selectBody class="form-select" (change)="onSelectedBody(selectBody.value)" aria-label="...">
+        <option selected value="default">Tüm kasalar</option>
+        <option *ngFor="let body of bodies let i=index" type="button" value="{{body.id}}">
+          {{body.type}}</option>
+      </select>
+    </div>
+    
+    <div> <span (click)="checkFilter()">Filtreleri Uygula</span></div>
+  </div>
+</div>

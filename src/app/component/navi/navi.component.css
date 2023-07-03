@@ -1,0 +1,43 @@
+.top-nav a {
+  margin-left: 1rem !important;
+  float: left;
+  font-size: small;
+  text-decoration: none;
+  color: gray;
+}
+.top-nav span {
+  font-size: small;
+  margin-left: 1rem !important;
+  float: left;
+}
+.top-nav li {
+  font-size: small;
+  margin-top: 10px !important;
+}
+
+.nav-bottom ul li a {
+  font-size: medium;
+  font-weight: 700;
+  color: #522100;
+}
+
+.top-login button {
+  font-size: smaller;
+}
+.social-media-content {
+  color: gray;
+}
+.select-language {
+  border: 0;
+}
+.navbar {
+  background-color: white;
+  padding: 0;
+  width: 90%;
+  margin: auto;
+}
+
+.navbar-brand {
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,71 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="contact-us" id="contact">
+  <div class="contact-top container">
+    <div class="contact-us-title">
+      <span>İLETİŞİME <strong>GEÇ</strong></span>
+    </div>
+  </div>
+  <div class="contact-center container  p-0">
+    <form [formGroup]="contactSendForm">
+      <div class="contact-left">
+        <div class="form-group">
+
+          <div class="input-group">
+            <input type="text" class="form-control" id="fullName" formControlName="fullName" aria-describedby="nameHelp"
+              placeholder="Adınız Soyadınız">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="userIcon"></fa-icon>
+              </span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <input type="email" class="form-control" id="mail" formControlName="mail" aria-describedby="mailHelp"
+              placeholder="Mail Adresiniz">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="mailIcon"></fa-icon>
+              </span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <input type="text" class="form-control p-2" id="subject" formControlName="subject"
+              aria-describedby="subjectHelp" placeholder="Konu">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="subjectIcon"></fa-icon>
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-3 bottom-message">
+            <span id="text-submit-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ullam quae ipsum
+              fugiat reprehenderit maxime soluta voluptatem, minus quaerat consequatur illo tenetur adipisci.</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="contact-right">
+        <div class="input-group">
+          <textarea class="form-control" id="message" formControlName="message"
+            placeholder="Mesajınızı Yazınız"></textarea>
+        </div>
+        <button type="submit" id="submit-message" class="btn mt-3" (click)="sendContactMessage()">
+          <fa-icon class="fa fa-check"></fa-icon>
+          Mesajı Yolla
+        </button>
+
+        <div class="mt-3 bottom-message-mobile">
+          <span id="text-bottom-message-mobile">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut ullam quae ipsum
+            fugiat reprehenderit maxime soluta voluptatem, minus quaerat consequatur illo tenetur adipisci.</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

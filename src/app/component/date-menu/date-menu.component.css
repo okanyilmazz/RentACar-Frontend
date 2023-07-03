@@ -1,0 +1,547 @@
+.date-menu-content {
+  background-color: #deaa4f;
+  padding: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/*DateTime*/
+#rentalDate {
+  font-size: small;
+  color: #522100;
+  border: none;
+  width: 100%;
+  padding: 7px;
+  outline: 0;
+  box-shadow: none;
+}
+#rentalDate:hover {
+  cursor: pointer;
+}
+#returnDate:hover {
+  cursor: pointer;
+}
+select:hover {
+  cursor: pointer;
+}
+
+#returnDate {
+  font-size: small;
+  color: #522100;
+  border: none;
+  width: 100%;
+  padding: 7px;
+  outline: 0;
+  box-shadow: none;
+}
+
+#rentalTime {
+  font-size: small;
+  color: #522100;
+  align-items: center;
+  border-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 0;
+  margin-left: 1px;
+  border-left: 1px solid;
+  padding: 7px;
+  outline: 0;
+  box-shadow: none;
+}
+#returnTime {
+  font-size: small;
+  color: #522100;
+  align-items: center;
+  border-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 0;
+  margin-left: 1px;
+  border-left: 1px solid;
+  padding: 7px;
+  outline: 0;
+  box-shadow: none;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--! Font Awesome Pro 6.2.1 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons  Inc. --%3E%3Cpath d='M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z'/%3E%3C/svg%3E");
+  background-size: 12px auto;
+}
+.rent-date-time .input-group {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.return-date-time .input-group {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+/*endregion*/
+
+.input-group-text {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.timepicker-input {
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background-color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 2px;
+  color: #522100;
+}
+
+.rent-date {
+  display: grid;
+  grid-template-columns: repeat(2, 220px) 30px 220px 220px;
+  column-gap: 27px;
+  grid-template-rows: 55px;
+  justify-content: center;
+}
+
+.rent-date-time {
+  grid-column: 2/3;
+}
+
+#rentLocation {
+  padding: 7px;
+  border: none;
+}
+
+#returnLocation {
+  padding: 7px;
+  border: none;
+}
+
+.return-location {
+  grid-column-start: 4;
+}
+
+.return-date-time {
+  grid-column-start: 5;
+}
+
+.icon fa-icon {
+  font-size: x-large;
+}
+
+.rent-arrow {
+  align-self: center;
+}
+
+.form-group label {
+  color: #522100;
+  font-family: Roboto-Bold;
+  font-size: small;
+  margin-left: 2px;
+}
+
+.form-group input {
+  font-family: Roboto;
+  font-size: small;
+  color: #7e7e7e;
+}
+
+/* Dropdown  */
+
+.dropdown {
+  background-color: #522100de;
+  border-radius: 0.375rem;
+  color: #fff;
+}
+
+.dropdown-location {
+  display: grid;
+  grid-template-columns: 20px auto;
+  align-items: center;
+}
+.dropdown-location:hover {
+  background-color: #522100de;
+
+  color: #deaa4f;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+.dropdown-location span {
+  font-family: Roboto;
+  font-weight: 500;
+}
+
+.seperator {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.rent-date-time {
+  position: relative;
+}
+#date-icon {
+  position: absolute;
+  top: 20%;
+  right: 45%;
+  fill: #522100;
+  cursor: pointer;
+  z-index: 5;
+}
+/* endregion */
+
+@media screen and (max-width: 1024px) {
+  .date-menu-content {
+    width: 100%;
+    border-radius: 0;
+    margin-top: 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .form-group label {
+    font-size: smaller;
+  }
+  .form-group input {
+    font-size: x-small;
+  }
+
+  .rent-date {
+    /* grid-template-columns:220px auto 20px 220px auto ; */
+    grid-template-columns: repeat(2, 210px) 30px repeat(2, 210px);
+    column-gap: 15px;
+  }
+  #rentLocation {
+    padding: 7px;
+    font-size: small;
+  }
+  #returnLocation {
+    padding: 7px;
+    font-size: small;
+  }
+  #rentalDate {
+    font-size: small;
+    padding: 7px;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+  #rentalTime {
+    font-size: small;
+    padding: 7px;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  #returnDate {
+    font-size: small;
+    padding: 7px;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+
+  /*bakılacak*/
+  #returnTime {
+    font-size: small;
+    padding: 7px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  #returnTime::placeholder {
+    font-size: small;
+    grid-template-columns: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .date-menu-content {
+    width: 100%;
+    border-radius: 0;
+    margin-top: 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .form-group label {
+    font-size: smaller;
+  }
+  .form-group input {
+    font-size: x-small;
+  }
+
+  .rent-date {
+    grid-template-columns: 170px auto 20px 170px auto;
+    /* grid-template-columns: repeat(2, 220px) 30px 220px 220px; */
+    column-gap: 15px;
+  }
+  #rentLocation {
+    padding: 7px;
+  }
+  #returnLocation {
+    padding: 7px;
+  }
+  #rentalDate {
+    font-size: x-small;
+    padding: 7px;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+  #rentalTime {
+    font-size: x-small;
+    padding: 7px;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  #returnDate {
+    font-size: x-small;
+    padding: 7px;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+
+  /*bakılacak*/
+  #returnTime {
+    font-size: x-small;
+    padding: 7px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  #returnTime::placeholder {
+    font-size: x-small;
+    grid-template-columns: 10px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .date-menu-content {
+    width: 100%;
+    border-radius: 0;
+  }
+  .rent-date {
+    grid-template-columns: repeat(2, 50%);
+    column-gap: 5px;
+    grid-template-rows: repeat(3, auto);
+    row-gap: 10px;
+  }
+  .rent-location {
+    grid-column: 1/3;
+  }
+  .rent-date-time {
+    grid-column: 1/2;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 62% 38%;
+  }
+  .return-location {
+    grid-column: 1/3;
+    grid-row-start: 2;
+  }
+  .return-date-time {
+    grid-column: 2/3;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 62% 38%;
+  }
+  .rent-arrow {
+    display: none;
+  }
+  #rentalDate {
+    font-size: small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #rentalTime {
+    font-size: small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  #returnDate {
+    font-size: small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+
+  /*bakılacak*/
+  #returnTime {
+    font-size: small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  #rentLocation,
+  #returnLocation {
+    padding: 10px;
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .date-menu-content {
+    width: 100%;
+    border-radius: 0;
+  }
+  .rent-date {
+    grid-template-columns: repeat(2, 50%);
+    column-gap: 5px;
+    grid-template-rows: repeat(3, auto);
+    row-gap: 10px;
+  }
+  .rent-location {
+    grid-column: 1/3;
+  }
+  .rent-date-time {
+    grid-column: 1/2;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 62% 38%;
+  }
+  .return-location {
+    grid-column: 1/3;
+    grid-row-start: 2;
+  }
+  .return-date-time {
+    grid-column: 2/3;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 62% 38%;
+  }
+
+  .rent-arrow {
+    display: none;
+  }
+  #rentalDate {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+  }
+  #rentalTime {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 65% 40%;
+    justify-items: end;
+  }
+  #returnDate {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+  }
+
+  /*bakılacak*/
+  #returnTime {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 65% 40%;
+    justify-items: end;
+  }
+
+  #rentLocation {
+    padding: 8px;
+    font-size: x-small;
+  }
+  #returnLocation {
+    padding: 8px;
+    font-size: x-small;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .date-menu-content {
+    width: 100%;
+    border-radius: 0;
+  }
+  .rent-date {
+    grid-template-columns: repeat(2, 50%);
+    column-gap: 5px;
+    grid-template-rows: repeat(3, auto);
+    row-gap: 10px;
+  }
+  .rent-location {
+    grid-column: 1/3;
+  }
+  .rent-date-time {
+    grid-column: 1/2;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 62% 38%;
+  }
+  .return-location {
+    grid-column: 1/3;
+    grid-row-start: 2;
+  }
+  .return-date-time {
+    grid-column: 2/3;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 62% 38%;
+  }
+
+  .rent-arrow {
+    display: none;
+  }
+  #rentalDate {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+  }
+  #rentalTime {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 65% 40%;
+    justify-items: end;
+  }
+  #returnDate {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+  }
+  #returnTime {
+    font-size: x-small;
+    padding: 8px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 65% 40%;
+    justify-items: end;
+  }
+
+  #rentLocation {
+    padding: 8px;
+    font-size: x-small;
+  }
+  #returnLocation {
+    padding: 8px;
+    font-size: x-small;
+  }
+}

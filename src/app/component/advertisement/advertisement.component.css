@@ -1,0 +1,126 @@
+.advertisement {
+  background-color: #deaa4f;
+  height: 200px;
+  width: 100%;
+}
+.advertisement-content {
+  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 40% 30%;
+  padding: 10px;
+  column-gap: 8rem;
+}
+
+.left-content {
+  display: grid;
+  grid-template-rows: repeat(2, 50px);
+  margin-top: 50px;
+}
+
+.right-content {
+  display: grid;
+  grid-template-rows: repeat(2, 50px);
+  margin-top: 50px;
+}
+span {
+  color: white;
+  font-size: x-large;
+  font-family: Roboto;
+}
+p {
+  color: white;
+  font-family: Roboto;
+}
+
+.payment-type img {
+  height: 100%;
+  width: 100%;
+}
+
+
+@media screen and (max-width: 768px) {
+  .advertisement {
+    width: 768px;
+  }
+  .advertisement-content{
+    grid-template-columns: 50% 30%;
+    height: 100%;
+
+  }
+  .left-content{
+    grid-template-rows: 50px auto;
+    align-self: center;
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .advertisement {
+    width: 425px;
+  }
+  .advertisement-content {
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, auto);
+  }
+  span {
+    font-size: medium;
+  }
+  .left-content {
+    grid-template-rows: 10px;
+    margin-top: 20px;
+  }
+  .left-content p {
+    display: none;
+  }
+  .payment-type{
+    align-self: end;
+    justify-self: start;
+  }
+  .payment-type img{
+    height: auto;
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .advertisement {
+    width: 375px;
+  }
+  .advertisement-content {
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, auto);
+  }
+  span {
+    font-size: medium;
+  }
+  .left-content {
+    grid-template-rows: 10px;
+    margin-top: 20px;
+  }
+  .left-content p {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .advertisement {
+    width: 320px;
+  }
+  .advertisement-content {
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, auto);
+  }
+
+  span {
+    font-size: medium;
+  }
+
+  .left-content {
+    grid-template-rows: 10px;
+    margin-top: 20px;
+  }
+
+  .left-content p {
+    display: none;
+  }
+}

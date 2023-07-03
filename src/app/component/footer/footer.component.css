@@ -1,0 +1,475 @@
+.footer {
+  background-color: #624034 !important;
+  height: 100%;
+}
+
+.footer-content {
+  height: 100%;
+}
+
+.footer-menu {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-column-start: 3;
+}
+
+.footer-content-top {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) 700px repeat(2, 1fr);
+}
+#footer-title {
+  font-family: Roboto-Bold;
+  font-size: large;
+  color: #deaa4f;
+}
+#footer-text {
+  font-family: Roboto-Bold;
+  font-size: small;
+  color: white;
+  line-height: 30px;
+}
+
+.footer-content-bottom {
+  display: grid;
+  grid-template-columns: repeat(2, auto) 700px repeat(2, auto);
+  padding: 20px;
+}
+
+.footer-bottom-center {
+  grid-column-start: 3;
+  display: grid;
+  grid-template-columns: 350px 350px;
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 50%;
+
+
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.fa {
+  color: White;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.fa-brands {
+  color: White;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.copyright {
+  font-family: Roboto-Bold;
+  font-size: small;
+  color: white;
+  justify-self: center;
+}
+
+.footer-bottom-left {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-items: start;
+}
+
+.download-app {
+  display: grid;
+  grid-template-rows: auto auto;
+  row-gap: 10px;
+  justify-items: end;
+}
+.download-app .app-store {
+  background-color: #deaa4f;
+  border-radius: 10px;
+  width: 32%;
+  height: 50px;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-self: center;
+  transition: 0.3s;
+}
+
+.download-app .app-store:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.download-app .play-store:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.download-app .play-store {
+  background-color: #deaa4f;
+  border-radius: 10px;
+  width: 32%;
+  height: 50px;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-self: center;
+  transition: 0.3s;
+}
+.app-store {
+  padding: 5px;
+}
+.app-store i {
+  padding: 6px;
+}
+.play-store {
+  padding: 5px;
+}
+.play-store i {
+  padding: 6px;
+}
+.download-app-text {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+.download-app-text span {
+  color: #fff;
+  font-family: Roboto-Bold;
+}
+.download-app i {
+  font-size: x-large;
+}
+.download-app-text span:first-child {
+  font-size: x-small;
+  line-height: 20px;
+}
+.download-app-text span:last-child {
+  font-size: small;
+  line-height: 20px;
+}
+
+.social-icons {
+  grid-template-columns: repeat(5, auto);
+  display: grid;
+  column-gap: 5px;
+}
+.social-icons .icon{
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  align-content: center;
+}
+.social-icons .fa-brands {
+  line-height: 50px;
+}
+.social-icons .fa {
+  line-height: 50px;
+}
+.social-icons .icon:hover {
+  opacity: 0.7;
+}
+
+ul li {
+  list-style: none;
+}
+.footer-menu ul li a {
+  color: white;
+  text-decoration: none;
+}
+.footer-menu ul li a:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 1440px) {
+  .footer {
+    width: 1440px;
+  }
+
+  .left ul li a {
+    text-decoration: none;
+    color: #fff;
+  }
+  .right ul li a {
+    text-decoration: none;
+    color: #fff;
+  }
+  #footer-title {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .footer {
+    width: 1024px;
+  }
+
+  .left ul li a {
+    text-decoration: none;
+    color: #fff;
+  }
+  .right ul li a {
+    text-decoration: none;
+    color: #fff;
+  }
+  #footer-title {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    width: 768px;
+  }
+
+  .left ul li a {
+    text-decoration: none;
+    color: #fff;
+  }
+  .right ul li a {
+    text-decoration: none;
+    color: #fff;
+  }
+  #footer-title {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .footer {
+    width: 425px;
+  }
+  .footer-menu {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-start: 1;
+    justify-content: space-between;
+  }
+
+  .footer-menu .right {
+    justify-self: end;
+  }
+  .footer-menu ul {
+    margin: 0;
+    padding: 5px;
+  }
+
+  .footer-menu ul li {
+    width: 100%;
+  }
+  .footer-menu ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  #footer-text {
+    font-size: small;
+  }
+  #footer-title {
+    font-size: medium;
+  }
+  .footer-content-top {
+    grid-template-columns: 100%;
+    padding: 20px;
+  }
+
+  .footer-content-bottom {
+    grid-template-columns: 100%;
+    padding: 0px;
+  }
+  .footer-bottom-center {
+    grid-column-start: 1;
+    grid-template-columns: auto;
+  }
+  .social-icons .icon {
+    margin: 2px;
+    transition: 0.3s;
+  }
+  .footer-bottom-left {
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    justify-self: center;
+  }
+  .social-icons,
+  .copyright {
+    justify-self: start;
+  }
+  .copyright {
+    margin-top: 5%;
+    margin-left: 10%;
+  }
+
+  .download-app {
+    grid-template-columns: 48% 48%;
+    justify-items: center;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .download-app .app-store {
+    width: 90%;
+    height: 50px;
+  }
+
+  .download-app .play-store {
+    margin-left: 10px;
+    width: 90%;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .footer {
+    width: 375px;
+  }
+  .footer-menu {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-start: 1;
+    justify-content: space-between;
+  }
+
+  .footer-menu .right {
+    justify-self: end;
+  }
+  .footer-menu ul {
+    margin: 0;
+    padding: 5px;
+  }
+
+  .footer-menu ul li {
+    width: 100%;
+  }
+  .footer-menu ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  #footer-text {
+    font-size: smaller;
+  }
+  #footer-title {
+    font-size: small;
+  }
+  .footer-content-top {
+    grid-template-columns: 100%;
+  }
+
+  .footer-content-bottom {
+    grid-template-columns: 100%;
+    padding: 0px;
+  }
+  .footer-bottom-center {
+    grid-column-start: 1;
+    grid-template-columns: auto;
+  }
+  .social-icons .icon {
+    margin: 2px;
+    transition: 0.3s;
+  }
+  .footer-bottom-left {
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    justify-self: center;
+  }
+  .social-icons,
+  .copyright {
+    justify-self: start;
+  }
+  .copyright {
+    margin-top: 5%;
+    margin-left: 10%;
+  }
+
+  .download-app {
+    grid-template-columns: 48% 48%;
+    justify-items: center;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .download-app .app-store {
+    width: 90%;
+    height: 50px;
+  }
+
+  .download-app .play-store {
+    margin-left: 10px;
+    width: 90%;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .footer {
+    width: 320px;
+  }
+  .footer-menu {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-start: 1;
+    justify-content: space-between;
+  }
+
+  .footer-menu .right {
+    justify-self: end;
+  }
+  .footer-menu ul {
+    margin: 0;
+    padding: 5px;
+  }
+
+  .footer-menu ul li {
+    width: 100%;
+  }
+  .footer-menu ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  #footer-text {
+    font-size: smaller;
+  }
+  #footer-title {
+    font-size: small;
+  }
+  .footer-content-top {
+    grid-template-columns: 100%;
+  }
+
+  .footer-content-bottom {
+    grid-template-columns: 100%;
+    padding: 0px;
+  }
+  .footer-bottom-center {
+    grid-column-start: 1;
+    grid-template-columns: auto;
+  }
+  .social-icons .icon {
+    margin: 2px;
+    transition: 0.3s;
+  }
+  .footer-bottom-left {
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    justify-self: center;
+  }
+  .social-icons,
+  .copyright {
+    justify-self: start;
+  }
+  .copyright {
+    margin-top: 5%;
+    margin-left: 10%;
+  }
+
+  .download-app {
+    grid-template-columns: 48% 48%;
+    justify-items: center;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .download-app .app-store {
+    width: 90%;
+    height: 50px;
+  }
+
+  .download-app .play-store {
+    margin-left: 10px;
+    width: 90%;
+    height: 50px;
+  }
+}

@@ -1,0 +1,24 @@
+
+.row{
+  margin-left:auto !important;
+  margin-right: auto !important;
+
+}
+.seperator{
+  border: 1px solid #624034;
+  margin-top:20px;
+  position:relative;
+z-index:1;
+}
+
+.btn{
+margin-top:-30px;
+position: relative;
+z-index: 2;
+background-color:#624034;
+color:white;
+font-family: Roboto-Bold;
+font-size: small;
+width:15%;
+}
+
