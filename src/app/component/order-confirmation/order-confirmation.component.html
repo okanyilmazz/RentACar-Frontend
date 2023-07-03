@@ -40,7 +40,7 @@
             <select class="form-select" [(ngModel)]="selectedCountryId" (change)="changeCountry($event)"
               [ngModelOptions]="{standalone: true}">
               <option value="" selected>Ülke seç</option>
-              <option *ngFor="let country of countries" [value]="country.Id">{{country.countryName}}</option>
+              <option *ngFor="let country of countries" [value]="country.Id">{{country.countryName}} </option>
             </select>
           </div>
           <div>
