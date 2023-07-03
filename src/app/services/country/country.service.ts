@@ -3,13 +3,13 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Country } from 'src/app/models/country/country';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-  // apiUrl = 'https://localhost:44318/api/';
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
   constructor(private httpClient:HttpClient) { }
 
   getAllCountry():Observable<ListResponseModel<Country>>{

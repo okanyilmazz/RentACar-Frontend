@@ -5,12 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocationDetailDto } from 'src/app/models/location/locationDetailsDto';
 import { NonListResponseModel } from 'src/app/models/nonListResponseModel';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
   constructor(private httpClient: HttpClient) {}
 
   getLocationDetails(): Observable<ListResponseModel<LocationDetailDto>> {

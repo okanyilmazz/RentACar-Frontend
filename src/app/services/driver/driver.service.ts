@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 import { Driver } from 'src/app/models/driver/driver';
 import { ListResponseModel } from 'src/app/models/listResponseModel';
 
@@ -8,7 +9,7 @@ import { ListResponseModel } from 'src/app/models/listResponseModel';
   providedIn: 'root',
 })
 export class DriverService {
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
   constructor(private httpClient: HttpClient) {}
 
   getAllDriver(): Observable<ListResponseModel<Driver>> {

@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ListResponseModel } from 'src/app/models/listResponseModel';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RentalDetailService {
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
 
   constructor(private httpClient: HttpClient) {}
 

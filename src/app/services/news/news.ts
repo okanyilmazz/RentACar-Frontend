@@ -3,12 +3,13 @@ import { News } from '../../models/news/news';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseModel } from 'src/app/models/responseModel';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubscribeNewsService {
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
 
   constructor(private httpClient: HttpClient) {}
 

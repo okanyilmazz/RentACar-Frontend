@@ -6,12 +6,13 @@ import { Injectable } from '@angular/core';
 import { CarDetail } from 'src/app/models/car/carDetailDto';
 import { ResponseModel } from 'src/app/models/responseModel';
 import { NonListResponseModel } from 'src/app/models/nonListResponseModel';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CarService {
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
 
 
   constructor(private httpClient: HttpClient) {}

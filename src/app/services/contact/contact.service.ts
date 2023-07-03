@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 import { Contact } from 'src/app/models/contact/contact';
 import { ResponseModel } from 'src/app/models/responseModel';
 
@@ -9,8 +10,7 @@ import { ResponseModel } from 'src/app/models/responseModel';
 })
 export class ContactService {
 
-  // apiUrl = 'https://localhost:44318/api/';
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
   constructor(private httpClient: HttpClient) {}
 
   add(contactMessage: Contact):Observable<ResponseModel> {

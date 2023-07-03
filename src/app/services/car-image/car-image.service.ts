@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ListResponseModel } from 'src/app/models/listResponseModel';
 import { CarImage } from 'src/app/models/car/carImage';
+import { BaseUrl } from 'src/app/constants/baseUrl';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CarImageService {
-  apiUrl = 'https://webservis.geziyoskii.site/api/';
+  apiUrl = new BaseUrl().apiUrl;
   constructor(private httpClient: HttpClient) {}
 
   getImageByCarId(carId: number): Observable<ListResponseModel<CarImage>> {
