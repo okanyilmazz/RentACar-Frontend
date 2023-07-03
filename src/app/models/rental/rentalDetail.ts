@@ -3,6 +3,12 @@ export interface RentalDetail {
   brandName: string;
   firstName: string;
   lastName: string;
-  rentDate: number;
-  returnDate: number;
+  rentDate: string;
+  rentTime: string;
+  returnDate: string;
+  returnTime: string;
+  returnLocationId:number;
+  rentLocationId:number;
+  rentDay:number;
+  totalPrice:number;
 }

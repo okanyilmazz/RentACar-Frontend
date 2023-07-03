@@ -8,7 +8,7 @@ import { CarImage } from 'src/app/models/car/carImage';
   providedIn: 'root',
 })
 export class CarImageService {
-  apiUrl = 'https://localhost:44318/api/';
+  apiUrl = 'https://webservis.geziyoskii.site/api/';
   constructor(private httpClient: HttpClient) {}
 
   getImageByCarId(carId: number): Observable<ListResponseModel<CarImage>> {

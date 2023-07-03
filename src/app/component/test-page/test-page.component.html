@@ -1,0 +1,59 @@
+<div class="testo">
+  <div class="date-time">
+    <div class="rent-date-time">
+      <div class="input-group input-date">
+
+        <input type="text" ngbDatepicker #rentDatePicker="ngbDatepicker"  placeholder="Tarih seçiniz" (click)="rentDatePicker.toggle()"/>
+         <div class="input-group-append">
+          <button (click)="rentDatePicker.toggle()">
+            <i class="fa-solid fa-calendar-days"></i>
+          </button>
+        </div>
+      </div> 
+  
+        <div class="input-group input-time">
+          <select class="form-select" id="selectTime">
+            <option selected>-- : --</option>
+            <option *ngFor="let time of Times">
+              {{ time.hour + " : " + time.minute }}
+            </option>
+          </select>
+          <!-- <div class="input-group-append">
+          <button id="Button1" type="button" value="button" onclick='test1()'>
+            <i class="fa-solid fa-clock"></i>
+          </button>
+        </div> -->
+  
+          <!-- <ngb-timepicker [(ngModel)]="time" [spinners]="true" [minuteStep]="30"></ngb-timepicker> -->
+        </div>
+    </div>
+
+    <div class="return-date-time">
+      <div class="input-group input-date">
+        <input type="text" ngbDatepicker #returnDatePicker="ngbDatepicker" placeholder="Tarih seçiniz" (click)="returnDatePicker.toggle()"/>
+         <div class="input-group-append">
+          <button (click)="returnDatePicker.toggle()">
+            <i class="fa-solid fa-calendar-days"></i>
+          </button>
+        </div>
+      </div> 
+  
+        <div class="input-group input-time">
+          <select class="form-select" id="selectTime">
+            <option selected>-- : --</option>
+            <option *ngFor="let time of Times">
+              {{ time.hour + " : " + time.minute }}
+            </option>
+          </select>
+          <!-- <div class="input-group-append">
+          <button id="Button1" type="button" value="button" onclick='test1()'>
+            <i class="fa-solid fa-clock"></i>
+          </button>
+        </div> -->
+  
+          <!-- <ngb-timepicker [(ngModel)]="time" [spinners]="true" [minuteStep]="30"></ngb-timepicker> -->
+        </div>
+    </div>
+
+  </div>
+</div>

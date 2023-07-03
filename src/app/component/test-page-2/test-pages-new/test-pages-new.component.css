@@ -1,0 +1,65 @@
+
+.rent-date {
+  display: grid;
+  grid-template-columns: repeat(2, 180px) repeat(2, 220px);
+  column-gap: 40px;
+}
+#rentalDate {
+  font-size: small;
+  color: #522100;
+  width: 100%;
+}
+#returnDate {
+  font-size: small;
+  color: #522100;
+  width: 100%;
+}
+#rentalDate:checked,
+:active,
+:focus {
+  box-shadow: none;
+}
+#returnDate:checked,
+:active,
+:focus {
+  box-shadow: none;
+}
+.rent-date-time{
+  grid-column-start: 3;
+}
+.return-date-time{
+  grid-column-start: 4;
+}
+.rent-date-time .input-group {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.return-date-time .input-group {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+
+#rentalTime {
+  font-size: small;
+  color: #522100;
+  align-items: center;
+  border-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#returnTime {
+  font-size: small;
+  color: #522100;
+  align-items: center;
+  border-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#rentLocation{
+  font-size: small;
+}
+.rent-location{
+  grid-column: 1/3;
+}
+

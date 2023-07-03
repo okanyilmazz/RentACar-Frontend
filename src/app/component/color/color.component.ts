@@ -1,6 +1,7 @@
 import { ColorService } from './../../services/color/color.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Color } from 'src/app/models/color/color';
+
 
 @Component({
   selector: 'app-color',
@@ -12,6 +13,9 @@ export class ColorComponent implements OnInit {
   dataLoaded = false;
   emptyColor: Color;
   currentColor: Color;
+  @Output() ColorEvent = new EventEmitter<boolean>();
+  @Input() isOpenColor: boolean;
+
   constructor(private colorService: ColorService) {}
 
   ngOnInit(): void {
@@ -21,7 +25,6 @@ export class ColorComponent implements OnInit {
   getColor() {
     this.colorService.getColor().subscribe((response) => {
       this.colors = response.data;
-      this.dataLoaded = true;
     });
   }
 
@@ -42,6 +45,9 @@ export class ColorComponent implements OnInit {
   }
 
   setCurrentColor(color: Color) {
+    this.isOpenColor = false;
+    this.ColorEvent.emit(this.isOpenColor);
+
     this.currentColor = color;
   }
 

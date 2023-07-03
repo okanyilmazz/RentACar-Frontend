@@ -1,36 +1,111 @@
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<div class="homebg">
+  <div class="row">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg mt-3 ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <div class="col-md-2">
+            <img class="navbar-brand" src="assets/image/rent-logo.png" href="#">
+          </div>
+          <div class="col-md-10">
+            <div class="container top-nav row border border-end-0 border-top-0 border-start-0 mb-2">
+
+              <div class="col-md-8">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                    <a href="#">Kullanım kılavuzu</a>
+                    <span>/</span>
+                    <a href="#">Partnerlerimiz</a>
+                    <span>/</span>
+                    <a href="#">+90 535 535 53 53</a>
+                    <span>/</span>
+                    <a href="#">info@info.com</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-top-right col-md-4 mb-1 row" style="text-align:end;">
+                <div class="social-media-content col-md-9">
+                  <button type="button" class="btn">
+                    <fa-icon [icon]="twitterIcon" style="font-size:medium; color:gray"></fa-icon>
+                  </button>
+                  <button type="button" class="btn">
+                    <fa-icon [icon]="youtubeIcon" style="font-size:medium; color:gray"></fa-icon>
+                  </button>
+                  <button type="button" class="btn">
+                    <fa-icon [icon]="googlePlusIcon" style="font-size:medium; color:gray"></fa-icon>
+                  </button>
+                  <button type="button" class="btn">
+                    <fa-icon [icon]="instagramIcon" style="font-size:medium; color:gray"></fa-icon>
+                  </button>
+                </div>
+                <div class="select-language col-md-2">
+                  <div class="mt-1">
+                    <select #selectLang class="language-select border-0 bg-light" style="width:auto; font-size: small;"
+                      aria-label="...">
+                      <option selected value="default">TR</option>
+                      <option>EN</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="top-login col-md-1"  >
+                  <button class="btn btn-light" type="button">Login</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="container row  mt-4 ">
+              <div class="col-md-8 nav-bottom" >
+                <ul class="navbar-nav mr-auto ">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#">ANASAYFA <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">SICAK FIRSATLAR</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" routerLink="/vehicles">ARAÇLAR</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">KONUMLAR</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">HAKKIMIZDA</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">İLETİŞİM</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-4 ">
+                <div class="row ">
+                  <div class="col-md-10">
+                    <form class="form-inline ">
+                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn" type="button">
+                      <fa-icon [icon]="searchIcon" style="font-size:large; color:rgb(41, 41, 41)"> <span
+                          class="search-toggler-icon"></span></fa-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
     </div>
   </div>
-</nav>
+</div>
+

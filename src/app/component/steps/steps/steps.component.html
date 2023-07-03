@@ -1,0 +1,101 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="steps">
+  <div class="steps-content">
+    <div class="step-top">
+      <div>
+        <span id="title"><i class="fa-solid fa-check"></i> Alış ve İade Ofisi </span>
+        <span id="content">10 Ocak 15:30 > 20 Ocak 15:30</span>
+        <span id="content">İstanbul Şişli > İstanbul Şişli</span>
+      </div>
+      <div>
+        <span id="title"><i class="fa-solid fa-x"></i> Araç Bilgileri</span>
+        <span id="content">Ford Focus</span>
+        <span id="content">Benzinli - Otomatik</span></div>
+      <div>
+        <span id="title"><i class="fa-solid fa-x"></i>Sürücü Bilgileri</span>
+        <span id="content">Okan Yılmaz</span>
+        <span id="content">25 Yaş</span>
+      </div>
+      <div>
+        <span id="title"><i class="fa-solid fa-x"></i>Ödeme Bilgileri</span>
+        <span id="content">Online Ödeme</span>
+        <span id="content">Toplam Tutar : 500 ₺</span>
+      </div>
+    </div>
+
+    <div class="step-bottom">
+      <div class="step1 ">
+        <div class="step-bottom-top">
+          <p class="step" ngbTooltip="Tarih Seçimi"
+            [ngbTooltip]="rentDetail.rentDate + ' > ' +rentDetail.returnDate +'\n' + rentalLocationTitle + ' > '+returnLocationTitle"
+            placement="right"><i class="fa-solid fa-calendar-days"></i></p>
+          <div class="seperator step-seperator" id="left"></div>
+          <div class="seperator" [class]="carLeftSeperatorClass" id="right"></div>
+        </div>
+        <div class="step-bottom-bottom ">
+          <span>Tarih Seçimi</span>
+        </div>
+      </div>
+
+      <div class="step2" *ngFor="let car of carDetails">
+        <div class="step-bottom-top">
+
+          <ng-template #carList>
+            <span>{{car.carName}}</span><br>
+            <span>{{car.fuelType}} - {{car.transmissionType}}</span>
+          </ng-template>
+
+          <p [class]="carStepClass" ngbTooltip="Araç Seçimi" [ngbTooltip]="(carTooltip) ? carList :'Araç Bilgileri'"><i class="fa-solid fa-car"></i></p>
+          <div class="seperator" [class]="carLeftSeperatorClass" id="left"></div>
+          <div class="seperator" [class]="driverLeftSeperatorClass" id="right"></div>
+        </div>
+        <div class="step-bottom-bottom">
+          <span>Araç Seçimi</span>
+        </div>
+      </div>
+
+      <div class="step3">
+        <div class="step-bottom-top">
+          <ng-template #driverList>
+            <span>{{driver.firstName}} {{driver.lastName}}</span><br>
+            <span>{{driver.phoneNumber}} - {{driver.birthDate}}</span>
+          </ng-template>
+          <p [class]="driverStepClass"  [ngbTooltip]="(driverTooltip) ? driverList : 'Sürücü Bilgileri'" placement="right"><i
+              class="fa-solid fa-user"></i>
+          </p>
+          <div class="seperator" [class]="driverRightSeperatorClass" id="left"></div>
+          <div class="seperator" [class]="paymentLeftSeperatorClass" id="right"></div>
+        </div>
+        <div class="step-bottom-bottom">
+          <span>Sürücü Bilgileri</span>
+        </div>
+      </div>
+      <div class="step4">
+        <div class="step-bottom-top">
+          <ng-template #paymentList>
+            <span>Online Ödeme</span><br>
+            <span>Toplam gün sayısı : {{rentDetail.rentDay}} <br> Toplam fiyat : {{rentDetail.totalPrice}}</span>
+          </ng-template>
+          <p [class]="paymentStepClass"
+            [ngbTooltip]="(paymentTooltip) ? paymentList : 'Ödeme Bilgileri' " placement="right"><i
+              class="fa-solid fa-credit-card"></i></p>
+          <div class="seperator" [class]="paymentRightSeperatorClass" id="left"></div>
+          <div class="seperator" [class]="orderConfirmationLeftSeperatorClass" id="right"></div>
+        </div>
+        <div class="step-bottom-bottom">
+          <span>Ödeme Bilgileri</span>
+        </div>
+      </div>
+      <div class="step5">
+        <div class="step-bottom-top-">
+          <p ngbTooltip="Sipariş Onayı" placement="right"><i class="fa-solid fa-check"></i></p>
+        </div>
+        <div class="step-bottom-bottom">
+          <span>Sipariş Onayı</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

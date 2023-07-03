@@ -1,0 +1,143 @@
+.subscribe {
+  background-color: #deaa4f;
+  height: 150px;
+}
+
+.subscribe-text {
+  font-family: Roboto;
+  font-size: x-large;
+  color: white;
+  text-align: start;
+}
+
+.subscribe-content {
+  align-items: center;
+  height: 150px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+
+#mail {
+  background-color: #ebc27b;
+  border: none;
+  border-radius: 0px;
+  font-family: Roboto-Bold;
+  font-size: small;
+}
+::placeholder {
+  color: #9c6300;
+}
+
+.input-group-text {
+  border-radius: 0px;
+  background-color: #ebc27b;
+  border-color: #ebc27b;
+}
+
+.input-group-text fa-icon {
+  color: #9c6300;
+  font-size: large;
+}
+
+#submit-mail {
+  font-family: Roboto-Bold;
+  font-size: small;
+  border-radius: 0px;
+  background-color: #624034;
+  color: white;
+  padding: 8px;
+  width: 40%;
+}
+
+@media screen and (max-width: 768px) {
+  .subscribe {
+    width: 768px;
+  }
+  .subscribe-content {
+    grid-template-columns: repeat(3, 240px);
+  }
+  .subscribe-text {
+    font-size: large;
+  }
+  #submit-mail{
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .subscribe {
+    height: 170px;
+    width: 425px;
+  }
+
+  .subscribe-content {
+    grid-template-columns: 100%;
+    grid-template-rows: 40px repeat(2, 60px);
+  }
+
+  .subscribe-text {
+    font-size: medium;
+    padding-bottom: 5px;
+    align-self: end;
+  }
+
+  #submit-mail {
+    padding: 10px;
+    width: 100%;
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .subscribe {
+    height: 170px;
+    width: 375px;
+  }
+
+  .subscribe-content {
+    grid-template-columns: 100%;
+    grid-template-rows: 40px repeat(2, 60px);
+  }
+
+  .subscribe-text {
+    font-size: medium;
+    padding-bottom: 5px;
+    align-self: end;
+  }
+
+  #submit-mail {
+    padding: 10px;
+    width: 100%;
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .subscribe {
+    height: 170px;
+    width: 320px;
+  }
+
+  .subscribe-content {
+    grid-template-columns: 100%;
+    grid-template-rows: 40px repeat(2, 60px);
+  }
+
+  .subscribe-text {
+    font-size: medium;
+    margin-left: 11.5%;
+    padding-bottom: 5px;
+    align-self: end;
+  }
+
+  form {
+    justify-self: center;
+  }
+
+  #submit-mail {
+    padding: 10px;
+    width: 77%;
+    font-size: small;
+    justify-self: center;
+  }
+}

@@ -1,0 +1,247 @@
+.home-page {
+  display: grid;
+  grid-template-rows: repeat(10, auto);
+}
+
+.navi-page {
+  background-image: url("https://i.ibb.co/W3v8jQC/car1.png");
+  height: 800px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+.reservation-date {
+  margin-top: 22%;
+  z-index: 2;
+}
+
+.info-rental {
+  z-index: 1;
+}
+.reference-field {
+  margin-top: 3%;
+}
+
+.what-we-do {
+  margin-top: 3%;
+  z-index: 2;
+}
+
+.advertisement {
+  margin-top: 3%;
+}
+
+.car-filter {
+  margin-top: 3%;
+}
+.cars {
+  margin-top: 3%;
+}
+
+.see-more {
+  margin-top: 3%;
+}
+
+.contact-us {
+  margin-top: 3%;
+}
+
+.subscribe-news {
+  margin-top: 3%;
+}
+.footer {
+  margin-top: 3%;
+}
+
+@media screen and (min-width: 2560px) {
+  .reservation-date {
+    margin-top: 20%;
+  }
+}
+@media screen and (min-width: 3000px) {
+  .reservation-date {
+    margin-top: 10%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .home-page {
+    width: 1200px !important;
+  }
+
+  .see-more {
+    display: none;
+  }
+  .reservation-date {
+    width: 1200px;
+    margin-top: 10%;
+    z-index: 2;
+  }
+
+  .navi-page {
+    width: 1200px;
+    height: 650px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .reservation-date{
+    margin-top: 310px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .home-page {
+    width: 1440px !important;
+  }
+
+  .see-more {
+    display: none;
+  }
+  .reservation-date {
+    width: 1440px;
+    margin-top: 10%;
+    z-index: 2;
+  }
+
+  .navi-page {
+    width: 1440px;
+    height: 650px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .home-page {
+    width: 1024px !important;
+  }
+  .cars {
+    display: none;
+  }
+  .car-filter {
+    display: none;
+  }
+  .see-more {
+    display: none;
+  }
+  .reservation-date {
+    width: 1024px;
+    margin-top: 10%;
+    z-index: 2;
+  }
+
+  .navi-page {
+    width: 1024px;
+    height: 650px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-page {
+    width: 768px !important;
+  }
+  .cars {
+    display: none;
+  }
+  .car-filter {
+    display: none;
+  }
+  .see-more {
+    display: none;
+  }
+  .reservation-date {
+    width: 768px;
+    margin-top: 10%;
+    z-index: 2;
+    justify-self: center;
+
+  }
+
+  .navi-page {
+    width: 768px;
+    max-width: 768px;
+    height: 600px;
+    max-height: 600px;
+    
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .home-page {
+    width: 425px !important;
+  }
+  .cars {
+    display: none;
+  }
+  .car-filter {
+    display: none;
+  }
+  .see-more {
+    display: none;
+  }
+  .reservation-date {
+    width: 425px;
+    margin-top: 10%;
+    z-index: 2;
+  }
+
+  .navi-page {
+    width: 425px;
+    max-width: 425px;
+    height: 490px;
+    max-height: 490px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .home-page {
+    width: 375px !important;
+  }
+  .cars {
+    display: none;
+  }
+  .car-filter {
+    display: none;
+  }
+  .see-more {
+    display: none;
+  }
+  .reservation-date {
+    width: 375px;
+    margin-top: 10%;
+    z-index: 2;
+  }
+
+  .navi-page {
+    width: 375px;
+    max-width: 375px;
+    height: 470px;
+    max-height: 470px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .home-page {
+    max-width: 320px !important;
+  }
+  .cars {
+    display: none;
+  }
+  .car-filter {
+    display: none;
+  }
+  .see-more {
+    display: none;
+  }
+  .reservation-date {
+    width: 320px;
+    margin-top: 10%;
+    z-index: 2;
+  }
+
+  .navi-page {
+    width: 320px;
+    max-width: 320px;
+    height: 450px;
+    max-height: 450px;
+  }
+}

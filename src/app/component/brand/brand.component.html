@@ -1,9 +1,27 @@
-<div *ngIf="dataLoaded==false" class="spinner-border" role="status">
-  <span class="visually-hidden">Loading...</span>
-</div>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="brand-filter">
+  <div class="brand ">
+    <div class="brand-title">
+      <span>Markalar</span>
+    </div>
+    <div class="brand-content">
+      <div class="content-search">
+        <form>
+          <div class="input-group">
+            <i class="fa-solid fa-magnifying-glass input-group-text"></i>
+            <input class="form-control" type="search" placeholder="Marka adı giriniz..." aria-label="Search">
+          </div>
 
-<ul *ngIf="dataLoaded!=false" class="list-group mt-2">
-  <li [class]="getAllBrandClass()" routerLink="/cars" (click)="clearCurrentBrand()">Tümünü Gör</li>
-  <li *ngFor="let brand of brands" routerLink="/cars/brand/{{brand.id}}" (click)="setCurrentBrand(brand)"
-    [class]="getCurrentBrandClass(brand)">{{brand.name}}</li>
-</ul>
+        </form>
+      </div>
+      <div class="content-list">
+        <li class="list-group-item p-2 show-all" type="button" (click)="clearCurrentBrand()" routerLink="/cars"
+          [class]="getAllBrandClass()">Tümünü gör</li>
+        <li *ngFor="let brand of brands" type="button" routerLink="/cars/brand/{{brand.id}}"
+          (click)="setCurrentBrand(brand)" class="p-2" [class]="getCurrentBrandClass(brand)">{{brand.name}}</li>
+      </div>
+    </div>
+  </div>
+</div>

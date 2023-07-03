@@ -1,0 +1,1246 @@
+.reservation-date {
+  width: 50%;
+  margin: auto;
+  position: absolute;
+}
+
+.date-container {
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  font-family: Roboto;
+  background-color: #522100de;
+  border-radius: 20px;
+  margin: auto;
+}
+
+.reservation-date-title {
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  border-bottom: 1px solid #deaa4f;
+  gap: 40px;
+}
+.left-title {
+  grid-column: 1/3;
+  align-self: center;
+}
+.left-title span {
+  font-size: medium;
+}
+.right-title {
+  grid-column-start: 4;
+  text-align: end;
+  align-self: center;
+}
+form {
+  display: grid;
+  /* grid-template-rows: 70px 70px 40px; */
+  gap: 25px;
+}
+
+.rent-date-time {
+  grid-column-start: 3;
+}
+.return-date {
+  display: grid;
+  grid-template-columns: repeat(2, 180px) repeat(2, 220px);
+  column-gap: 40px;
+}
+.return-location {
+  grid-column: 1/3;
+}
+.submit-date {
+  display: grid;
+  grid-template-columns: repeat(2, 180px) repeat(2, 220px);
+  column-gap: 40px;
+  align-items: start;
+}
+.input-group-text {
+  grid-column: 1/3;
+  padding: 0;
+}
+.submit-button {
+  grid-column-start: 4;
+}
+
+.reservation-date-title span {
+  color: white;
+}
+
+.carCount {
+  color: #deaa4f !important;
+}
+
+.btn-search-car {
+  background-color: #deaa4f !important;
+  color: white;
+  width: 100%;
+}
+.input-group-text {
+  background-color: transparent;
+  border: none;
+}
+.input-group-text label {
+  color: white;
+  font-size: small;
+}
+.form-group label {
+  color: white;
+  font-size: small;
+}
+
+input::placeholder {
+  font-size: small;
+  color: #522100;
+}
+#rentalDate {
+  font-size: small;
+  color: #522100;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+#rentLocation {
+  font-size: small;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+#returnLocation {
+  font-size: small;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+#rentalTime {
+  font-size: small;
+  color: #522100;
+  align-items: center;
+  border-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left: 1px solid;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  border-left: 1px solid #522100;
+  margin-left: 1px;
+}
+#returnTime {
+  font-size: small;
+  color: #522100;
+  align-items: center;
+  border-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  border-left: 1px solid #522100;
+  margin-left: 1px;
+}
+#rentalDate:hover {
+  cursor: pointer;
+}
+#returnDate:hover {
+  cursor: pointer;
+}
+select:hover {
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  display: block;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f073";
+  width: 15px;
+  height: 15px;
+  border-width: thick;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  width: 15px;
+  height: 15px;
+  border-width: thick;
+}
+.dropdown {
+  background-color: white;
+  border-radius: 0.375rem;
+  position: absolute;
+  z-index: 2;
+}
+.dropdown-location {
+  display: grid;
+  grid-template-columns: 20px auto;
+  align-items: center;
+}
+.dropdown-location:hover {
+  background-color: #deaa4f;
+  color: #522100de;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+.dropdown-location span {
+  font-family: Roboto;
+  font-weight: 500;
+}
+.seperator {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.timepicker-input {
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  background-color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 2px;
+  color: #522100;
+}
+
+#returnDate {
+  font-size: small;
+  color: #522100;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--! Font Awesome Pro 6.2.1 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons  Inc. --%3E%3Cpath d='M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z'/%3E%3C/svg%3E");
+  background-size: 12px auto;
+}
+.rent-date-time .input-group {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.return-date-time .input-group {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+
+@media screen and (min-width: 1441px) {
+  .reservation-date {
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    justify-items: center;
+  }
+
+  .rent-return-date {
+    display: grid;
+    grid-template-columns: none;
+    column-gap: 5px;
+    grid-column: 1/2;
+  }
+  .rent-date {
+    display: grid;
+    grid-template-columns: repeat(2, 180px) repeat(2, 220px);
+    column-gap: 40px;
+    row-gap: 20px;
+  }
+  .rent-location {
+    grid-column: 1/5;
+  }
+  .return-location {
+    grid-column: 1/5;
+  }
+  .rent-return-date {
+    grid-column: 1/5;
+  }
+  .rent-date-time {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+  .return-date-time {
+    grid-row-start: 1;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .reservation-date {
+    padding: 10px;
+    width: 1440px;
+    display: grid;
+    justify-content: center;
+  }
+  .date-container {
+    width: 600px;
+    padding: 20px;
+    height: 100%;
+    justify-content: normal;
+  }
+  form {
+    grid-template-rows: auto repeat(3, auto);
+    width: 100%;
+    gap: 0;
+    max-width: 1440px;
+  }
+  .rent-date .form-group {
+    max-width: 1440px;
+  }
+  .return-date .form-group {
+    max-width: 1440px;
+  }
+  .reservation-date-title {
+    grid-template-columns: 100%;
+    justify-items: center;
+    row-gap: 0;
+    max-width: 1440px;
+  }
+  .left-title {
+    grid-column: 1/2;
+  }
+  .left-title span {
+    font-size: medium;
+  }
+  .right-title {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    justify-self: center;
+    font-size: medium;
+  }
+  .rent-date {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: none;
+    column-gap: 20px;
+    row-gap: 10px;
+  }
+  .rent-date-time {
+    /* grid-column-start: 1;
+    grid-row-start: 2; */
+    grid-column-start: 1;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 60% 40%;
+  }
+  #rentalDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #rentalTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  
+  .return-date-time {
+    /* grid-column-start: 2;
+    grid-row-start: 2; */
+    grid-column-start: 2;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 60% 40%;
+  }
+  #returnDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #returnTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  .return-date {
+    display: grid;
+    grid-template-columns: 100%;
+    column-gap: 0;
+  }
+  .submit-date {
+    grid-template-columns: 67% 30%;
+    column-gap: 20px;
+    grid-column-start: 0;
+    grid-row-start: 3;
+    padding: 10px;
+    padding-left: 0;
+    align-items: center;
+  }
+  .btn-search-car {
+    font-size: small;
+  }
+  .input-group-text {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+  .input-group-text label {
+    color: white;
+    font-size: small;
+  }
+  .submit-button {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    width: 100%;
+    height: 100%;
+  }
+  .form-group label {
+    font-size: small;
+  }
+  #rentLocation {
+    padding: 10px;
+    font-size: small;
+  }
+  #rentLocation::placeholder {
+    font-size: small;
+  }
+  #returnLocation {
+    padding: 10px;
+    font-size: small;
+    margin-bottom: 10px;
+  }
+  #returnLocation::placeholder {
+    font-size: small;
+  }
+  .dropdown {
+    z-index: 2;
+    width: 650px;
+    max-width: 650px;
+  }
+  select {
+    background-size: 15px;
+  }
+  .rent-return-date {
+    display: grid;
+    grid-template-columns: none;
+    column-gap: 5px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .reservation-date {
+    padding: 10px;
+    width: 1024px;
+    display: grid;
+    justify-content: center;
+  }
+  .date-container {
+    width: 500px;
+    padding: 20px;
+    height: 100%;
+    justify-content: normal;
+  }
+  form {
+    grid-template-rows: auto repeat(3, auto);
+    width: 100%;
+    gap: 0;
+    max-width: 1024px;
+  }
+  .rent-date .form-group {
+    max-width: 1024px;
+  }
+  .return-date .form-group {
+    max-width: 1024px;
+  }
+  .reservation-date-title {
+    grid-template-columns: 100%;
+    justify-items: center;
+    row-gap: 0;
+    max-width: 1024px;
+  }
+  .left-title {
+    grid-column: 1/2;
+  }
+  .left-title span {
+    font-size: medium;
+  }
+  .right-title {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    justify-self: center;
+    font-size: medium;
+  }
+  .rent-date {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: 100%;
+    row-gap: 20px;
+  }
+  .rent-date-time {
+    grid-column-start: 1;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 55% 45%;
+  }
+  #rentalDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #rentalTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    justify-items: center;
+  }
+  .return-date-time {
+    grid-column-start: 2;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  #returnDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #returnTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  .return-date {
+    display: grid;
+    grid-template-columns: 100%;
+    column-gap: 0;
+  }
+  .submit-date {
+    grid-template-columns: 67% 30%;
+    column-gap: 20px;
+    grid-column-start: 0;
+    grid-row-start: 3;
+    padding: 10px;
+    padding-left: 0;
+    align-items: center;
+  }
+  .btn-search-car {
+    font-size: small;
+  }
+  .input-group-text {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+  .input-group-text label {
+    color: white;
+    font-size: small;
+  }
+  .submit-button {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    width: 100%;
+    height: 100%;
+  }
+  .form-group label {
+    font-size: small;
+  }
+  #rentLocation {
+    padding: 10px;
+    font-size: small;
+  }
+  #rentLocation::placeholder {
+    font-size: small;
+  }
+  #returnLocation {
+    padding: 10px;
+    font-size: small;
+    margin-bottom: 10px;
+  }
+  #returnLocation::placeholder {
+    font-size: small;
+  }
+  .dropdown {
+    z-index: 2;
+    width: 450px;
+    max-width: 450px;
+  }
+  select {
+    background-size: 15px;
+  }
+  .rent-return-date {
+    display: grid;
+    grid-template-columns: none;
+    column-gap: 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .reservation-date {
+    padding: 10px;
+    width: 768px;
+    display: grid;
+    justify-content: center;
+  }
+  .date-container {
+    width: 100%;
+    padding: 20px;
+    height: 100%;
+    justify-content: normal;
+  }
+  form {
+    grid-template-rows: auto repeat(3, auto);
+    width: 100%;
+    gap: 0;
+    max-width: 768px;
+  }
+  .rent-date .form-group {
+    max-width: 768px;
+  }
+  .return-date .form-group {
+    max-width: 768px;
+  }
+  .reservation-date-title {
+    grid-template-columns: 100%;
+    justify-items: center;
+    row-gap: 0;
+    max-width: 768px;
+  }
+  .left-title {
+    grid-column: 1/2;
+  }
+  .left-title span {
+    font-size: small;
+  }
+  .right-title {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    justify-self: center;
+  }
+  .rent-date {
+    display: grid;
+    grid-template-rows: repeat(3, 33.33%);
+    grid-template-columns: none;
+    column-gap: 3px;
+    row-gap: 20px;
+  }
+  .rent-date-time {
+    grid-column-start: 1;
+    grid-row-start: 2;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 55% 45%;
+  }
+  #rentalDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #rentalTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    justify-items: center;
+  }
+  .return-date-time {
+    grid-column-start: 2;
+    grid-row-start: 2;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  #returnDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #returnTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  .return-date {
+    display: grid;
+    grid-template-columns: 100%;
+    column-gap: 0;
+  }
+  .submit-date {
+    grid-template-columns: 67% 30%;
+    column-gap: 20px;
+    grid-column-start: 0;
+    grid-row-start: 3;
+    padding: 10px;
+    padding-left: 0;
+    align-items: center;
+  }
+  .btn-search-car {
+    font-size: small;
+  }
+  .input-group-text {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+  .input-group-text label {
+    color: white;
+    font-size: small;
+  }
+  .submit-button {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    width: 100%;
+    height: 100%;
+  }
+  .form-group label {
+    font-size: small;
+  }
+  #rentLocation {
+    padding: 10px;
+    font-size: small;
+  }
+  #rentLocation::placeholder {
+    font-size: small;
+  }
+  #returnLocation {
+    padding: 10px;
+    font-size: small;
+    margin-bottom: 10px;
+  }
+  #returnLocation::placeholder {
+    font-size: small;
+  }
+  .dropdown {
+    width: 500px;
+    max-width: 500px;
+  }
+  select {
+    background-size: 15px;
+  }
+  .rent-return-date {
+    display: grid;
+    grid-template-columns: none;
+    column-gap: 5px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .reservation-date {
+    padding: 10px;
+    width: 425px;
+  }
+  .date-container {
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+  }
+  form {
+    grid-template-rows: auto repeat(3, auto);
+    width: 100%;
+    gap: 0;
+    /* max-width: 425px; */
+    max-width: 400px;
+    grid-template-columns: 100%;
+  }
+  .rent-date .form-group {
+    /* max-width: 425px; */
+    max-width: 400px;
+    width: 100%;
+  }
+  .return-date .form-group {
+    /* max-width: 425px; */
+    max-width: 400px;
+    width: 100%;
+  }
+  .reservation-date-title {
+    grid-template-columns: 100%;
+    justify-items: center;
+    row-gap: 0;
+    /* max-width: 425px; */
+    max-width: 400px;
+    width: 100%;
+  }
+  .left-title {
+    grid-column: 1/2;
+  }
+  .left-title span {
+    font-size: small;
+  }
+  .right-title {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    justify-self: center;
+  }
+  .rent-date {
+    display: grid;
+    grid-template-rows: repeat(3, 33.33%);
+    grid-template-columns: none;
+    column-gap: 3px;
+    row-gap: 20px;
+  }
+  .rent-date-time {
+    grid-column: 1/2;
+
+    grid-row-start: 2;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  #rentalDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #rentalTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  .return-date-time {
+    grid-column: 2/3;
+    grid-row-start: 2;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  #returnDate {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #returnTime {
+    font-size: small;
+    padding: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  .return-date {
+    display: grid;
+    grid-template-columns: 100%;
+    column-gap: 0;
+  }
+  .submit-date {
+    grid-template-columns: 67% 30%;
+    column-gap: 20px;
+    grid-column-start: 0;
+    grid-row-start: 3;
+    padding: 10px;
+    padding-left: 0;
+    align-items: center;
+  }
+  .btn-search-car {
+    font-size: small;
+  }
+  .input-group-text {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+  .input-group-text label {
+    color: white;
+    font-size: small;
+  }
+  .submit-button {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    width: 100%;
+    height: 100%;
+  }
+  .form-group label {
+    font-size: small;
+  }
+  #rentLocation {
+    padding: 10px;
+    font-size: small;
+  }
+  #rentLocation::placeholder {
+    font-size: small;
+  }
+  #returnLocation {
+    padding: 10px;
+    font-size: small;
+    margin-bottom: 10px;
+  }
+  #returnLocation::placeholder {
+    font-size: small;
+  }
+  .dropdown {
+    z-index: 1;
+  }
+  .dropdown {
+    width: 385px;
+    max-width: 385px;
+  }
+
+  select {
+    background-size: 15px;
+  }
+  #locationName {
+    font-size: small;
+  }
+  .rent-return-date {
+    display: grid;
+    grid-template-columns: none;
+    column-gap: 5px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .reservation-date {
+    padding: 10px;
+    width: 375px;
+  }
+  .date-container {
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+  }
+  form {
+    grid-template-rows: auto repeat(3, auto);
+    width: 100%;
+    gap: 0;
+    max-width: 375px;
+  }
+  .rent-date .form-group {
+    max-width: 375px;
+  }
+  .return-date .form-group {
+    max-width: 375px;
+  }
+  .reservation-date-title {
+    grid-template-columns: 100%;
+    justify-items: center;
+    row-gap: 0;
+    max-width: 375px;
+  }
+  .left-title {
+    grid-column: 1/2;
+  }
+  .left-title span {
+    font-size: small;
+  }
+  .right-title {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    justify-self: center;
+  }
+  .rent-date {
+    display: grid;
+    grid-template-rows: repeat(3, 33.33%);
+    grid-template-columns: none;
+    column-gap: 3px;
+    row-gap: 20px;
+  }
+
+  .rent-date-time {
+    grid-column-start: 1;
+    grid-row-start: 2;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 55% 45%;
+  }
+  #rentalDate {
+    font-size: x-small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #rentalDate::placeholder {
+    font-size: x-small;
+  }
+  #returnDate::placeholder {
+    font-size: x-small;
+  }
+  #rentalTime {
+    font-size: x-small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 40%;
+  }
+
+  .return-date-time {
+    grid-column-start: 2;
+    grid-row-start: 2;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 55% 45%;
+  }
+  #returnDate {
+    font-size: x-small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #returnTime {
+    font-size: x-small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 40%;
+  }
+  .return-date {
+    display: grid;
+    grid-template-columns: 100%;
+    column-gap: 0;
+  }
+  .submit-date {
+    grid-template-columns: 67% 30%;
+    column-gap: 20px;
+    grid-column-start: 0;
+    grid-row-start: 3;
+    padding: 10px;
+    padding-left: 0;
+    align-items: center;
+  }
+  .btn-search-car {
+    font-size: x-small;
+  }
+  .input-group-text {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+  .input-group-text label {
+    color: white;
+    font-size: x-small;
+  }
+  .submit-button {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    width: 100%;
+    height: 100%;
+  }
+  .form-group label {
+    font-size: x-small;
+  }
+  #rentLocation {
+    padding: 5px;
+    font-size: x-small;
+  }
+  #rentLocation::placeholder {
+    font-size: x-small;
+  }
+  #returnLocation {
+    padding: 5px;
+    font-size: x-small;
+    margin-bottom: 10px;
+  }
+  #returnLocation::placeholder {
+    font-size: x-small;
+  }
+
+  .dropdown {
+    width: 335px;
+    max-width: 335px;
+  }
+
+  #locationName {
+    font-size: x-small;
+  }
+  .rent-return-date {
+    display: grid;
+    grid-template-columns: none;
+    column-gap: 5px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .reservation-date {
+    padding: 10px;
+    width: 320px;
+  }
+  .date-container {
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+  }
+  form {
+    grid-template-rows: auto repeat(3, auto);
+    width: 100%;
+    gap: 0;
+    max-width: 320px;
+  }
+  .rent-date .form-group {
+    max-width: 320px;
+  }
+  .return-date .form-group {
+    max-width: 320px;
+  }
+  .reservation-date-title {
+    grid-template-columns: 100%;
+    justify-items: center;
+    row-gap: 0;
+    max-width: 320px;
+  }
+  .left-title {
+    grid-column: 1/2;
+  }
+  .left-title span {
+    font-size: small;
+  }
+  .right-title {
+    grid-column-start: 1;
+    grid-row-start: 2;
+    justify-self: center;
+  }
+  .rent-date {
+    display: grid;
+    grid-template-rows: repeat(3, 33.33%);
+    grid-template-columns: none;
+    column-gap: 3px;
+    row-gap: 20px;
+  }
+
+  .rent-date-time {
+    grid-column-start: 1;
+    grid-row-start: 2;
+  }
+  .rent-date-time .input-group {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  .rent-return-date {
+    display: grid;
+    grid-template-columns: none;
+    column-gap: 5px;
+  }
+  #rentalDate {
+    font-size: xx-small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #rentalDate::placeholder {
+    font-size: xx-small;
+  }
+  #returnDate::placeholder {
+    font-size: xx-small;
+  }
+  #rentalTime {
+    font-size: xx-small;
+    padding: 5px;
+  }
+
+  .return-date-time {
+    grid-column-start: 2;
+    grid-row-start: 2;
+  }
+  .return-date-time .input-group {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  #returnDate {
+    font-size: xx-small;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 75% auto;
+  }
+  #returnTime {
+    font-size: xx-small;
+    padding: 5px;
+  }
+
+  .return-date {
+    display: grid;
+    grid-template-columns: 100%;
+    column-gap: 0;
+  }
+
+  .submit-date {
+    grid-template-columns: 67% 30%;
+    column-gap: 20px;
+    grid-column-start: 0;
+    grid-row-start: 3;
+    padding: 10px;
+    padding-left: 0;
+    align-items: center;
+  }
+  .btn-search-car {
+    font-size: x-small;
+  }
+
+  .input-group-text {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+  .input-group-text label {
+    color: white;
+    font-size: x-small;
+  }
+  .submit-button {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    width: 100%;
+    height: 100%;
+  }
+
+  .form-group label {
+    font-size: x-small;
+  }
+
+  #rentLocation {
+    padding: 5px;
+    font-size: x-small;
+  }
+  #rentLocation::placeholder {
+    font-size: x-small;
+  }
+  #returnLocation {
+    padding: 5px;
+    font-size: x-small;
+    margin-bottom: 10px;
+  }
+  #returnLocation::placeholder {
+    font-size: x-small;
+  }
+  .dropdown {
+    width: 280px;
+    max-width: 280px;
+  }
+  #locationName {
+    font-size: x-small;
+  }
+  select {
+    background-size: 10px auto;
+  }
+}

@@ -1,0 +1,178 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="navigation container">
+  <div class="logo">
+    <img class="navbar-brand" src="assets/image/rent-logo.png" href="#">
+    <img class="navbar-brand-transparent" src="assets/image/logo-transparent.png" href="#">
+
+  </div>
+
+  <div class="menu">
+
+    <div class="top-menu row m-0 p-0">
+      <div class="top-menu-link">
+        <ul>
+          <li><a href=""> Kullanım Kılavuzu</a></li>
+          <span> / </span>
+          <li><a href="">Partnerlerimiz</a></li>
+          <span> / </span>
+          <li><a href="">+90 000 000 00 00</a></li>
+          <span> / </span>
+          <li><a href="">info@info.com</a></li>
+        </ul>
+        <div class="search-tablet">
+          <div class="search-form">
+            <form class="form-inline collapse" [ngbCollapse]="isSearchCollapsed">
+              <input class="form-control" type="search" placeholder="Arama yap..." aria-label="Seach">
+            </form>
+          </div>
+          <div class="search-button">
+            <button class="btn" type="button" (click)="isSearchCollapsed = !isSearchCollapsed">
+              <fa-icon [icon]="searchIcon" style="font-size:small; color:rgb(41, 41, 41)"> <span
+                  class="search-toggler-icon"></span></fa-icon>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="social-media">
+        <button type="button" class="btn">
+          <fa-icon [icon]="twitterIcon" style="font-size:medium; color:gray"></fa-icon>
+        </button>
+        <button type="button" class="btn">
+          <fa-icon [icon]="youtubeIcon" style="font-size:medium; color:gray"></fa-icon>
+        </button>
+        <button type="button" class="btn">
+          <fa-icon [icon]="googlePlusIcon" style="font-size:medium; color:gray"></fa-icon>
+        </button>
+        <button type="button" class="btn">
+          <fa-icon [icon]="instagramIcon" style="font-size:medium; color:gray"></fa-icon>
+        </button>
+      </div>
+
+      <div class="lang">
+        <select #selectLang class="language-select border-0 " style="font-size: small;" aria-label="...">
+          <option selected value="default">TR</option>
+          <option>EN</option>
+        </select>
+      </div>
+      <div class="login-btn">
+        <button class="btn btn-light" type="button">Giriş Yap</button>
+      </div>
+
+    </div>
+    <div class="bottom-menu">
+      <div class="nav-menu">
+        <ul>
+          <li><a href="">ANASAYFA</a> </li>
+          <li><a routerLink="/cars">ARAÇLAR</a></li>
+          <li><a href="">SICAK FIRSATLAR</a></li>
+          <li><a href="">KONUMLAR</a></li>
+          <li><a href="">HAKKIMIZDA</a></li>
+          <li><a href="">İLETİŞİM</a></li>
+        </ul>
+      </div>
+      <div class="search-form">
+        <form class="form-inline collapse" [ngbCollapse]="isSearchCollapsed">
+          <input class="form-control mr-sm-2" type="search" placeholder="Arama yap..." aria-label="Seach">
+        </form>
+      </div>
+      <div class="search-button">
+        <button class="btn" type="button" (click)="isSearchCollapsed = !isSearchCollapsed">
+          <fa-icon [icon]="searchIcon" style="font-size:large; color:rgb(41, 41, 41)"> <span
+              class="search-toggler-icon"></span></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--  -->
+  <div class="menu-bar" id="test">
+    <i *ngIf="isMenuCollapsed" (click)="isMenuCollapsed=!isMenuCollapsed" class=" fa-solid fa-bars"></i>
+
+
+    <i *ngIf="!isMenuCollapsed" (click)="isMenuCollapsed=!isMenuCollapsed" class="fa fa-times"></i>
+  </div>
+</div>
+
+<div class="dropdown-menu" id="dropdown-menu" [ngbCollapse]="isMenuCollapsed">
+  <div class="dropdown-menu-title">
+    <div class="dropdown-menu-register">
+      <fa-icon [icon]="userIcon"></fa-icon>
+      <span>Üye Ol</span>
+    </div>
+    <div class="dropdown-menu-login" (click)="login()">
+      <span>Üye Girişi</span>
+    </div>
+    <div class="dropdown-lang">
+      <select #selectLang class="language-select border-0 " aria-label="...">
+        <option selected value="default">TR</option>
+        <option>EN</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="dropdown-menu-search">
+    <form class="form-inline">
+      <input class="form-control" type="search" placeholder="Rent'te Ara ..." aria-label="Seach">
+      <button type="submit">
+        <fa-icon [icon]="searchIcon"></fa-icon>
+      </button>
+    </form>
+  </div>
+
+  <div class="dropdown-menu-content">
+    <div class="menu-list" routerLink="/home">
+      <div>
+        <fa-icon [icon]="homeIcon"></fa-icon>
+        <span>Anasayfa</span>
+      </div>
+      <fa-icon [icon]="rightArrowIcon"></fa-icon>
+    </div>
+    <div class="menu-list" routerLink="/cars">
+      <div>
+        <fa-icon [icon]="carIcon"></fa-icon>
+        <span>Araçlar</span>
+      </div>
+      <fa-icon [icon]="rightArrowIcon"></fa-icon>
+    </div>
+    <div class="menu-list">
+      <div>
+        <fa-icon [icon]="bullhornIcon"></fa-icon>
+        <span>Sıcak Fırsatlar</span>
+      </div>
+      <fa-icon [icon]="rightArrowIcon"></fa-icon>
+    </div>
+    <div class="menu-list">
+      <div>
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Konumlar</span>
+      </div>
+      <fa-icon [icon]="rightArrowIcon"></fa-icon>
+    </div>
+    <div class="menu-list" (click)="scroll('about')">
+      <div>
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Hakkımızda</span>
+      </div>
+      <fa-icon [icon]="rightArrowIcon"></fa-icon>
+    </div>
+    <div class="menu-list" (click)="scroll('contact')">
+      <div>
+        <fa-icon [icon]="mailIcon"></fa-icon>
+        <span>İletişim</span>
+      </div>
+      <fa-icon [icon]="rightArrowIcon"></fa-icon>
+    </div>
+    <button type="button" class="sign-out" *ngIf="!isLogin" (click)="signOut()">Çıkış Yap</button>
+  </div>
+  <div class="dropdown-footer">
+    <fa-icon [icon]="twitterIcon"></fa-icon>
+    <fa-icon [icon]="youtubeIcon"></fa-icon>
+    <fa-icon [icon]="googlePlusIcon"></fa-icon>
+    <fa-icon [icon]="instagramIcon"></fa-icon>
+  </div>
+</div>

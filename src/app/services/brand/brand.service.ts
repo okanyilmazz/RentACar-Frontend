@@ -8,7 +8,7 @@ import { ListResponseModel } from 'src/app/models/listResponseModel';
   providedIn: 'root',
 })
 export class BrandService {
-  apiUrl = 'https://localhost:44318/api/Brands/getall';
+  apiUrl = 'https://webservis.geziyoskii.site/api/Brands/getall';
 
   constructor(private httpClient: HttpClient) {}
 

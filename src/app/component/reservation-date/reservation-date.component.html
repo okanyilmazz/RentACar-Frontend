@@ -1,0 +1,177 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div class="reservation-date">
+  <div class="date-container">
+    <div class="reservation-date-title">
+      <div class="left-title">
+        <span>REZERVASYON YAPMAK <strong>ARTIK ÇOK KOLAY!</strong></span>
+      </div>
+      <div class="right-title">
+        <span class="carCount"><strong>50</strong></span>
+        <span><strong> Müsait araç!</strong></span>
+      </div>
+    </div>
+    <form
+      #reservationInfo="ngForm"
+      (ngSubmit)="onClickSubmit(reservationInfo.value)"
+    >
+      <div class="rent-date">
+        <div class="form-group rent-location">
+          <label for="rentLocation">Nereden alacaksınız?</label>
+          <input
+            type="search"
+            [(ngModel)]="filterRentalText"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control"
+            id="rentLocation"
+            aria-describedby="deliveredLocationHelp"
+            placeholder="Teslim alma ofisi seç"
+            (input)="rentalValueCheck()"
+            (click)="rentalLocationClickX()"
+            (focus)="rentalValueCheck()"
+
+          />
+          <div class="dropdown mt-2" *ngIf="isRentalText">
+            <div
+              class="dropdown-location px-2"
+              *ngFor="let location of locations | filterPipe : filterRentalText"
+            >
+              <i class="fa-solid fa-location-dot mt-2"></i>
+              <div class="mt-2" (click)="selectRentalLocation(location)">
+                <span id="locationName">{{ location.countyName }}</span>
+              </div>
+              <div class="seperator border-top my-1 mt-2"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rent-return-date">
+          <div class="form-group rent-date-time">
+            <label for="rentalDate">Alış Tarihi</label>
+            <div class="input-group">
+              <input
+                type="text"
+                ngbDatepicker
+                #rentDatePicker="ngbDatepicker"
+                [minDate]="rentMinDate"
+                (dateSelect)="onRentDateSelect($event)"
+                class="form-control"
+                id="rentalDate"
+                placeholder="Tarih seçiniz"
+                (click)="rentDatePicker.toggle()"
+                [value]="rentalDate"
+              />
+              <div class="input-group-append">
+                <select
+                  class="form-select"
+                  id="rentalTime"
+                  [(ngModel)]="rentalTime"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option selected>--:--</option>
+                  <option *ngFor="let time of loadTimes">
+                    {{ time }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group return-date-time">
+            <label for="returnDate">Teslim Tarihi</label>
+            <div class="input-group">
+              <input
+                ngbDatepicker
+                type="text"
+                #returnDatePicker="ngbDatepicker"
+                [minDate]="returnMinDate"
+                (dateSelect)="onReturnDateSelect($event)"
+                class="form-control"
+                id="returnDate"
+                placeholder="Tarih seçiniz"
+                (click)="returnDatePicker.toggle()"
+                [value]="returnDate"
+              />
+              <div class="input-group-append">
+                <select
+                  class="form-select"
+                  id="returnTime"
+                  [(ngModel)]="returnTime"
+                  [ngModelOptions]="{ standalone: true }"
+                  
+                >
+                  <option value="" selected>--:--</option>
+                  <option *ngFor="let time of loadTimes">
+                    {{ time }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group return-date" *ngIf="isDifferentLocation">
+        <div class="form-group return-location">
+          <label for="returnLocation">Nereye teslim edeceksiniz?</label>
+          <input
+            type="search"
+            [(ngModel)]="filterReturnText"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control"
+            id="returnLocation"
+            aria-describedby="returnLocation"
+            placeholder="Teslim etme ofisini seç"
+            (input)="returnValueCheck()"
+            (click)="returnLocationClickX()"
+          />
+
+          <div class="dropdown mt-2" *ngIf="isReturnText">
+            <div
+              class="dropdown-location px-2"
+              *ngFor="let location of locations | filterPipe : filterReturnText"
+            >
+              <i class="fa-solid fa-location-dot mt-2"></i>
+              <div class="mt-2" (click)="selectReturnLocation(location)">
+                <span id="locationName">{{ location.countyName }}</span>
+              </div>
+              <div class="seperator border-top my-1 mt-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="form-group">
+          <label for="returnDate">Teslim Tarihi</label>
+          <input type="date" class="form-control" id="returnDate" aria-describedby="returnDateHelp" [(ngModel)]="returnDate" [ngModelOptions]="{standalone: true}"
+           >
+        </div>
+        <div class="form-group">
+          <label for="returnTime">Teslim Saati</label>
+          <input type="time" class="form-control" id="returnTime" aria-describedby="returnTimeDateHelp" [(ngModel)]="returnTime" [ngModelOptions]="{standalone: true}"
+          >
+        </div> -->
+      </div>
+
+      <div class="form-group submit-date">
+        <div class="input-group-text">
+          <input
+            type="checkbox"
+            style="height: 20px; width: 20px"
+            id="checkboxDifferentLocation"
+            [(ngModel)]="isDifferentLocation"
+            [ngModelOptions]="{ standalone: true }"
+            aria-describedby="checkboxDifferentLocation"
+          />
+          <label style="margin-left: 2%" for="#checkboxDifferentLocation"
+            >Farklı yerde teslim etmek istiyorum</label
+          >
+        </div>
+        <div class="submit-button">
+          <button class="btn btn-search-car align-text-bottom" type="submit">
+            Araç Ara
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
