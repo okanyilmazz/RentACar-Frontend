@@ -1,0 +1,20 @@
+<div class="row mt-2" >
+
+<ngb-carousel *ngIf="carImages" class="col-md-8" height="20">
+  <ng-template *ngFor="let carImage of carImages" ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img  [src]="getAllImage(carImage.imagePath)" class="img-fluid mx-auto d-block" alt="Random first slide">
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+<div class="col-md-4">
+  <ul class="list-group list-group-flush" *ngFor="let car of carDetails">
+    <li  class="list-group-item" ><strong>Model: </strong>{{car.carName}}</li>
+    <li  class="list-group-item" ><strong>Marka: </strong> {{car.brandName}}</li>
+    <li  class="list-group-item" ><strong>Renk: </strong> {{car.colorName}}</li>
+    <li  class="list-group-item" ><strong>Yıl: </strong> {{car.modelYear}}</li>
+    <li  class="list-group-item" ><strong>Günlük fiyat: </strong> {{car.dailyPrice | currency:"TRY":"₺"}}</li>
+  </ul>
+</div>
+</div>
