@@ -136,7 +136,6 @@ export class DriverDetailsComponent implements OnInit {
   }
   goToPaymentDetails() {
     let driverModel = Object.assign({}, this.driverAddForm.value);
-    console.log(driverModel)
     if(this.driverAddForm.valid){
       localStorage.removeItem('driverDetails');
       localStorage.setItem('driverDetails', JSON.stringify(driverModel));
@@ -148,18 +147,6 @@ export class DriverDetailsComponent implements OnInit {
     else{
       this.toastrService.error('Gerekli alanları doldurmalısınız.', 'Dikkat');
     }
-    // let newDriver: Driver = {
-    //   birthDate: this.driverBirthday,
-    //   firstName: this.driverFirstName,
-    //   lastName: this.driverLastName,
-    //   id: null,
-    //   phoneNumber: this.driverPhoneNumber,
-    //   countryCodeId: this.selectedCountryId,
-    //   nationalId: this.driverNationalId,
-    //   passportNumber: this.driverPassportNumber,
-    // };
-
-
   }
 
   createDriverAddForm() {
@@ -178,7 +165,6 @@ export class DriverDetailsComponent implements OnInit {
     if (this.driverAddForm.valid) {
       let driverModel = Object.assign({}, this.driverAddForm.value);
       this.driverService.add(driverModel).subscribe(response=>{
-        console.log(response);
         this.toastrService.success("Ürün eklendi","Başarılı");
       })
     

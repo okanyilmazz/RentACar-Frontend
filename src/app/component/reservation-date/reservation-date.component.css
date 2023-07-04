@@ -43,6 +43,15 @@ form {
 .rent-date-time {
   grid-column-start: 3;
 }
+.rent-date-time .input-group{
+  position: relative;
+}
+#date-icon{
+  position: absolute;
+  right: 43%;
+  top: 15%;
+  cursor:pointer;
+}
 .return-date {
   display: grid;
   grid-template-columns: repeat(2, 180px) repeat(2, 220px);

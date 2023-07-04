@@ -78,7 +78,13 @@
   text-align: center;
   padding: 4px;
   grid-row: 4/6;
+
 }
+#rent{
+  vertical-align: middle;
+  margin-left: 0 !important;
+}
+
 .rent-button:hover {
   background-color: #46443f;
   cursor: pointer;
@@ -104,6 +110,7 @@
   align-self: center;
   margin-left: 10px;
 }
+
 .right div {
   margin-left: 10px;
 }
@@ -428,5 +435,11 @@
   }
   .car-details .detail-content{
     margin-top: 0;
+  }
+}
+
+@media screen and (min-width:1440px) {
+  .car-detail-top{
+    margin-top: 2rem;
   }
 }

@@ -35,7 +35,8 @@ export class PaymentDetailsComponent implements OnInit {
   cardYear: number;
   cardSecurityCode: number;
   payment: Payment;
-
+  monthBase:string="Ay";
+  yearBase:string="Yıl";
   months = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
   years = new Array();
 
@@ -129,7 +130,6 @@ export class PaymentDetailsComponent implements OnInit {
   goToOrderConfirmation() {
 
     let paymentModel = Object.assign({}, this.paymentAddForm.value);
-console.log(paymentModel)
     if(this.paymentAddForm.valid){
 
       localStorage.removeItem('paymentDetails');
@@ -140,7 +140,7 @@ console.log(paymentModel)
       ]);
     }
     else{
-      this.toastrService.error('Gerekli alanları doldurmalısınız.', 'Dikkat');
+      this.toastrService.error('Gerekli alanları doğru bir şekilde doldurmalısınız.', 'Dikkat');
     }
     // let newPayment: Payment = {
     //   id: null,
@@ -154,13 +154,7 @@ console.log(paymentModel)
 
   }
 
-  limitCharacterCount(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const maxLength = 16; // Maksimum karakter sayısı
-    if (inputElement.value.length > maxLength) {
-      inputElement.value = inputElement.value.slice(0, maxLength); // Maksimum karakter sayısını aşanları kes
-    }
-  }
+
 
   createPaymentAddForm() {
     this.paymentAddForm = this.formBuilder.group({
@@ -178,5 +172,19 @@ console.log(paymentModel)
   changeExpirationMonth(event:any){
     this.cardMonth  = event.target?.value;
   }
+  cardNumberLimitCharacterCount(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const maxLength = 16; // Maksimum karakter sayısı
+    if (inputElement.value.length > maxLength) {
+      inputElement.value = inputElement.value.slice(0, maxLength); // Maksimum karakter sayısını aşanları kes
+    }
+  }
+  securityCodeLimitCharacterCount(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const maxLength = 3; // Maksimum karakter sayısı
 
+    if (inputElement.value.length > maxLength) {
+      inputElement.value = inputElement.value.slice(0, maxLength); // Maksimum karakter sayısını aşanları kes
+    }
+  }
 }

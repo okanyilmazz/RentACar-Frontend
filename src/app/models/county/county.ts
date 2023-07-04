@@ -1,5 +1,5 @@
 export interface County {
-  Id: number;
+  id: number;
   countyName: string;
   cityId:number;
 }

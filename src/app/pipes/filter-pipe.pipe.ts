@@ -5,7 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipePipe implements PipeTransform {
   transform(value: LocationDetailDto[], filterText: string): LocationDetailDto[] {
-    filterText = filterText ? filterText.toLocaleLowerCase() :"";
-       return filterText?value.filter((l:LocationDetailDto) => l.title.toLocaleLowerCase().indexOf(filterText)!==-1):value;
+    if(filterText!==undefined){
+      filterText = filterText ? filterText.toLocaleLowerCase() :"";
+      return filterText?value.filter((l:LocationDetailDto) => l.title.toLocaleLowerCase().indexOf(filterText)!==-1):value;
+    }else{
+      return null;
+    }
   }
 }

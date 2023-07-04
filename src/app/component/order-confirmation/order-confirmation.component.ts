@@ -21,6 +21,7 @@ import { RentalDetail } from 'src/app/models/rental/rentalDetail';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { DriverService } from 'src/app/services/driver/driver.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -32,6 +33,7 @@ export class OrderConfirmationComponent implements OnInit {
   carDetail: CarDetail;
   carImages: CarImage[];
   cities: City[];
+  selectedCity: City;
   countries: Country[];
   counties: County[];
   rentDetail: RentalDetail;
@@ -53,6 +55,10 @@ export class OrderConfirmationComponent implements OnInit {
   rentalLocationTitle: string;
   returnLocationTitle: string;
   isSuccessRental = true;
+  orderAddForm: FormGroup;
+  cityBase: string = 'Şehir seç';
+  countyBase: string = 'İlçe seç';
+  countryBase: string = 'Ülke seç';
   constructor(
     private carService: CarService,
     private activatedRoute: ActivatedRoute,
@@ -66,6 +72,7 @@ export class OrderConfirmationComponent implements OnInit {
     private driverService: DriverService,
     private toastrService: ToastrService,
     config: NgbModalConfig,
+    private formBuilder: FormBuilder,
     private modalService: NgbModal
   ) {
     config.backdrop = 'static';
@@ -83,6 +90,19 @@ export class OrderConfirmationComponent implements OnInit {
       this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
+      this.createOrderAddForm();
+    });
+  }
+
+  createOrderAddForm() {
+    this.orderAddForm = this.formBuilder.group({
+      billingAddress: [''],
+      companyTitle: [''],
+      taxAdministration: [''],
+      taxNumber: [''],
+      country: ['', Validators.required],
+      countie: ['', Validators.required],
+      city: ['', Validators.required],
     });
   }
 
@@ -139,6 +159,7 @@ export class OrderConfirmationComponent implements OnInit {
       this.counties = response.data;
     });
   }
+
   changeCountry(e: any) {
     this.selectedCountryId = e.target.value;
     this.cityService
@@ -150,6 +171,7 @@ export class OrderConfirmationComponent implements OnInit {
       this.isCitySelected = false;
     }
   }
+
   changeCity(e: any) {
     this.selectedCityId = e.target.value;
     this.countyService
@@ -161,6 +183,7 @@ export class OrderConfirmationComponent implements OnInit {
       this.isCountySelected = false;
     }
   }
+
   getRentalLocationDetailsById(locationId: number): any {
     this.locationService
       .getLocationDetailsById(locationId)
@@ -178,25 +201,27 @@ export class OrderConfirmationComponent implements OnInit {
   }
 
   finishTheOrder(content: any) {
-    let newOrder: Bill = {
-      id: null,
-      billingAddress: this.billingAddress,
-      companyTitle: this.companyTitle,
-      taxAdministration: this.taxAdministration,
-      taxNumber: this.taxNumber,
-    };
+    if (this.orderAddForm.valid) {
+      let orderModel = Object.assign({}, this.orderAddForm.value);
+      localStorage.removeItem('orderDetails');
+      localStorage.setItem('orderDetails', JSON.stringify(orderModel));
 
-    localStorage.removeItem('orderDetails');
-    localStorage.setItem('orderDetails', JSON.stringify(newOrder));
+      this.modalService.open(content, { scrollable: true });
+      this.addDriver();
 
-    this.modalService.open(content, { scrollable: true });
-    this.addDriver();
+      this.router.navigate([`home`]);
+    } else {
+      this.toastrService.error('Gerekli alanları doldurmalısınız.', 'Dikkat');
+    }
 
-    this.router.navigate([`home`]);
+    // let newOrder: Bill = {
+    //   id: null,
+    //   billingAddress: this.billingAddress,
+    //   companyTitle: this.companyTitle,
+    //   taxAdministration: this.taxAdministration,
+    //   taxNumber: this.taxNumber,
+    // };
   }
 
-  addDriver() {
-    console.log('test');
-  }
-  goToOrderConfirmation() {}
+  addDriver() {}
 }

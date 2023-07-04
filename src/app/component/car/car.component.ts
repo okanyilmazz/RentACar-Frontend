@@ -50,6 +50,8 @@ export class CarComponent implements OnChanges {
   returnTime: string;
   selectedRentalLocationId: number;
   selectedReturnLocationId: number;
+  rentDay:number;
+  dailyPrice:number;
   @Input() isNull: boolean;
   @Input() isExistInfo: boolean;
   @Input() dateDetail: RentalDetail;
@@ -146,6 +148,7 @@ export class CarComponent implements OnChanges {
   getAllCarDetail() {
     this.carService.getAllCarDetails().subscribe((response) => {
       this.carDetails = response.data;
+      
     });
   }
 
@@ -198,12 +201,11 @@ export class CarComponent implements OnChanges {
       .getCarDetailByBodyAndColor(bodyId, colorId)
       .subscribe((response) => {
         this.carDetails = response.data;
+
       });
   }
 
-  test(currentCarId: number) {
 
-  }
 
   findDay(rentalDate: string, returnDate: string): any {
     let rentalDateSplit = rentalDate.split('.');
@@ -221,7 +223,10 @@ export class CarComponent implements OnChanges {
   }
 
   goToVehicles(carId: number) {
-    if (this.href !== '/home') {
+    console.log('href = ' + this.href);
+    if (this.href !== '/home' && this.href !== '/') {
+
+
       if (this.isNull === false) {
         this.toastr.error(
           'Devam etmek için Tarih/Saat/Konum bilgilerini girmeniz gerekmektedir.',
@@ -229,19 +234,23 @@ export class CarComponent implements OnChanges {
         );
       } else {
         if (this.dateDetail !== undefined) {
+          this.rentDay=this.findDay(
+            this.dateDetail.rentDate,
+            this.dateDetail.returnDate
+          );
           let newRental: RentalDetail = {
             id: null,
-            rentDate:   this.dateDetail.rentDate,
-            rentTime:   this.dateDetail.rentTime,
+            rentDate: this.dateDetail.rentDate,
+            rentTime: this.dateDetail.rentTime,
             returnDate: this.dateDetail.returnDate,
             returnTime: this.dateDetail.returnTime,
             brandName: null,
-            firstName: null,
-            lastName: null,
+            firstName: "",
+            lastName: "",
             rentLocationId: this.dateDetail.rentLocationId,
             returnLocationId: this.dateDetail.rentLocationId,
-            totalPrice: null,
-            rentDay: this.findDay(this.dateDetail.rentDate, this.dateDetail.returnDate)
+            totalPrice: this.totalPrice(this.dailyPrice),
+            rentDay: this.rentDay
           };
 
           localStorage.removeItem('newRental');
@@ -250,8 +259,7 @@ export class CarComponent implements OnChanges {
           this.router.navigate([
             `reservation/details/car-id/${carId}/rent-date/${this.dateDetail.rentDate}/rent-time/${this.dateDetail.rentTime}/return-date/${this.dateDetail.returnDate}/return-time/${this.dateDetail.returnTime}/rental-location/${this.dateDetail.rentLocationId}/return-location/${this.dateDetail.returnLocationId}`,
           ]);
-        }
-        else{
+        } else {
           this.router.navigate([
             `reservation/details/car-id/${carId}/rent-date/${this.rentalDate}/rent-time/${this.rentalTime}/return-date/${this.returnDate}/return-time/${this.returnTime}/rental-location/${this.selectedRentalLocationId}/return-location/${this.selectedReturnLocationId}`,
           ]);
@@ -263,14 +271,10 @@ export class CarComponent implements OnChanges {
   }
 
   isExistAvailableCar(rentalDetail: RentalDetail) {
-    console.log("girdi");
     this.getAllCarDetail();
     this.rentalDetailService.getAllRental().subscribe((response) => {
       this.rents = response.data.filter(function (rental) {
-        console.log("rental.rentDate = " +rental.rentDate)
-        console.log("rentalDetail.rentDate = " +rentalDetail.rentDate)
         return rental.rentDate == rentalDetail.rentDate;
-
       });
       if (this.rents.length === 0) {
         this.getAllCarDetail();
@@ -280,25 +284,11 @@ export class CarComponent implements OnChanges {
         this.getUnvaliableAllCar(rent.carId);
       });
 
-      // carDetails = this.availableCars;
-      // this.carDetails = carDetails;
-      // console.log('first CarDetails = ' + carDetails);
-      // console.log('first availableCars = ' + this.unavailableCars);
-      // console.log('---------------------------------------------');
-
-      // console.log('last CarDetails = ' + carDetails);
-      // console.log('last availableCars = ' + this.unavailableCars);
-      // this.carDetails = carDetails;
-      // this.getAvailableCar(this.carDetails, this.unavailableCars);
-
       this.getAvailableCar(this.carDetails, this.unavailableCars);
       this.carDetails = this.availableCars;
     });
 
-    // this.availableCars.forEach((element) => {
-    //   var index = this.availableCars.indexOf(element);
-    //   this.carDetails.splice(index, 1);
-    // });
+
   }
 
   getAvailableCar(carDetails: CarDetail[], unavailableCars: CarDetail[]) {
@@ -310,16 +300,6 @@ export class CarComponent implements OnChanges {
     });
   }
 
-  testO(carDetails: CarDetail[], unavailableCars: CarDetail[]) {
-    carDetails.forEach((car) => {
-      unavailableCars.forEach((unavailableCar) => {
-        if (car === unavailableCar) {
-
-          this.availableCars.push(car);
-        }
-      });
-    });
-  }
 
   getUnvaliableAllCar(carId: number) {
     if (this.carDetails !== undefined) {
@@ -331,19 +311,12 @@ export class CarComponent implements OnChanges {
     }
   }
 
-  tes(carId: number) {
-    this.carService.getCarDetailByClick(carId).subscribe((response) => {
-      response.data.forEach((element) => {
-        this.testCarDetail = element;
-        this.filterCarDetail.push(this.testCarDetail);
-      });
-      this.carDetails = this.filterCarDetail;
-    });
-  }
-
   transformDate(date: any) {
     return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
   }
-
-
+  
+  totalPrice(dailyPrice: number) {
+    return dailyPrice * this.rentDay;
+  }
+  
 }

@@ -144,8 +144,9 @@
               [(ngModel)]="returnTime"
               [ngModelOptions]="{ standalone: true }"
               (change)="checkAllInfo()"
+              
             >
-              <option value="" selected>--:--</option>
+            <option selected>--:--</option>
               <option *ngFor="let time of loadTimes">
                 {{ time }}
               </option>

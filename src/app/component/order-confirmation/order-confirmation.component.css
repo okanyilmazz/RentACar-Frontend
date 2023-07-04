@@ -38,6 +38,7 @@
   font-size: small;
   font-family: Roboto;
   width: 100%;
+  padding: 10px
 }
 .select-content select {
   border: 1px solid #adadad65;

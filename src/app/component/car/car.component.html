@@ -36,7 +36,7 @@
       </div>
       <div class="shape" (click)="[goToVehicles(car.carId)]">
         <div class="daily-price text-center">
-          <span>{{car.dailyPrice | currency:"TRY":"₺"}} /</span><span class="daily-text">günlük</span>
+          <span [(ngModel)]="dailyPrice">{{car.dailyPrice | currency:"TRY":"₺"}} /</span><span class="daily-text">günlük</span>
         </div>
       </div>
     </div>

@@ -148,6 +148,7 @@
   grid-template-columns: repeat(5, auto);
   display: grid;
   column-gap: 5px;
+  justify-self: center;
 }
 .social-icons .icon{
   display: grid;
@@ -179,6 +180,7 @@ ul li {
 @media screen and (max-width: 1440px) {
   .footer {
     width: 1440px;
+    max-width: 1440px;
   }
 
   .left ul li a {
@@ -193,6 +195,7 @@ ul li {
     margin-bottom: 10px;
   }
 }
+
 
 @media screen and (max-width: 1024px) {
   .footer {

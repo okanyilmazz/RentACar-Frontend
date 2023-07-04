@@ -138,25 +138,27 @@ p {
   font-family: Roboto;
 }
 
-
-@media  screen and (max-width:2560px) {
-
-
-    #square{
-      margin-top: 4% ;
-    }
-    ul li {
-      font-size: medium;
-    }
-  
+@media  screen  and (min-width:1440px){
+  .content-center{
+    position: relative;
+  }
+  .what-we-do{
+    width: 100%;
+  }
+  .what-we-do-content{
+    max-width: 1440px;
+    width: 100%;
+    height: auto;
+    grid-template-columns: 0.7fr 1fr 0.1fr;
+  }
+  #square{
+    width: 15rem;
+    top: 11rem;
+  }
 }
 
-
 @media screen and (max-width: 1440px) {
-  .what-we-do {
-    width: 1440px;
-    height: auto;
-  }
+
   .what-we-do-content {
     grid-template-columns: 40% 50%;
   }

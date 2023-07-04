@@ -11,7 +11,7 @@
       <div class="info-content">
         <div class="card-number infos">
           <span> Kart Numarası </span>
-          <input type="text" formControlName="cardNumber" (input)="limitCharacterCount($event)" [value]="cardNumber">
+          <input type="text" formControlName="cardNumber" (input)="cardNumberLimitCharacterCount($event)" [value]="cardNumber" >
         </div>
         <div class="card-name infos">
           <span> Kart Üzerindeki İsim </span>
@@ -20,11 +20,11 @@
         <div class="expiration-date infos">
           <span>Son Kullanma Tarihi </span>
           <div>
-            <select class="form-select"  formControlName="expirationMonth"  >
+            <select class="form-select"  formControlName="expirationMonth"    [(ngModel)]="monthBase">
               <option selected>Ay</option>
               <option  *ngFor="let month of months"  [value]="month" (change)="changeExpirationMonth($event)">{{month}}</option>
             </select>
-            <select class="form-select" formControlName="expirationYear" >
+            <select class="form-select" formControlName="expirationYear" [(ngModel)]="yearBase">
               <option selected>Yıl</option>
               <option  *ngFor="let year of years"  [value]="year" (change)="changeExpirationYear($event)" >{{year}}</option>
             </select>
@@ -33,7 +33,7 @@
         </div>
         <div class="security-code infos">
           <span>Güvenlik Kodu  <fa-icon [icon]="infoIcon" ngbTooltip="Güvenlik kodu, kartın arkasında bulunan 3 haneli rakamdan oluşur" placement="top"> </fa-icon></span>
-          <input formControlName="securityCode" >
+          <input formControlName="securityCode" type="number" (input)="securityCodeLimitCharacterCount($event)" min="1" max="999">
         </div>
         <div class="mobile-btn">
           <button type="button" (click)="goToOrderConfirmation()" routerLinkActive="active">Devam Et <fa-icon

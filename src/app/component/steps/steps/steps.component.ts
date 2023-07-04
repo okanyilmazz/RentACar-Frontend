@@ -17,10 +17,17 @@ export class StepsComponent implements OnInit {
   rentDetail: RentalDetail;
   carDetails: CarDetail[] = [];
   driver: Driver;
+  driverFirstName: string = '';
+  driverLastName: string = '';
   payment: Payment;
-  rentalLocationTitle: string;
-  returnLocationTitle: string;
-
+  rentalLocationTitle: string = '';
+  returnLocationTitle: string = '';
+  rentCarName: string = '';
+  rentBrandName: string = '';
+  rentFuelName: string = '';
+  rentTransmissionName: string = '';
+  dailyPrice: number;
+  driverAge: number;
   carStepClass: string = '';
   driverStepClass: string = '';
   paymentStepClass: string = '';
@@ -43,6 +50,7 @@ export class StepsComponent implements OnInit {
   orderConfirmationLeftSeperatorClass: string = '';
   orderConfirmationRightSeperatorClass: string = '';
   carId: number;
+
   constructor(
     private router: Router,
     private locationService: LocationService,
@@ -62,7 +70,6 @@ export class StepsComponent implements OnInit {
       this.carLeftSeperatorClass = 'step-seperator';
       this.carStepClass = 'step';
       this.carRightSeperatorClass = 'step-seperator';
-
       this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
@@ -77,6 +84,10 @@ export class StepsComponent implements OnInit {
     if (this.router.url.includes('payment-details')) {
       this.driverTooltip = true;
       this.driver = JSON.parse(localStorage.getItem('driverDetails'));
+      this.driverFirstName = this.driver.firstName;
+      this.driverLastName = this.driver.lastName;
+      this.getDriverAge(this.driver.birthDate);
+
       this.paymentLeftSeperatorClass = 'step-seperator';
       this.paymentStepClass = 'step';
       this.paymentRightSeperatorClass = 'step-seperator';
@@ -108,10 +119,35 @@ export class StepsComponent implements OnInit {
   getCarDetailByCarId(carId: number) {
     this.carService.getCarDetailById(carId).subscribe((response) => {
       this.carDetails = response.data;
+      this.carDetails.forEach((car) => {
+        this.rentCarName = car.carName;
+        this.rentBrandName = car.brandName;
+        this.rentFuelName = car.fuelType;
+        this.rentTransmissionName = car.transmissionType;
+        this.dailyPrice = car.dailyPrice;
+        
+      });
     });
   }
   totalPrice(dailyPrice: number) {
-    return dailyPrice * 3;
+    return dailyPrice * this.rentDetail.rentDay;
   }
+  getDriverAge(birthDate: any) {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+    const currentDay = today.getDate();
 
+    const birthYear = (birthDate as any)['year'];
+    const birthMonth = (birthDate as any)['month'] - 1; // JavaScript'te aylar 0-11 arasında indekslenir
+    const birthDay = (birthDate as any)['day'];
+
+    this.driverAge = currentYear - birthYear;
+    if (
+      currentMonth < birthMonth ||
+      (currentMonth === birthMonth && currentDay < birthDay)
+    ) {
+      this.driverAge--;
+    }
+  }
 }

@@ -57,27 +57,27 @@ export class CarDetailsComponent implements OnInit {
       ) {
         this.getCarDetailByCarId(params['carId']);
         this.getImageByCarId(params['carId']);
-
         this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
+
         this.rentDay = this.rentDetail.rentDay;
       }
     });
   }
 
-   findDay(rentalDate: string, returnDate: string): any {
-     let rentalDateSplit = rentalDate.split('.');
-     let returnDateSplit = returnDate.split('.');
+  findDay(rentalDate: string, returnDate: string): any {
+    let rentalDateSplit = rentalDate.split('.');
+    let returnDateSplit = returnDate.split('.');
 
-     let returnDay: number = +returnDateSplit[0];
-     let rentalDay: number = +rentalDateSplit[0];
-     let returnMonth: number = +returnDateSplit[1];
-     let rentalMonth: number = +rentalDateSplit[1];
+    let returnDay: number = +returnDateSplit[0];
+    let rentalDay: number = +rentalDateSplit[0];
+    let returnMonth: number = +returnDateSplit[1];
+    let rentalMonth: number = +rentalDateSplit[1];
 
-     let dayDifference: number = returnDay - rentalDay;
-     let monthDifference: number = returnMonth - rentalMonth;
-     dayDifference = dayDifference + monthDifference * 30;
-     return dayDifference;
-   }
+    let dayDifference: number = returnDay - rentalDay;
+    let monthDifference: number = returnMonth - rentalMonth;
+    dayDifference = dayDifference + monthDifference * 30;
+    return dayDifference;
+  }
 
   transformDate(date: any) {
     return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
@@ -109,13 +109,12 @@ export class CarDetailsComponent implements OnInit {
     }
   }
 
-  totalPrice(dailyPrice: number) {
-    return dailyPrice * this.rentDay;
-  }
-
   goToDriverDetails() {
     this.router.navigate([
       `reservation/details/car-id/${this.carId}/rent-date/${this.rentalDate}/rent-time/${this.rentalTime}/return-date/${this.returnDate}/return-time/${this.returnTime}/rental-location/${this.selectedRentalLocationId}/return-location/${this.selectedRentalLocationId}/driver-details`,
     ]);
+  }
+  totalPrice(dailyPrice: number) {
+    return dailyPrice * this.rentDay;
   }
 }

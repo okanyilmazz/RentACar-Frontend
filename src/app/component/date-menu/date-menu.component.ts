@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { TrDatepickerI18n } from 'src/app/directives/trDatepickerI18n';
 
 
 import { LocationDetailDto } from 'src/app/models/location/locationDetailsDto';
@@ -20,6 +21,12 @@ import { LocationService } from 'src/app/services/location/location.service';
   selector: 'app-date-menu',
   templateUrl: './date-menu.component.html',
   styleUrls: ['./date-menu.component.css'],
+  providers: [
+    {
+      provide: NgbDatepickerI18n,
+      useClass: TrDatepickerI18n
+    }
+  ]
 })
 export class DateMenuComponent implements OnInit {
   constructor(
@@ -46,9 +53,9 @@ export class DateMenuComponent implements OnInit {
   isRentalText: string;
   isReturnText: string;
   rentalDate: string="";
-  rentalTime: string;
+  rentalTime: string="--:--";
   returnDate: string="";
-  returnTime: string;
+  returnTime: string="--:--";
   loadTimes: string[] = [];
   testId: number;
   rentMinDate: NgbDateStruct = {

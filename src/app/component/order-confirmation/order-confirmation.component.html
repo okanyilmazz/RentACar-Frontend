@@ -12,65 +12,62 @@
         <div class="bill-type">
           <label class="custom-control-label radio-inline">
             <input type="radio" name="bill-type" checked class="bill-personal custom-control-input" (change)="testA()"
-              onclick="startRow()">
+             >
             Bireysel
           </label>
           <label class="custom-control-label radio-inline">
             <input type="radio" name="bill-type" class="bill-corporate custom-control-input" (change)="testB()"
-              onclick="startRow()">
+            >
             Kurumsal 
           </label>
         </div>
 
-        <div class="select-content">
+        <form class="select-content" [formGroup]="orderAddForm">
           <div [(ngbCollapse)]="isCollapsed">
             <span>Şirket Unvanı</span>
-            <input type="text" [(ngModel)]="companyTitle" [ngModelOptions]="{standalone: true}">
+            <input type="text" formControlName="companyTitle">
           </div>
           <div [(ngbCollapse)]="isCollapsed">
             <span>Vergi Dairesi</span>
-            <input type="text" [(ngModel)]="taxAdministration" [ngModelOptions]="{standalone: true}">
+            <input type="text" formControlName="taxAdministration">
           </div>
           <div [(ngbCollapse)]="isCollapsed">
             <span>Vergi No</span>
-            <input type="text" [(ngModel)]="taxNumber" [ngModelOptions]="{standalone: true}">
+            <input type="number"   formControlName="taxNumber">
           </div>
           <div>
             <span>Ülke Seçimi</span>
-            <select class="form-select" [(ngModel)]="selectedCountryId" (change)="changeCountry($event)"
-              [ngModelOptions]="{standalone: true}">
-              <option value="" selected>Ülke seç</option>
-              <option *ngFor="let country of countries" [value]="country.Id">{{country.countryName}} </option>
+            <select class="form-select" formControlName="country" [(ngModel)]="countryBase" (change)="changeCountry($event)">
+              <option selected>Ülke seç</option>
+              <option *ngFor="let country of countries" [value]="country.id">{{country.countryName}} </option>
             </select>
           </div>
           <div>
             <span>Şehir Seçimi</span>
-            <select class="form-select" [disabled]="isCitySelected" [(ngModel)]="selectedCityId"
-              (change)="changeCity($event)" [ngModelOptions]="{standalone: true}">
-              <option value="" selected>Şehir seç</option>
-              <option *ngFor="let city of cities" [value]="city.Id">{{city.cityName}}</option>
+            <select class="form-select" formControlName="city"  [disabled]="isCitySelected" [(ngModel)]="cityBase"
+              (change)="changeCity($event)">
+              <option selected>Şehir seç</option>
+              <option *ngFor="let city of cities" [value]="city.id">{{city.cityName}}</option>
             </select>
           </div>
           <div>
             <span>İlçe Seçimi</span>
-            <select class="form-select" [disabled]="isCountySelected" [(ngModel)]="selectedCountieId"
-              [ngModelOptions]="{standalone: true}">
-              <option value="">İlçe seç</option>
-              <option *ngFor="let county of counties" [value]="county.Id">{{county.countyName}}</option>
+            <select class="form-select" formControlName="countie"  [disabled]="isCountySelected" [(ngModel)]="countyBase">
+              <option selected>İlçe seç</option>
+              <option *ngFor="let county of counties" [value]="county.id">{{county.countyName}}</option>
             </select>
           </div>
           <div class="payment-options">
             <div class="form-group content">
               <label for="address">Adres</label>
-              <textarea maxlength="255" class="form-control" id="address" rows="3" [(ngModel)]="billingAddress"
-                [ngModelOptions]="{standalone: true}"></textarea>
+              <textarea maxlength="255" formControlName="billingAddress" class="form-control" id="address" rows="3" [(ngModel)]="billingAddress"></textarea>
             </div>
           </div>
           <div class="mobile-btn">
             <button type="button" (click)="finishTheOrder(content)" routerLinkActive="active">Siparişi Bitir <fa-icon
               [icon]="rightArrowIcon"></fa-icon></button>
           </div>
-        </div>
+        </form>
       </div>
 
       <div class="info-bottom p-2">

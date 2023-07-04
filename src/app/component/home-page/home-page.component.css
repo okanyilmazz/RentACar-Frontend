@@ -53,6 +53,15 @@
   margin-top: 3%;
 }
 
+
+@media screen and (min-width:1440px) {
+  .car-filter{
+    margin-top: 3rem;
+  }
+  .cars{
+    margin-top: 3rem;
+  }
+}
 @media screen and (min-width: 2560px) {
   .reservation-date {
     margin-top: 20%;
