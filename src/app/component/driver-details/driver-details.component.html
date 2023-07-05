@@ -87,7 +87,7 @@
             <option
               *ngFor="let country of countries"
               ng-repeat="country in countries | orderBy:'countryCode'"
-              [value]="country.countryCode"
+              [value]="country.id"
             >
                           {{ country.countryCode }}
             </option>

@@ -37,14 +37,14 @@
           </div>
           <div>
             <span>Ülke Seçimi</span>
-            <select class="form-select" formControlName="country" [(ngModel)]="countryBase" (change)="changeCountry($event)">
+            <select class="form-select" formControlName="countryId" [(ngModel)]="countryBase" (change)="changeCountry($event)">
               <option selected>Ülke seç</option>
               <option *ngFor="let country of countries" [value]="country.id">{{country.countryName}} </option>
             </select>
           </div>
           <div>
             <span>Şehir Seçimi</span>
-            <select class="form-select" formControlName="city"  [disabled]="isCitySelected" [(ngModel)]="cityBase"
+            <select class="form-select" formControlName="cityId"  [disabled]="isCitySelected" [(ngModel)]="cityBase"
               (change)="changeCity($event)">
               <option selected>Şehir seç</option>
               <option *ngFor="let city of cities" [value]="city.id">{{city.cityName}}</option>
@@ -52,7 +52,7 @@
           </div>
           <div>
             <span>İlçe Seçimi</span>
-            <select class="form-select" formControlName="countie"  [disabled]="isCountySelected" [(ngModel)]="countyBase">
+            <select class="form-select" formControlName="countieId"  [disabled]="isCountySelected" [(ngModel)]="countyBase">
               <option selected>İlçe seç</option>
               <option *ngFor="let county of counties" [value]="county.id">{{county.countyName}}</option>
             </select>
@@ -60,7 +60,7 @@
           <div class="payment-options">
             <div class="form-group content">
               <label for="address">Adres</label>
-              <textarea maxlength="255" formControlName="billingAddress" class="form-control" id="address" rows="3" [(ngModel)]="billingAddress"></textarea>
+              <textarea maxlength="255" formControlName="address" class="form-control" id="address" rows="3" [(ngModel)]="billingAddress"></textarea>
             </div>
           </div>
           <div class="mobile-btn">

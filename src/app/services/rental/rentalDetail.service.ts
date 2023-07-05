@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ListResponseModel } from 'src/app/models/listResponseModel';
 import { BaseUrl } from 'src/app/constants/baseUrl';
+import { ResponseModel } from 'src/app/models/responseModel';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,8 @@ export class RentalDetailService {
     let newPath = this.apiUrl + 'rentals/getall';
     return this.httpClient.get<ListResponseModel<Rental>>(newPath);
   }
-  add(rental: Rental) {
-    return this.httpClient.post(this.apiUrl + 'rentals/add', rental);
+  add(rental: Rental):Observable<ResponseModel> {
+    return this.httpClient.post<ResponseModel>(this.apiUrl + 'Rentals/add', rental);
   }
+
 }

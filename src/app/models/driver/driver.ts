@@ -4,7 +4,7 @@ export interface Driver{
     lastName:string;
     phoneNumber:string;
     birthDate:string;
-    nationalId?:string;
-    passportNumber?:string;
-    countryCodeId?:number;
+    nationalId:string;
+    passportNumber:string;
+    countryCodeId:number;
 }

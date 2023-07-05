@@ -1,5 +1,5 @@
 import { LocationService } from 'src/app/services/location/location.service';
-import { Bill } from './../../models/bill/bill';
+import { Invoice } from '../../models/invoice/invoice';
 import { CountyService } from './../../services/county/county.service';
 import { County } from './../../models/county/county';
 import { CountryService } from './../../services/country/country.service';
@@ -22,6 +22,10 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Driver } from 'src/app/models/driver/driver';
+import { Rental } from 'src/app/models/rental/rental';
+import { RentalDetailService } from 'src/app/services/rental/rentalDetail.service';
+import { InvoiceService } from 'src/app/services/invoice/invoice.service';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -73,7 +77,9 @@ export class OrderConfirmationComponent implements OnInit {
     private toastrService: ToastrService,
     config: NgbModalConfig,
     private formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private rentalService: RentalDetailService,
+    private invoiceService: InvoiceService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -96,13 +102,13 @@ export class OrderConfirmationComponent implements OnInit {
 
   createOrderAddForm() {
     this.orderAddForm = this.formBuilder.group({
-      billingAddress: [''],
+      countryId: ['', Validators.required],
+      countieId: ['', Validators.required],
+      cityId: ['', Validators.required],
+      address: ['', Validators.required],
       companyTitle: [''],
       taxAdministration: [''],
       taxNumber: [''],
-      country: ['', Validators.required],
-      countie: ['', Validators.required],
-      city: ['', Validators.required],
     });
   }
 
@@ -203,12 +209,37 @@ export class OrderConfirmationComponent implements OnInit {
   finishTheOrder(content: any) {
     if (this.orderAddForm.valid) {
       let orderModel = Object.assign({}, this.orderAddForm.value);
+      console.log(
+        orderModel.countryId,
+        orderModel.countieId,
+        orderModel.cityId,
+        orderModel.address,
+        orderModel.companyTitle,
+        orderModel.taxAdministration,
+        orderModel.taxNumber 
+      );
+      this.invoiceService.add(orderModel).subscribe(
+        (response) => {
+          if (response.success) {
+            this.toastr.success(response.message, 'Proje eklendi!');
+          }
+        },
+        (responseError) => {
+          if (responseError.error.Errors.length > 0) {
+            for (let i = 0; i < responseError.error.Errors.length; i++) {
+              this.toastr.error(
+                responseError.error.Errors[i].ErrorMessage,
+                'Doğrulama Hatası'
+              );
+            }
+          }
+        }
+      );
       localStorage.removeItem('orderDetails');
       localStorage.setItem('orderDetails', JSON.stringify(orderModel));
 
       this.modalService.open(content, { scrollable: true });
-      this.addDriver();
-
+      this.addRental();
       this.router.navigate([`home`]);
     } else {
       this.toastrService.error('Gerekli alanları doldurmalısınız.', 'Dikkat');
@@ -223,5 +254,37 @@ export class OrderConfirmationComponent implements OnInit {
     // };
   }
 
-  addDriver() {}
+  addRental() {
+    this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
+
+    let newRental: Rental = {
+      id: 0,
+      carId: this.carId,
+      userId: 2,
+      rentLocationId: this.rentDetail.rentLocationId,
+      returnLocationId: this.rentDetail.returnLocationId,
+      rentDate: this.rentDetail.rentDate,
+      rentTime: this.rentDetail.rentTime,
+      returnDate: this.rentDetail.returnDate,
+      returnTime: this.rentDetail.returnTime,
+      rentDay: this.rentDetail.rentDay,
+      totalPrice: 500,
+    };
+
+    this.rentalService.add(newRental).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (responseError) => {
+        if (responseError.error.Errors.length > 0) {
+          for (let i = 0; i < responseError.error.Errors.length; i++) {
+            this.toastr.error(
+              responseError.error.Errors[i].ErrorMessage,
+              'Rezervasyon Oluşturulamadı.'
+            );
+          }
+        }
+      }
+    );
+  }
 }

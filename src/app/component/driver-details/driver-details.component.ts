@@ -30,7 +30,7 @@ export class DriverDetailsComponent implements OnInit {
   rentDetail: RentalDetail;
   rentalLocationTitle: string;
   returnLocationTitle: string;
-  selectedCountryCode: string;
+  selectedCountryId: string;
   driverFirstName: string;
   driverLastName: string;
   driverPhoneNumber: string;
@@ -118,7 +118,7 @@ export class DriverDetailsComponent implements OnInit {
     });
   }
   changeCountry(event: any) {
-    this.selectedCountryCode  = event.target?.value;
+    this.selectedCountryId  = event.target?.value;
   }
   getRentalLocationDetailsById(locationId: number): any {
     this.locationService
@@ -157,7 +157,7 @@ export class DriverDetailsComponent implements OnInit {
       birthDate: [this.driverBirthday, Validators.required],
       nationalId: [''],
       passportNumber: [''],
-      countryCode: [this.selectedCountryCode],
+      selectedCountryId: [this.selectedCountryId],
     });
   }
 
