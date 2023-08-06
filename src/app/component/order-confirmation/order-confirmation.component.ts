@@ -1,5 +1,4 @@
 import { LocationService } from 'src/app/services/location/location.service';
-import { Invoice } from '../../models/invoice/invoice';
 import { CountyService } from './../../services/county/county.service';
 import { County } from './../../models/county/county';
 import { CountryService } from './../../services/country/country.service';
@@ -17,16 +16,15 @@ import { CarImageService } from 'src/app/services/car-image/car-image.service';
 import { CarService } from 'src/app/services/car/car.service';
 import { CityService } from 'src/app/services/city/city.service';
 import { Country } from 'src/app/models/country/country';
-import { RentalDetail } from 'src/app/models/rental/rentalDetail';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Driver } from 'src/app/models/driver/driver';
 import { Rental } from 'src/app/models/rental/rental';
 import { RentalDetailService } from 'src/app/services/rental/rentalDetail.service';
 import { InvoiceService } from 'src/app/services/invoice/invoice.service';
 import { PaymentService } from 'src/app/services/payment/payment';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -82,7 +80,8 @@ export class OrderConfirmationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private rentalService: RentalDetailService,
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    private localStorageService: LocalStorageService
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -230,9 +229,8 @@ export class OrderConfirmationComponent implements OnInit {
           }
         }
       );
-
-      localStorage.removeItem('orderDetails');
-      localStorage.setItem('orderDetails', JSON.stringify(orderModel));
+      this.localStorageService.removeItem('orderDetails');
+      this.localStorageService.setItem('orderDetails', orderModel);
 
       this.modalService.open(content, { scrollable: true });
       this.addRental();
@@ -242,18 +240,11 @@ export class OrderConfirmationComponent implements OnInit {
     } else {
       this.toastrService.error('Gerekli alanları doldurmalısınız.', 'Dikkat');
     }
-
-    // let newOrder: Bill = {
-    //   id: null,
-    //   billingAddress: this.billingAddress,
-    //   companyTitle: this.companyTitle,
-    //   taxAdministration: this.taxAdministration,
-    //   taxNumber: this.taxNumber,
-    // };
   }
 
   addRental() {
-    let newRentalDetail = JSON.parse(localStorage.getItem('newRental'));
+    let newRentalDetail = this.localStorageService.getItem('newRental');
+
     this.rental = {
       id: 0,
       carId: newRentalDetail.carId,
@@ -282,102 +273,21 @@ export class OrderConfirmationComponent implements OnInit {
     );
   }
 
-  test() {
-    this.addDriver();
-    this.addPayment();
-    // this.addOrder();
-    // this.addNewRental();
-  }
   addDriver() {
-    let driverDetails = JSON.parse(localStorage.getItem('driverDetails'));
+    let driverDetails = this.localStorageService.getItem('driverDetails');
     const birthDate = this.dateTransform(driverDetails.birthDate);
     driverDetails.birthDate = birthDate;
-
-    console.dir(driverDetails)
-    console.log('driverDetails : ' + driverDetails.countryCodeId);
-    console.log('driverDetails : ' + driverDetails.firstName);
-    console.log('driverDetails : ' + driverDetails.lastName);
-    console.log('driverDetails : ' + driverDetails.phoneNumber);
-    console.log('driverDetails : ' + driverDetails.birthDate);
-    console.log('driverDetails : ' + driverDetails.nationalId);
-    console.log('driverDetails : ' + driverDetails.passportNumber);
-
-
-    if(driverDetails.userId!==null){
+    if (driverDetails.userId !== null) {
       this.driverService.add(driverDetails).subscribe((response) => {});
-
     }
-
-    // const test = JSON.parse(driverDetails);
   }
 
   addPayment() {
-    let paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
+    let paymentDetails = this.localStorageService.getItem('paymentDetails');
 
-    if(paymentDetails.userId!==null){
+    if (paymentDetails.userId !== null) {
       this.paymentService.add(paymentDetails).subscribe((response) => {});
     }
-
-  }
-  addOrder() {
-    let orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
-    console.log(
-      ' orderDetails countryId: ' +
-        orderDetails.countryId +
-        '\n' +
-        ' orderDetails cityId: ' +
-        orderDetails.cityId +
-        '\n' +
-        ' orderDetails countieId: ' +
-        orderDetails.countieId +
-        '\n' +
-        ' orderDetails address: ' +
-        orderDetails.address +
-        '\n' +
-        ' orderDetails companyTitle: ' +
-        orderDetails.companyTitle +
-        '\n' +
-        ' orderDetails taxAdministration: ' +
-        orderDetails.taxAdministration +
-        '\n' +
-        ' orderDetails taxNumber: ' +
-        orderDetails.taxNumber
-    );
-  }
-  addNewRental() {
-    let addNewRental = JSON.parse(localStorage.getItem('newRental'));
-    console.log(
-      ' newRental carId: ' +
-        addNewRental.carId +
-        '\n' +
-        ' newRental userId: ' +
-        addNewRental.userId +
-        '\n' +
-        ' newRental rentDate: ' +
-        addNewRental.rentDate +
-        '\n' +
-        ' newRental rentTime: ' +
-        addNewRental.rentTime +
-        '\n' +
-        ' newRental rentLocationId: ' +
-        addNewRental.rentLocationId +
-        '\n' +
-        ' newRental returnDate: ' +
-        addNewRental.returnDate +
-        '\n' +
-        ' newRental returnTime: ' +
-        addNewRental.returnTime +
-        '\n' +
-        ' newRental returnLocationId: ' +
-        addNewRental.returnLocationId +
-        '\n' +
-        ' newRental rentDay: ' +
-        addNewRental.rentDay +
-        '\n' +
-        ' newRental totalPrice: ' +
-        addNewRental.totalPrice +
-        '\n'
-    );
   }
 
   dateTransform(event: any) {

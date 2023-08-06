@@ -25,6 +25,7 @@ import {
 import { TrDatepickerI18n } from 'src/app/directives/trDatepickerI18n';
 import { User } from 'src/app/models/user/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-driver-details',
@@ -66,7 +67,8 @@ export class DriverDetailsComponent implements OnInit {
     private driverService: DriverService,
     private locationService: LocationService,
     private authService: AuthService,
-    private carImageService: CarImageService
+    private carImageService: CarImageService,
+    private localStorageService:LocalStorageService
   ) {}
 
   birthdateMaxDate: NgbDateStruct = {
@@ -76,13 +78,14 @@ export class DriverDetailsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    localStorage.removeItem('driverDetails');
+    this.localStorageService.removeItem('driverDetails');
+
     this.createDriverAddForm();
     this.activatedRoute.params.subscribe((params) => {
       this.getCarDetailByCarId(params['carId']);
       this.getImageByCarId(params['carId']);
       this.carId = params['carId'];
-      this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
+      this.rentDetail = this.localStorageService.getItem('newRental');
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
     });
@@ -147,9 +150,8 @@ export class DriverDetailsComponent implements OnInit {
 
     console.dir(driverModel)
     if (this.driverAddForm.valid) {
-      localStorage.removeItem('driverDetails');
-
-      localStorage.setItem('driverDetails', JSON.stringify(driverModel));
+      this.localStorageService.removeItem('driverDetails');
+      this.localStorageService.setItem('driverDetails',driverModel)
 
       this.router.navigate([
         `reservation/details/car-id/${this.carId}/rent-date/${this.rentDetail.rentDate}/rent-time/${this.rentDetail.rentTime}/return-date/${this.rentDetail.returnDate}/return-time/${this.rentDetail.returnTime}/rental-location/${this.rentDetail.rentLocationId}/return-location/${this.rentDetail.returnLocationId}/driver-details/payment-details`,

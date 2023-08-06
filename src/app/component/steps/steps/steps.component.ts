@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from 'src/app/services/location/location.service';
 import { Driver } from 'src/app/models/driver/driver';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-steps',
@@ -56,7 +57,8 @@ export class StepsComponent implements OnInit {
     private router: Router,
     private locationService: LocationService,
     private carService: CarService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private localStorageService:LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +74,8 @@ export class StepsComponent implements OnInit {
       this.carStepClass = 'step';
       this.carRightSeperatorClass = 'step-seperator';
 
-      this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
+      this.rentDetail =this.localStorageService.getItem('newRental')
+      
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
     }
@@ -83,20 +86,22 @@ export class StepsComponent implements OnInit {
       this.driverStepClass = 'step';
       this.driverRightSeperatorClass = 'step-seperator';
     }
+    
     if (this.router.url.includes('payment-details')) {
       this.driverTooltip = true;
-      this.driver = JSON.parse(localStorage.getItem('driverDetails'));
+      this.driver = this.localStorageService.getItem('driverDetails');
       this.paymentLeftSeperatorClass = 'step-seperator';
       this.paymentStepClass = 'step';
       this.paymentRightSeperatorClass = 'step-seperator';
-      this.driver = JSON.parse(localStorage.getItem('driverDetails'));
+      this.driver = this.localStorageService.getItem('driverDetails');
       this.driverFirstName = this.driver.firstName;
       this.driverLastName = this.driver.lastName;
       this.getDriverAge(this.driver.birthDate);
     }
+
     if (this.router.url.includes('order-confirmation')) {
       this.paymentTooltip = true;
-      this.payment = JSON.parse(localStorage.getItem('paymentDetails'));
+      this.payment = this.localStorageService.getItem('paymentDetails')
       this.orderConfirmationLeftSeperatorClass = 'step-seperator';
       this.orderConfirmationStepClass = 'step';
       this.orderConfirmationRightSeperatorClass = 'step-seperator';

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -29,7 +30,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private localStorageService:LocalStorageService
   ) {
   
   }
@@ -38,9 +40,8 @@ export class SidebarComponent implements OnInit {
     this.getUserId();
   }
 
-
   logOut() {
-    localStorage.removeItem('token');
+    this.localStorageService.removeAll()
     this.router.navigate(['/home']);
   }
 

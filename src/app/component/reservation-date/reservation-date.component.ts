@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { TimeList } from 'src/app/models/time/timeList';
 import { NgbDateStruct, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { TrDatepickerI18n } from 'src/app/directives/trDatepickerI18n';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 declare const myTest: any;
 @Component({
   selector: 'app-reservation-date',
@@ -23,6 +24,7 @@ export class ReservationDateComponent implements OnInit {
     private locationService: LocationService,
     private datePipe: DatePipe,
     private router: Router,
+    private localStorageService:LocalStorageService,
     @Inject(LOCALE_ID) private locale: string
   ) {}
 
@@ -59,7 +61,7 @@ export class ReservationDateComponent implements OnInit {
     this.isRentalText = this.filterRentalText;
     this.isReturnText = this.filterReturnText;
     this.loadTimeList();
-    localStorage.removeItem("rentalValue")
+    this.localStorageService.removeItem('rentalValue');
   }
 
   getLocationDetails() {

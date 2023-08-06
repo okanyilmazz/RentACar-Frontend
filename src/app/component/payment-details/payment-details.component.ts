@@ -17,6 +17,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user/user';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-payment-details',
@@ -61,17 +62,19 @@ export class PaymentDetailsComponent implements OnInit {
     private carImageService: CarImageService,
     private modalService: NgbModal,
     private toastrService: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private localStorageService: LocalStorageService
   ) {}
 
   isActive = true;
   ngOnInit(): void {
-    localStorage.removeItem('paymentDetails');
+    this.localStorageService.removeItem('paymentDetails');
+
     this.activatedRoute.params.subscribe((params) => {
       this.carId = params['carId'];
       this.getCarDetailByCarId(params['carId']);
       this.getImageByCarId(params['carId']);
-      this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
+      this.rentDetail = this.localStorageService.getItem('newRental');
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
     });
@@ -150,10 +153,7 @@ export class PaymentDetailsComponent implements OnInit {
     paymentModel.cardMonth = Number(paymentModel.cardMonth);
 
     if (this.paymentAddForm.valid) {
-      localStorage.setItem('paymentDetails', JSON.stringify(paymentModel));
-
-
-      console.log(localStorage.getItem('paymentDetails'))
+      this.localStorageService.setItem('paymentDetails', paymentModel);
       this.router.navigate([
         `reservation/details/car-id/${this.carId}/rent-date/${this.rentDetail.rentDate}/rent-time/${this.rentDetail.rentTime}/return-date/${this.rentDetail.returnDate}/return-time/${this.rentDetail.returnTime}/rental-location/${this.rentDetail.rentLocationId}/return-location/${this.rentDetail.returnLocationId}/driver-details/payment-details/order-confirmation`,
       ]);

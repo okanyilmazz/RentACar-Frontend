@@ -14,6 +14,7 @@ import {
 import { CarImage } from 'src/app/models/car/carImage';
 import { DatePipe } from '@angular/common';
 import { RentalDetail } from 'src/app/models/rental/rentalDetail';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-car-details',
@@ -41,6 +42,7 @@ export class CarDetailsComponent implements OnInit {
     private datePipe: DatePipe,
     private router: Router,
     private carImageService: CarImageService,
+    private localStorageService:LocalStorageService,
     @Inject(LOCALE_ID) private locale: string
   ) {}
 
@@ -57,7 +59,7 @@ export class CarDetailsComponent implements OnInit {
       ) {
         this.getCarDetailByCarId(params['carId']);
         this.getImageByCarId(params['carId']);
-        this.rentDetail = JSON.parse(localStorage.getItem('newRental'));
+        this.rentDetail = this.localStorageService.getItem('newRental');
 
         this.rentDay = this.rentDetail.rentDay;
       }
@@ -83,7 +85,7 @@ export class CarDetailsComponent implements OnInit {
     return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
   }
   getCarDetailByCarId(carId: number) {
-    const storedData = localStorage.getItem('newRental');
+    const storedData = this.localStorageService.getItem('newRental');
     const rentalData = JSON.parse(storedData);
     let updatedData = JSON.stringify(rentalData);
     this.carService.getCarDetailByClick(carId).subscribe((response) => {
@@ -92,8 +94,8 @@ export class CarDetailsComponent implements OnInit {
         rentalData.totalPrice = this.totalPrice(car.dailyPrice);
         rentalData.carId=carId;
         updatedData = JSON.stringify(rentalData);
-        localStorage.removeItem('newRental');
-        localStorage.setItem('newRental', updatedData);
+        this.localStorageService.removeItem('newRental');
+        this.localStorageService.setItem('newRental', updatedData);
       });
     });
   }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-register-page',
@@ -15,7 +16,8 @@ export class RegisterPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private localStorageService:LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class RegisterPageComponent implements OnInit {
       let registerModel = Object.assign({}, this.registerForm.value);
       this.authService.register(registerModel).subscribe(
         (response) => {
-          localStorage.setItem('token', response.data.token);
+          this.localStorageService.setItem('token',response.data.token);
           this.toastrService.success('Tebrikler! başarıyla kayıt olundu.');
           this.router.navigate(["home"]);
         },

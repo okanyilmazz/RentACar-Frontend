@@ -45,7 +45,7 @@ import { TestPageComponent } from './component/test-page/test-page.component';
 import { TestPagesNewComponent } from './component/test-page-2/test-pages-new/test-pages-new.component';
 import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 import { StepsComponent } from './component/steps/steps/steps.component';
-import { BodyComponent } from './component/body/body/body.component';
+import { BodyComponent } from './component/body/body.component';
 import { CreditCardFormatPipe } from './pipes/credit-card-format.pipe';
 import { LoginPageComponent } from './component/login-page/login-page.component';
 import { RegisterPageComponent } from './component/register-page/register-page.component';

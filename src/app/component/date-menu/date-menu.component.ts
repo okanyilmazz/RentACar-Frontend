@@ -9,6 +9,7 @@ import { LocationDetailDto } from 'src/app/models/location/locationDetailsDto';
 import { Rental } from 'src/app/models/rental/rental';
 import { RentalDetail } from 'src/app/models/rental/rentalDetail';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { LocationService } from 'src/app/services/location/location.service';
 
 @Component({
@@ -27,9 +28,10 @@ export class DateMenuComponent implements OnInit {
     private locationService: LocationService,
     private datePipe: DatePipe,
     private activatedRoute: ActivatedRoute,
+    private localStorageService:LocalStorageService,
     @Inject(LOCALE_ID) private locale: string
   ) {
-    localStorage.removeItem('rentalValue');
+    this.localStorageService.removeItem('rentalValue');
   }
 
   arrowIcon = faAngleDoubleRight;
@@ -131,7 +133,7 @@ export class DateMenuComponent implements OnInit {
     this.returnTime = rentalInfo.returnTime;
     this.selectedRentalLocationId = rentalInfo.rentLocationId;
     this.selectedReturnLocationId = rentalInfo.returnLocationId;
-    this.setLocalStorage('rentalValue', rentalInfo);
+    this.localStorageService.setItem('rentalValue',rentalInfo);
   }
 
   getLocationDetails() {
@@ -223,7 +225,7 @@ export class DateMenuComponent implements OnInit {
   // }
 
   checkAllInfo() {
-    localStorage.removeItem('rentalValue');
+    this.localStorageService.removeItem('rentalValue');
     if (
       this.rentalDate &&
       this.returnDate &&
@@ -245,7 +247,7 @@ export class DateMenuComponent implements OnInit {
         rentDay: null,
         totalPrice: null,
       };
-      this.setLocalStorage('rentalValue', this.rentalInfo);
+      this.localStorageService.setItem('rentalValue',this.rentalInfo);
     }
   }
 
@@ -346,10 +348,4 @@ export class DateMenuComponent implements OnInit {
       '23:30',
     ];
   }
-
-  setLocalStorage(storageName: string, storageData: any) {
-    localStorage.setItem(storageName, JSON.stringify(storageData));
-  }
-
-
 }

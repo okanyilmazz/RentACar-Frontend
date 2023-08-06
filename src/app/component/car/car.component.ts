@@ -16,7 +16,7 @@ import { CarImage } from 'src/app/models/car/carImage';
 import { RentalDetail } from 'src/app/models/rental/rentalDetail';
 import { Rental } from 'src/app/models/rental/rental';
 import { DatePipe } from '@angular/common';
-
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-car',
@@ -63,6 +63,7 @@ export class CarComponent implements OnChanges {
     private datePipe: DatePipe,
     private toastr: ToastrService,
     private rentalDetailService: RentalDetailService,
+    private localStorageService: LocalStorageService,
     @Inject(LOCALE_ID) private locale: string
   ) {}
   ngOnInit(): void {
@@ -105,8 +106,8 @@ export class CarComponent implements OnChanges {
 
         this.getUnvaliableAllCar(this.rentalDate, this.returnDate);
       } else {
-        localStorage.removeItem('newRental');
-        localStorage.removeItem('rentalValue');
+        this.localStorageService.removeItem('newRental');
+        this.localStorageService.removeItem('rentalValue');
         this.getAllCarDetail();
       }
     });
@@ -122,20 +123,16 @@ export class CarComponent implements OnChanges {
     }
   }
 
-
-
   goToVehicles(carId: number) {
     if (this.href !== '/home' && this.href !== '/') {
-      if (!localStorage.getItem('rentalValue')) {
+      if (!this.localStorageService.getItem('rentalValue')) {
         this.toastr.error(
           'Devam etmek için Tarih/Saat/Konum bilgilerini girmeniz gerekmektedir.',
           'Dikkat!'
         );
       } else {
-        const storedRental = localStorage.getItem('rentalValue');
+        const storedRental = this.localStorageService.getItem('rentalValue');
         const rentalValue = JSON.parse(storedRental);
-        console.log(rentalValue.rentLocationId);
-        console.log(rentalValue.returnLocationId);
         if (rentalValue !== undefined) {
           this.rentDay = this.findDay(
             rentalValue.rentDate,
@@ -154,8 +151,8 @@ export class CarComponent implements OnChanges {
             rentDay: this.rentDay,
             totalPrice: 0,
           };
-          localStorage.removeItem('newRental');
-          localStorage.setItem('newRental', JSON.stringify(newRental));
+          this.localStorageService.removeItem('newRental');
+          this.localStorageService.setItem('newRental', newRental);
           this.router.navigate([
             `reservation/details/car-id/${carId}/rent-date/${rentalValue.rentDate}/rent-time/${rentalValue.rentTime}/return-date/${rentalValue.returnDate}/return-time/${rentalValue.returnTime}/rental-location/${rentalValue.rentLocationId}/return-location/${rentalValue.returnLocationId}`,
           ]);
@@ -169,8 +166,6 @@ export class CarComponent implements OnChanges {
       this.router.navigate([`cars`]);
     }
   }
-
-
 
   async getUnvaliableAllCar(rentDate: string, returnDate: string) {
     await this.getAllCarDetail();
@@ -196,7 +191,6 @@ export class CarComponent implements OnChanges {
     });
   }
 
-
   async getUnvaliableCar(carId: number) {
     let unavailableCar = this.carDetails.find((c) => c.carId === carId);
     if (unavailableCar) {
@@ -209,7 +203,6 @@ export class CarComponent implements OnChanges {
       await this.getAllCarDetail();
     }
   }
-
 
   stringToDate(dateStr: string): Date {
     // Tarih formatını 'dd.MM.yyyy' şeklinde belirliyoruz.
@@ -261,11 +254,6 @@ export class CarComponent implements OnChanges {
     return dayDifference;
   }
 
-
-
-
-
-  
   /* FILTERS METHOD */
 
   getCarByBrand(brandId: number) {
@@ -323,5 +311,4 @@ export class CarComponent implements OnChanges {
         this.carDetails = response.data;
       });
   }
-
 }

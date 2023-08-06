@@ -18,6 +18,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-navigation',
@@ -28,7 +29,8 @@ export class NavigationComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private localStorageService:LocalStorageService
   ) {}
   searchIcon = faSearch;
   homeIcon = faHome;
@@ -49,7 +51,7 @@ export class NavigationComponent implements OnInit {
   userId: number;
 
   ngOnInit(): void {
-    if (localStorage.getItem('token') !== null) {
+    if (this.localStorageService.getItem('token') !== null) {
       this.getUserId();
       this.isLogin = true;
     } else {
@@ -58,11 +60,7 @@ export class NavigationComponent implements OnInit {
   }
 
   signOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('paymentDetails');
-    localStorage.removeItem('driverDetails');
-    localStorage.removeItem('orderDetails');
-    localStorage.removeItem('newRental');
+    this.localStorageService.removeAll()
     window.location.href = '/home';
     this.refreshPage();
   }
@@ -83,7 +81,7 @@ export class NavigationComponent implements OnInit {
 
   getCurrentUrl() {
     const currentUrl = this.router.url;
-    localStorage.setItem('lastUrl', currentUrl);
+    this.localStorageService.setItem('lastUrl',currentUrl);
   }
   getUserId() {
     let userInfo = this.authService.getUserInfo();
