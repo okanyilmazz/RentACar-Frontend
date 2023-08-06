@@ -14,9 +14,9 @@ declare const myTest: any;
   providers: [
     {
       provide: NgbDatepickerI18n,
-      useClass: TrDatepickerI18n
-    }
-  ]
+      useClass: TrDatepickerI18n,
+    },
+  ],
 })
 export class ReservationDateComponent implements OnInit {
   constructor(
@@ -35,9 +35,9 @@ export class ReservationDateComponent implements OnInit {
   isRentalText: string;
   isReturnText: string;
   rentalDate: string = '';
-  rentalTime: string;
+  rentalTime: string = '--:--';
   returnDate: string = '';
-  returnTime: string;
+  returnTime: string = '--:--';
   loadTimes: string[] = [];
   sonReturnTime: TimeList;
   rentMinDate: NgbDateStruct = {
@@ -59,6 +59,7 @@ export class ReservationDateComponent implements OnInit {
     this.isRentalText = this.filterRentalText;
     this.isReturnText = this.filterReturnText;
     this.loadTimeList();
+    localStorage.removeItem("rentalValue")
   }
 
   getLocationDetails() {
@@ -85,13 +86,6 @@ export class ReservationDateComponent implements OnInit {
   }
 
   onClickSubmit(data: any) {
-    console.log('rentaldate : ' + this.rentalDate);
-    console.log('returndate : ' + this.returnDate);
-    console.log('rentaltime : ' + this.rentalTime);
-    console.log('returntime : ' + this.returnTime);
-    // this.rentalDate = this.transformDate(this.rentalDate);
-    // this.returnDate = this.transformDate(this.returnDate);
-
     if (this.isDifferentLocation === false) {
       this.selectedReturnLocation = undefined;
     }
@@ -185,57 +179,6 @@ export class ReservationDateComponent implements OnInit {
       '23:00',
       '23:30',
     ];
-
-    // this.Times = [
-    //   { hour: 0, minute: 0 },
-    //   { hour: 0, minute: 30 },
-    //   { hour: 1, minute: 0 },
-    //   { hour: 1, minute: 30 },
-    //   { hour: 2, minute: 0 },
-    //   { hour: 2, minute: 30 },
-    //   { hour: 3, minute: 0 },
-    // { hour: '03', minute: '30' },
-    // { hour: '04', minute: '00' },
-    // { hour: '04', minute: '30' },
-    // { hour: '05', minute: '00' },
-    // { hour: '05', minute: '30' },
-    // { hour: '06', minute: '00' },
-    // { hour: '06', minute: '30' },
-    // { hour: '07', minute: '00' },
-    // { hour: '07', minute: '30' },
-    // { hour: '08', minute: '00' },
-    // { hour: '08', minute: '30' },
-    // { hour: '09', minute: '00' },
-    // { hour: '09', minute: '30' },
-    // { hour: '10', minute: '00' },
-    // { hour: '10', minute: '30' },
-    // { hour: '11', minute: '00' },
-    // { hour: '11', minute: '30' },
-    // { hour: '12', minute: '00' },
-    // { hour: '12', minute: '30' },
-    // { hour: '13', minute: '00' },
-    // { hour: '13', minute: '30' },
-    // { hour: '14', minute: '00' },
-    // { hour: '14', minute: '30' },
-    // { hour: '15', minute: '00' },
-    // { hour: '15', minute: '30' },
-    // { hour: '16', minute: '00' },
-    // { hour: '16', minute: '30' },
-    // { hour: '17', minute: '00' },
-    // { hour: '17', minute: '30' },
-    // { hour: '18', minute: '00' },
-    // { hour: '18', minute: '30' },
-    // { hour: '19', minute: '00' },
-    // { hour: '19', minute: '30' },
-    // { hour: '20', minute: '00' },
-    // { hour: '20', minute: '30' },
-    // { hour: '21', minute: '00' },
-    // { hour: '21', minute: '30' },
-    // { hour: '22', minute: '00' },
-    // { hour: '22', minute: '30' },
-    // { hour: '23', minute: '00' },
-    // { hour: '23', minute: '30' },
-    //];
   }
 
   private currentDate() {

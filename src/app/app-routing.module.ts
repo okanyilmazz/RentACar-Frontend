@@ -1,4 +1,4 @@
-import { TestPageComponent } from './component/test-page/test-page.component';
+
 import { OrderConfirmationComponent } from './component/order-confirmation/order-confirmation.component';
 import { PaymentDetailsComponent } from './component/payment-details/payment-details.component';
 import { DriverDetailsComponent } from './component/driver-details/driver-details.component';
@@ -8,6 +8,15 @@ import { ReservationComponent } from './component/reservation/reservation.compon
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CarDetailsComponent } from './component/car-details/car-details.component';
+import { LoginPageComponent } from './component/login-page/login-page.component';
+import { RegisterPageComponent } from './component/register-page/register-page.component';
+import { LoginGuard } from './guards/login-guard';
+import { LoginPageGuard } from './guards/login-page-guard';
+import { SettingsComponent } from './component/user-panel/settings/settings.component';
+import { RentalsComponent } from './component/user-panel/rentals/rentals.component';
+import { DriversComponent } from './component/user-panel/drivers/drivers.component';
+import { AddressesComponent } from './component/user-panel/addresses/addresses.component';
+import { PaymentsComponent } from './component/user-panel/payments/payments.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomePageComponent },
@@ -71,18 +80,51 @@ const routes: Routes = [
       },
       {
         path: 'details/car-id/:carId/rent-date/:rentalDate/rent-time/:rentalTime/return-date/:returnDate/return-time/:returnTime/rental-location/:selectedRentalLocationId/return-location/:selectedReturnLocationId/driver-details',
+        canActivate: [LoginGuard],
         component: DriverDetailsComponent,
       },
       {
         path: 'details/car-id/:carId/rent-date/:rentalDate/rent-time/:rentalTime/return-date/:returnDate/return-time/:returnTime/rental-location/:selectedRentalLocationId/return-location/:selectedReturnLocationId/driver-details/payment-details',
+        canActivate: [LoginGuard],
         component: PaymentDetailsComponent,
       },
       {
         path: 'details/car-id/:carId/rent-date/:rentalDate/rent-time/:rentalTime/return-date/:returnDate/return-time/:returnTime/rental-location/:selectedRentalLocationId/return-location/:selectedReturnLocationId/driver-details/payment-details/order-confirmation',
+        canActivate: [LoginGuard],
         component: OrderConfirmationComponent,
-      }
+      },
     ],
   },
+  {
+    path: 'login',
+    canActivate: [LoginPageGuard],
+    component: LoginPageComponent,
+  },
+  {
+    path: 'register',
+    canActivate: [LoginPageGuard],
+    component: RegisterPageComponent,
+  },
+  {
+    path: 'profile',
+    component: SettingsComponent
+  },
+  {
+    path:'profile/rental',
+    component:RentalsComponent
+  }
+  ,
+  {
+    path:'profile/driver',
+    component:DriversComponent
+  },
+  {
+    path:'profile/payment',
+    component:PaymentsComponent
+  },{
+    path:'profile/address',
+    component:AddressesComponent
+  }
 ];
 
 @NgModule({

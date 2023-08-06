@@ -1,0 +1,59 @@
+.sidebar {
+  float: left;
+}
+
+.payments {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+table tbody th {
+  font-weight: normal !important;
+}
+#updateDeleteButtons {
+  text-align: end;
+}
+button {
+  font-size: 0.7rem;
+}
+button:last-child {
+  margin-left: 1rem;
+}
+.question-modal-body {
+  padding: 2rem;
+}
+.question-modal-body p {
+  font-family: Roboto-Medium;
+}
+.question-modal-body button {
+  font-family: Roboto-Medium;
+}
+#btn-yes {
+  padding: 10px;
+  background-color: green;
+  color: #fff;
+  font-size: .8rem;
+}
+#btn-yes:hover {
+  background-color: #17a917;
+}
+#btn-no {
+  padding: 10px;
+  color: #000;
+  font-size: .8rem;
+}
+#btn-no:hover {
+  background-color: #7c0404;
+  color: #fff;
+}
+
+@media screen and (min-width: 1440px) {
+  .sidebar {
+    width: 15rem;
+  }
+  .payments {
+    width: 40%;
+    padding-left: 1rem;
+    padding-top: 1rem;
+  }
+}

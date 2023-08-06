@@ -1,0 +1,70 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="addresses container">
+  <div class="addresses-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Adres Bilgileri">
+        <ng-template ngbPanelContent>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Adres</th>
+                <th>İlçe Adı</th>
+                <th>Şehir Adı</th>
+                <th>Ülke Adı</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let invoice of userInvoicesDetailsDto; let i = index">
+                <th>{{ invoice.address }}</th>
+                <th>{{ invoice.countyName }}</th>
+                <th>{{ invoice.cityName }}</th>
+                <th>{{ invoice.countryName }}</th>
+                <th>
+                  <div id="updateDeleteButtons">
+                    <button
+                      id="updateButton"
+                      class="btn btn-success"
+                      (click)="alert()"
+                    >
+                      Güncelle
+                    </button>
+                    <button
+                      id="deleteButton"
+                      class="btn btn-danger"
+                      (click)="openModal(questionContent)"
+                    >
+                      Sil
+                    </button>
+                  </div>
+                </th>
+                <!--MODAL DELETE -->
+                <ng-template #questionContent>
+                  <div class="question-modal-body text-center">
+                    <p>
+                      {{ invoice.address }} silmek istediğinize emin misiniz?
+                    </p>
+                    <button type="button" class="btn" id="btn-yes">Evet</button>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="btn-no"
+                      (click)="decline()"
+                    >
+                      Hayır
+                    </button>
+                  </div>
+                </ng-template>
+                <!-- #endregion -->
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <div class="payment">
   <form class="payment-info" [formGroup]="paymentAddForm">
@@ -11,88 +11,190 @@
       <div class="info-content">
         <div class="card-number infos">
           <span>Kart Numarası </span>
-          <input type="text" formControlName="cardNumber" (input)="cardNumberLimitCharacterCount($event)" [value]="cardNumber" >
+          <input
+            type="text"
+            formControlName="cardNumber"
+            (input)="formatCardNumber($event)"
+            [value]="cardNumber"
+            [(ngModel)]="cardNumber"
+            maxlength="19"
+          />
         </div>
         <div class="card-name infos">
           <span>Kart Üzerindeki İsim </span>
-          <input  formControlName="cardName" >
+          <input
+            formControlName="cardName"
+            type="text"
+            maxlength="20"
+            (ngModelChange)="onValueChange($event)"
+            [(ngModel)]="cardName"
+          />
         </div>
         <div class="expiration-date infos">
           <span>Son Kullanma Tarihi </span>
           <div>
-            <select class="form-select"  formControlName="expirationMonth"    [(ngModel)]="monthBase">
+            <select
+              class="form-select"
+              formControlName="cardMonth"
+              [(ngModel)]="monthBase"
+            >
               <option selected>Ay</option>
-              <option  *ngFor="let month of months"  [value]="month" (change)="changeExpirationMonth($event)">{{month}}</option>
+              <option *ngFor="let month of months" [value]="month">
+                {{ month }}
+              </option>
             </select>
-            <select class="form-select" formControlName="expirationYear" [(ngModel)]="yearBase">
+            <select
+              class="form-select"
+              formControlName="cardYear"
+              [(ngModel)]="yearBase"
+            >
               <option selected>Yıl</option>
-              <option  *ngFor="let year of years"  [value]="year" (change)="changeExpirationYear($event)" >{{year}}</option>
+              <option *ngFor="let year of years" [value]="year">
+                {{ year }}
+              </option>
             </select>
           </div>
-
         </div>
         <div class="security-code infos">
-          <span>Güvenlik Kodu  <fa-icon [icon]="infoIcon" ngbTooltip="Güvenlik kodu, kartın arkasında bulunan 3 haneli rakamdan oluşur" placement="top"> </fa-icon></span>
-          <input formControlName="securityCode" type="number" (input)="securityCodeLimitCharacterCount($event)" min="1" max="999">
+          <span
+            >Güvenlik Kodu
+            <fa-icon
+              [icon]="infoIcon"
+              ngbTooltip="Güvenlik kodu, kartın arkasında bulunan 3 haneli rakamdan oluşur"
+              placement="top"
+            >
+            </fa-icon
+          ></span>
+          <input
+            [(ngModel)]="cardSecurityCode"
+            formControlName="cardSecurityCode"
+            type="number"
+            (input)="securityCodeLimitCharacterCount($event)"
+            min="1"
+            max="999"
+          />
         </div>
         <div class="mobile-btn">
-          <button type="button" (click)="goToOrderConfirmation()" routerLinkActive="active">Devam Et <fa-icon
-            [icon]="rightArrowIcon"></fa-icon></button>
+          <button
+            type="button"
+            (click)="openModal(addCard)"
+            routerLinkActive="active"
+          >
+            Devam Et <fa-icon [icon]="rightArrowIcon"></fa-icon>
+          </button>
         </div>
       </div>
 
+      <div class="info-bottom">
+        <div class="credit-card">
+          <div class="credit-top-content">
+            <div id="bank-name"><span>XXX Bank</span></div>
+            <div id="credit-card-name"><span>Credit Card</span></div>
+          </div>
+          <div class="credit-middle-content">
+            <div id="credit-number">
+              <span>{{ cardNumber }}</span>
+            </div>
+          </div>
+          <div class="credit-bottom-content">
+            <div id="expiration-date">
+              <span>UNTIL END</span>
+              <span>
+                {{ monthBase }}/{{
+                  yearBase === "Yıl"
+                    ? yearBase
+                    : yearBase.slice(2, yearBase.length)
+                }}</span
+              >
+            </div>
+            <div id="cvv-code">
+              <span>CVV</span>
+              <span>{{ cardSecurityCode }}</span>
+            </div>
+          </div>
 
-
-      <div class="info-bottom" >
-        <div class="payment-options">
+          <div id="credit-name">
+            <span>{{ cardName | uppercase }}</span>
+          </div>
+        </div>
+        <div class="payment-options" [style.grid-row-start]="paymentOptionsRow">
           <span id="title">Taksit Seçenekleri</span>
-          <span id="content">Taksit seçenekleri kart bilgileri girildikten sonra görüntülenecektir.</span>
+          <span id="content" [style.display]="installmentInfo"
+            >Taksit seçenekleri kart bilgileri girildikten sonra
+            görüntülenecektir.</span
+          >
+          <div class="installment-content" [style.display]="installment">
+            <span>Kartınıza özel 9 Ay Taksit imkanı bulunmaktadır.</span>
+            <div class="form-check">
+              <span>Taksit yapmak istiyorum.</span>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckChecked"
+              />
+            </div>
+          </div>
+          <span id="content-installment"></span>
         </div>
 
         <div class="payment-type">
-            <img src="./assets/image/payment-type/maximum.png">
-            <img src="./assets/image/payment-type/axess.png">
-            <img src="./assets/image/payment-type/bonus.png">
-            <img src="./assets/image/payment-type/world.png">
-            <img src="./assets/image/payment-type/paypal.png">
+          <img src="./assets/image/payment-type/maximum.png" />
+          <img src="./assets/image/payment-type/axess.png" />
+          <img src="./assets/image/payment-type/bonus.png" />
+          <img src="./assets/image/payment-type/world.png" />
+          <img src="./assets/image/payment-type/paypal.png" />
         </div>
       </div>
     </div>
     <div class="seperator"></div>
     <div class="info-right" *ngFor="let car of carDetails">
       <div class="title">
-        <span>{{car.carName}}</span>
+        <span>{{ car.carName }}</span>
       </div>
       <div class="feature">
         <div class="content">
           <div class="feature-top">
-            <div id="icon"><img src="assets/image/icon-fuel.png">
-              <span>{{car.fuelType}}</span></div>
-            <div>
-              <div id="icon"><img src="assets/image/icon-group.png">
-                <span>{{car.numberOfPassengers}} Kişi</span></div>
+            <div id="icon">
+              <img src="assets/image/icon-fuel.png" />
+              <span>{{ car.fuelType }}</span>
             </div>
             <div>
-              <div id="icon"><img src="assets/image/icon-gearbox.png">
-                <span>{{car.transmissionType}}</span></div>
+              <div id="icon">
+                <img src="assets/image/icon-group.png" />
+                <span>{{ car.numberOfPassengers }} Kişi</span>
+              </div>
+            </div>
+            <div>
+              <div id="icon">
+                <img src="assets/image/icon-gearbox.png" />
+                <span>{{ car.transmissionType }}</span>
+              </div>
             </div>
           </div>
           <div class="feature-bottom">
-            <div id="icon"><img src="assets/image/icon-suv.png">
-              <span>{{car.bodyType}}</span></div>
-            <div>
-              <div id="icon"><img src="assets/image/icon-color.png">
-                <span>{{car.colorName}}</span></div>
+            <div id="icon">
+              <img src="assets/image/icon-suv.png" />
+              <span>{{ car.bodyType }}</span>
             </div>
             <div>
-              <div id="icon"><img src="assets/image/air-conditioner.png">
-                <span>{{isExistAirConditioner(car.airConditioning)}}</span></div>
+              <div id="icon">
+                <img src="assets/image/icon-color.png" />
+                <span>{{ car.colorName }}</span>
+              </div>
             </div>
-
+            <div>
+              <div id="icon">
+                <img src="assets/image/air-conditioner.png" />
+                <span>{{ isExistAirConditioner(car.airConditioning) }}</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="car-img">
-          <div class="right"> <img [src]="getImagePath(car.carImages[0].imagePath)"> </div>
+          <div class="right">
+            <img [src]="getImagePath(car.carImages[0].imagePath)" />
+          </div>
         </div>
       </div>
       <div class="rental-info">
@@ -114,15 +216,19 @@
         <div>
           <div><span id="title">Depozito Tutarı</span></div>
           <div><span>:</span></div>
-          <div><span>{{car.deposit | currency:"TRY":"₺"}} </span></div>
+          <div>
+            <span>{{ car.deposit | currency : "TRY" : "₺" }} </span>
+          </div>
         </div>
         <div>
           <div><span id="title">KM Sınırı</span></div>
           <div><span>:</span></div>
-          <div><span>{{car.kilometerLimit}} KM</span></div>
+          <div>
+            <span>{{ car.kilometerLimit }} KM</span>
+          </div>
         </div>
       </div>
-      <div class="location mt-3 container-fluid ">
+      <div class="location mt-3 container-fluid">
         <div class="rent">
           <div><span id="title">Alış Yeri</span></div>
           <div>
@@ -130,19 +236,29 @@
             <div id="seperator-bottom" class="mt-2"></div>
           </div>
           <div class="info">
-            <div><span>{{rentalLocationTitle}}</span></div>
-            <div><span>{{rentDetail.rentDate}} - {{rentDetail.rentTime}}</span></div>
+            <div>
+              <span>{{ rentalLocationTitle }}</span>
+            </div>
+            <div>
+              <span>{{ rentDetail.rentDate }} - {{ rentDetail.rentTime }}</span>
+            </div>
           </div>
         </div>
-        <div class="return ">
+        <div class="return">
           <div><span id="title">Teslim Yeri</span></div>
           <div>
             <div id="seperator-top"></div>
             <div id="seperator-bottom" class="mt-2"></div>
           </div>
           <div class="info">
-            <div><span>{{returnLocationTitle}}</span></div>
-            <div><span>{{rentDetail.returnDate}} - {{rentDetail.returnTime}}</span></div>
+            <div>
+              <span>{{ returnLocationTitle }}</span>
+            </div>
+            <div>
+              <span
+                >{{ rentDetail.returnDate }} - {{ rentDetail.returnTime }}</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -150,23 +266,31 @@
         <div>
           <div><span id="title">Kiralama Süresi</span></div>
           <div><span>:</span></div>
-          <div><span>{{rentDetail.rentDay}} Gün</span></div>
+          <div>
+            <span>{{ rentDetail.rentDay }} Gün</span>
+          </div>
         </div>
         <div>
           <div><span id="title">Günlük Fiyatı</span></div>
           <div><span>:</span></div>
-          <div><span>{{car.dailyPrice | currency:"TRY":"₺"}}</span></div>
+          <div>
+            <span>{{ car.dailyPrice | currency : "TRY" : "₺" }}</span>
+          </div>
         </div>
         <div>
           <div><span id="title">Toplam Fiyat</span></div>
           <div><span>:</span></div>
-          <div><span>{{totalPrice(car.dailyPrice) | currency:"TRY":"₺"}}  </span></div>
+          <div>
+            <span
+              >{{ totalPrice(car.dailyPrice) | currency : "TRY" : "₺" }}
+            </span>
+          </div>
         </div>
       </div>
 
       <div class="coupon-code mt-3">
         <form>
-            <input type="text" placeholder="Kupon Kodu">
+          <input type="text" placeholder="Kupon Kodu" />
           <div class="coupon-button">
             <button type="button" (click)="checkCouponCode('')">
               <i class="fa-solid fa-check mt-2"></i>
@@ -176,11 +300,39 @@
       </div>
 
       <div class="submit-form mt-3">
-        <button type="button" (click)="goToOrderConfirmation()" routerLinkActive="active">Ödemeyi Tamamla <fa-icon
-            [icon]="rightArrowIcon"></fa-icon></button>
+        <button
+          type="button"
+          (click)="openModal(addCard)"
+          routerLinkActive="active"
+        >
+          Ödemeyi Tamamla <fa-icon [icon]="rightArrowIcon"></fa-icon>
+        </button>
       </div>
     </div>
-
   </form>
 
+
+  <ng-template #addCard>
+    <div class="credit-card-modal-body text-center">
+      <p>
+       Kredi kartını daha sonra kullanmak için kaydetmek ister misiniz?
+      </p>
+      <button
+        type="button"
+        class="btn"
+        id="btn-yes"
+        (click)="addCardToUser()"
+      >
+        Evet
+      </button>
+      <button
+        type="button"
+        class="btn"
+        id="btn-no"
+        (click)="decline()"
+      >
+        Hayır
+      </button>
+    </div>
+  </ng-template>
 </div>

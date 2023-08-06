@@ -83,8 +83,18 @@ export class CarDetailsComponent implements OnInit {
     return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
   }
   getCarDetailByCarId(carId: number) {
+    const storedData = localStorage.getItem('newRental');
+    const rentalData = JSON.parse(storedData);
+    let updatedData = JSON.stringify(rentalData);
     this.carService.getCarDetailByClick(carId).subscribe((response) => {
       this.carDetails = response.data;
+      this.carDetails.forEach((car) => {
+        rentalData.totalPrice = this.totalPrice(car.dailyPrice);
+        rentalData.carId=carId;
+        updatedData = JSON.stringify(rentalData);
+        localStorage.removeItem('newRental');
+        localStorage.setItem('newRental', updatedData);
+      });
     });
   }
   getImageByCarId(carId: number) {

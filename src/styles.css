@@ -2,31 +2,37 @@
 
 @font-face {
   font-family: Roboto;
-  src: url(assets/fonts/Roboto-Regular.ttf) format('truetype');
+  src: url(assets/fonts/Roboto-Regular.ttf) format("truetype");
 }
 @font-face {
   font-family: Roboto-Bold;
-  src: url(assets/fonts/Roboto-Bold.ttf) format('truetype');
+  src: url(assets/fonts/Roboto-Bold.ttf) format("truetype");
 }
 @font-face {
   font-family: Roboto-Medium;
-  src: url(assets/fonts/Roboto-Medium.ttf) format('truetype');
+  src: url(assets/fonts/Roboto-Medium.ttf) format("truetype");
 }
 @font-face {
   font-family: Inter;
-  src: url(assets/fonts/INTER_FXH-REGULAR.TTF) format('truetype');
+  src: url(assets/fonts/INTER_FXH-REGULAR.TTF) format("truetype");
 }
 @font-face {
   font-family: Inter-Bold;
-  src: url(assets/fonts/INTER_FXH-BOLD.TTF) format('truetype');
+  src: url(assets/fonts/INTER_FXH-BOLD.TTF) format("truetype");
 }
 
 @font-face {
   font-family: NFS;
-  src: url(assets/fonts/NFS_by_JLTV.ttf) format('truetype');
+  src: url(assets/fonts/NFS_by_JLTV.ttf) format("truetype");
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -34,6 +40,41 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.dropdown-menu-user-settings #dropdown-animated {
+  transform: translate(2px, 40px) !important;
+}
+.user-first-name #dropdown-animated {
+  inset: 0px auto auto 20px !important;
+  transform: translate3d(-10px, 35px, 0px) !important;
+}
+.save-driver .tooltip {
+  width: 20rem !important;
+}
+.credit-card-modal .modal-content {
+  top: 30vh !important;
+}
+.accordion-button {
+  font-weight: 500;
+}
+
+.question-modal .modal-dialog,
+.question-modal .modal-content  {
+  width: 50% !important;
+  margin: 0 auto !important;
+  top: 30% !important;
+}
+
+@media screen and (max-width: 768px) {
+  .question-modal .modal-dialog {
+    width: 90% !important;
+  }
+  .question-modal .modal-content {
+    width: 50% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 }

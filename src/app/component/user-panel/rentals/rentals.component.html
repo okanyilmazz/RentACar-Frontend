@@ -1,0 +1,34 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="past-rentals container">
+  <div class="past-rentals-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Kiralama Bilgileri">
+        <ng-template ngbPanelContent>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Marka</th>
+                <th>Alış Tarihi</th>
+                <th>Teslim Tarihi</th>
+                <th>Kiralanan Gün Sayısı</th>
+                <th>Toplam Fiyat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let userRental of userRentals; let i = index">
+                <td>{{ userRental.brandName }}</td>
+                <td>{{ userRental.rentDate }}</td>
+                <td>{{ userRental.returnDate }}</td>
+                <td>{{ userRental.rentDay }}</td>
+                <td>{{ userRental.totalPrice | currency : "TRY" : "₺" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion> 
+  </div>
+</div>

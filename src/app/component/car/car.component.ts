@@ -1,29 +1,22 @@
 import { CarDetail } from './../../models/car/carDetailDto';
 import { ToastrService } from 'ngx-toastr';
 import { RentalDetailService } from './../../services/rental/rentalDetail.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 import {
   faPalette,
   faGasPump,
   faCarSide,
 } from '@fortawesome/free-solid-svg-icons';
-import { CarImageService } from './../../services/car-image/car-image.service';
-import {
-  Component,
-  Inject,
-  Input,
-  LOCALE_ID,
-  OnChanges,
-  OnInit,
-} from '@angular/core';
+
+import { Component, Inject, LOCALE_ID, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from 'src/app/models/car/car';
 import { CarService } from 'src/app/services/car/car.service';
 import { CarImage } from 'src/app/models/car/carImage';
 import { RentalDetail } from 'src/app/models/rental/rentalDetail';
 import { Rental } from 'src/app/models/rental/rental';
-import { faTheRedYeti } from '@fortawesome/free-brands-svg-icons';
 import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-car',
@@ -38,6 +31,7 @@ export class CarComponent implements OnChanges {
 
   unavailableCars: CarDetail[] = [];
   availableCars: CarDetail[] = [];
+  car: Car;
   cars: Car[];
   carImages: CarImage[];
   rents: Rental[] = [];
@@ -50,11 +44,8 @@ export class CarComponent implements OnChanges {
   returnTime: string;
   selectedRentalLocationId: number;
   selectedReturnLocationId: number;
-  rentDay:number;
-  dailyPrice:number;
-  @Input() isNull: boolean;
-  @Input() isExistInfo: boolean;
-  @Input() dateDetail: RentalDetail;
+  rentDay: number;
+  dailyPrice: number;
 
   colorIcon = faPalette;
   fuelIcon = faGasPump;
@@ -67,9 +58,7 @@ export class CarComponent implements OnChanges {
 
   constructor(
     private carService: CarService,
-    private carImageService: CarImageService,
     private activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService,
     private router: Router,
     private datePipe: DatePipe,
     private toastr: ToastrService,
@@ -114,54 +103,183 @@ export class CarComponent implements OnChanges {
         this.selectedRentalLocationId = params['selectedRentalLocationId'];
         this.selectedReturnLocationId = params['selectedReturnLocationId'];
 
-        let newRental: RentalDetail = {
-          id: null,
-          rentDate: this.rentalDate,
-          rentTime: this.rentalTime,
-          returnDate: this.returnDate,
-          returnTime: this.returnTime,
-          brandName: null,
-          firstName: null,
-          lastName: null,
-          rentLocationId: null,
-          returnLocationId: null,
-          totalPrice: null,
-          rentDay: null,
-        };
-
-        this.rentalDetail = newRental;
-        this.isExistAvailableCar(newRental);
+        this.getUnvaliableAllCar(this.rentalDate, this.returnDate);
       } else {
+        localStorage.removeItem('newRental');
+        localStorage.removeItem('rentalValue');
         this.getAllCarDetail();
       }
     });
   }
-  ngOnChanges() {
-    if (this.isExistInfo) {
-      if (this.dateDetail !== undefined) {
-        this.availableCars.splice(0);
-        this.isExistAvailableCar(this.dateDetail);
-        this.isNull = true;
-      }
+  ngOnChanges() {}
+
+  async getAllCarDetail() {
+    try {
+      const response = await this.carService.getAllCarDetails().toPromise();
+      this.carDetails = response.data;
+    } catch (error) {
+      console.error('Hata oluştu:', error);
     }
   }
-  getAllCarDetail() {
-    this.carService.getAllCarDetails().subscribe((response) => {
-      this.carDetails = response.data;
-      
+
+
+
+  goToVehicles(carId: number) {
+    if (this.href !== '/home' && this.href !== '/') {
+      if (!localStorage.getItem('rentalValue')) {
+        this.toastr.error(
+          'Devam etmek için Tarih/Saat/Konum bilgilerini girmeniz gerekmektedir.',
+          'Dikkat!'
+        );
+      } else {
+        const storedRental = localStorage.getItem('rentalValue');
+        const rentalValue = JSON.parse(storedRental);
+        console.log(rentalValue.rentLocationId);
+        console.log(rentalValue.returnLocationId);
+        if (rentalValue !== undefined) {
+          this.rentDay = this.findDay(
+            rentalValue.rentDate,
+            rentalValue.returnDate
+          );
+          let newRental: Rental = {
+            id: 0,
+            carId: carId,
+            userId: 2,
+            rentDate: rentalValue.rentDate,
+            rentTime: rentalValue.rentTime,
+            rentLocationId: rentalValue.rentLocationId,
+            returnDate: rentalValue.returnDate,
+            returnTime: rentalValue.returnTime,
+            returnLocationId: rentalValue.returnLocationId,
+            rentDay: this.rentDay,
+            totalPrice: 0,
+          };
+          localStorage.removeItem('newRental');
+          localStorage.setItem('newRental', JSON.stringify(newRental));
+          this.router.navigate([
+            `reservation/details/car-id/${carId}/rent-date/${rentalValue.rentDate}/rent-time/${rentalValue.rentTime}/return-date/${rentalValue.returnDate}/return-time/${rentalValue.returnTime}/rental-location/${rentalValue.rentLocationId}/return-location/${rentalValue.returnLocationId}`,
+          ]);
+        } else {
+          this.router.navigate([
+            `reservation/details/car-id/${carId}/rent-date/${this.rentalDate}/rent-time/${this.rentalTime}/return-date/${this.returnDate}/return-time/${this.returnTime}/rental-location/${this.selectedRentalLocationId}/return-location/${this.selectedReturnLocationId}`,
+          ]);
+        }
+      }
+    } else {
+      this.router.navigate([`cars`]);
+    }
+  }
+
+
+
+  async getUnvaliableAllCar(rentDate: string, returnDate: string) {
+    await this.getAllCarDetail();
+    const newRentDate = this.stringToDate(rentDate);
+    const newReturnDate = this.stringToDate(returnDate);
+
+    this.rentalDetailService.getAllRental().subscribe((response) => {
+      this.rents = response.data;
+      this.rents.forEach((rent) => {
+        const newRentalRentDate = this.stringToDate(rent.rentDate);
+        const newRentalReturnDate = this.stringToDate(rent.returnDate);
+        if (
+          (newRentDate <= newRentalRentDate &&
+            newRentalRentDate <= newReturnDate) ||
+          (newRentDate <= newRentalReturnDate &&
+            newRentalReturnDate <= newReturnDate) ||
+          (newRentalRentDate <= newRentDate &&
+            newReturnDate <= newRentalReturnDate)
+        ) {
+          this.getUnvaliableCar(rent.carId);
+        }
+      });
     });
   }
+
+
+  async getUnvaliableCar(carId: number) {
+    let unavailableCar = this.carDetails.find((c) => c.carId === carId);
+    if (unavailableCar) {
+      this.unavailableCars.push(unavailableCar);
+      this.carDetails = this.carDetails.filter(
+        (car) => !this.unavailableCars.includes(car)
+      );
+    }
+    if (this.unavailableCars.length === 0) {
+      await this.getAllCarDetail();
+    }
+  }
+
+
+  stringToDate(dateStr: string): Date {
+    // Tarih formatını 'dd.MM.yyyy' şeklinde belirliyoruz.
+    const dateRegex = /^(\d{2})\.(\d{2})\.(\d{4})$/;
+    const match = dateStr.match(dateRegex);
+
+    if (!match) {
+      console.error("Hatalı tarih formatı. Geçerli format: 'dd.MM.yyyy'");
+      // Geçersiz tarih için dönüş yerine başka bir şey döndürebiliriz, örneğin bir default tarih.
+      return new Date(); // Bu örnek default tarih olarak şu anki zamanı veriyor.
+    }
+
+    const day = Number(match[1]);
+    const month = Number(match[2]) - 1; // JavaScript'in tarih objesinde aylar 0'dan başlar (Ocak: 0, Şubat: 1, vs.)
+    const year = Number(match[3]);
+
+    // Date türü doğru bir şekilde çevrilemeyebilir (örn. 30 Şubat gibi). Bu yüzden kontrol ediyoruz.
+    const newDate = new Date(year, month, day);
+    if (isNaN(newDate.getTime())) {
+      console.error('Geçersiz tarih.');
+      // Geçersiz tarih için dönüş yerine başka bir şey döndürebiliriz, örneğin bir default tarih.
+      return new Date(); // Bu örnek default tarih olarak şu anki zamanı veriyor.
+    }
+    return newDate;
+  }
+
+  transformDate(date: any) {
+    return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
+  }
+
+  totalPrice(dailyPrice: number) {
+    return dailyPrice * this.rentDay;
+  }
+
+  findDay(rentDateStr: string, returnDateStr: string): number {
+    const [rentDay, rentMonth, rentYear] = rentDateStr.split('.').map(Number);
+    const [returnDay, returnMonth, returnYear] = returnDateStr
+      .split('.')
+      .map(Number);
+
+    const rentDate = new Date(rentYear, rentMonth - 1, rentDay); // Months are zero-based, so subtract 1
+    const returnDate = new Date(returnYear, returnMonth - 1, returnDay); // Months are zero-based, so subtract 1
+
+    let dayDifference: number = Math.floor(
+      (returnDate.getTime() - rentDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    console.log(dayDifference);
+    return dayDifference;
+  }
+
+
+
+
+
+  
+  /* FILTERS METHOD */
 
   getCarByBrand(brandId: number) {
     this.carService.getCarDetailByBrand(brandId).subscribe((response) => {
       this.carDetails = response.data;
     });
   }
+
   getCarByColor(colorId: number) {
     this.carService.getCarDetailByColor(colorId).subscribe((response) => {
       this.carDetails = response.data;
     });
   }
+
   getCarByBody(bodyId: number) {
     this.carService.getCarDetailByBody(bodyId).subscribe((response) => {
       this.carDetails = response.data;
@@ -189,6 +307,7 @@ export class CarComponent implements OnChanges {
         this.carDetails = response.data;
       });
   }
+
   getBrandAndBodyFilter(brandId: number, bodyId: number) {
     this.carService
       .getCarDetailByBrandAndColor(brandId, bodyId)
@@ -196,127 +315,13 @@ export class CarComponent implements OnChanges {
         this.carDetails = response.data;
       });
   }
+
   getBodyAndColorFilter(bodyId: number, colorId: number) {
     this.carService
       .getCarDetailByBodyAndColor(bodyId, colorId)
       .subscribe((response) => {
         this.carDetails = response.data;
-
       });
   }
 
-
-
-  findDay(rentalDate: string, returnDate: string): any {
-    let rentalDateSplit = rentalDate.split('.');
-    let returnDateSplit = returnDate.split('.');
-
-    let returnDay: number = +returnDateSplit[0];
-    let rentalDay: number = +rentalDateSplit[0];
-    let returnMonth: number = +returnDateSplit[1];
-    let rentalMonth: number = +rentalDateSplit[1];
-
-    let dayDifference: number = returnDay - rentalDay;
-    let monthDifference: number = returnMonth - rentalMonth;
-    dayDifference = dayDifference + monthDifference * 30;
-    return dayDifference;
-  }
-
-  goToVehicles(carId: number) {
-    console.log('href = ' + this.href);
-    if (this.href !== '/home' && this.href !== '/') {
-
-
-      if (this.isNull === false) {
-        this.toastr.error(
-          'Devam etmek için Tarih/Saat/Konum bilgilerini girmeniz gerekmektedir.',
-          'Dikkat!'
-        );
-      } else {
-        if (this.dateDetail !== undefined) {
-          this.rentDay=this.findDay(
-            this.dateDetail.rentDate,
-            this.dateDetail.returnDate
-          );
-          let newRental: RentalDetail = {
-            id: null,
-            rentDate: this.dateDetail.rentDate,
-            rentTime: this.dateDetail.rentTime,
-            returnDate: this.dateDetail.returnDate,
-            returnTime: this.dateDetail.returnTime,
-            brandName: null,
-            firstName: "",
-            lastName: "",
-            rentLocationId: this.dateDetail.rentLocationId,
-            returnLocationId: this.dateDetail.rentLocationId,
-            totalPrice: this.totalPrice(this.dailyPrice),
-            rentDay: this.rentDay
-          };
-
-          localStorage.removeItem('newRental');
-          localStorage.setItem('newRental', JSON.stringify(newRental));
-
-          this.router.navigate([
-            `reservation/details/car-id/${carId}/rent-date/${this.dateDetail.rentDate}/rent-time/${this.dateDetail.rentTime}/return-date/${this.dateDetail.returnDate}/return-time/${this.dateDetail.returnTime}/rental-location/${this.dateDetail.rentLocationId}/return-location/${this.dateDetail.returnLocationId}`,
-          ]);
-        } else {
-          this.router.navigate([
-            `reservation/details/car-id/${carId}/rent-date/${this.rentalDate}/rent-time/${this.rentalTime}/return-date/${this.returnDate}/return-time/${this.returnTime}/rental-location/${this.selectedRentalLocationId}/return-location/${this.selectedReturnLocationId}`,
-          ]);
-        }
-      }
-    } else {
-      this.router.navigate([`cars`]);
-    }
-  }
-
-  isExistAvailableCar(rentalDetail: RentalDetail) {
-    this.getAllCarDetail();
-    this.rentalDetailService.getAllRental().subscribe((response) => {
-      this.rents = response.data.filter(function (rental) {
-        return rental.rentDate == rentalDetail.rentDate;
-      });
-      if (this.rents.length === 0) {
-        this.getAllCarDetail();
-      }
-      this.unavailableCars = [];
-      this.rents.forEach((rent) => {
-        this.getUnvaliableAllCar(rent.carId);
-      });
-
-      this.getAvailableCar(this.carDetails, this.unavailableCars);
-      this.carDetails = this.availableCars;
-    });
-
-
-  }
-
-  getAvailableCar(carDetails: CarDetail[], unavailableCars: CarDetail[]) {
-    carDetails.forEach((car) => {
-      const test = unavailableCars.indexOf(car);
-      if (test === -1) {
-        this.availableCars.push(car);
-      }
-    });
-  }
-
-
-  getUnvaliableAllCar(carId: number) {
-    if (this.carDetails !== undefined) {
-      this.carDetails.forEach((car) => {
-        if (car.carId === carId) {
-          this.unavailableCars.push(car);
-        }
-      });
-    }
-  }
-
-  transformDate(date: any) {
-    return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
-  }
-  
-  totalPrice(dailyPrice: number) {
-    return dailyPrice * this.rentDay;
-  }
-  
 }

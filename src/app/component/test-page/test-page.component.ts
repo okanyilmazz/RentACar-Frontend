@@ -12,6 +12,7 @@ import { JsonPipe } from '@angular/common';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import * as $ from 'jquery';
 import { TimeList } from 'src/app/models/time/timeList';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-page',
@@ -19,70 +20,140 @@ import { TimeList } from 'src/app/models/time/timeList';
   styleUrls: ['./test-page.component.css'],
 })
 export class TestPageComponent implements OnInit {
-  @ViewChild('#selectTime') input: ElementRef;
+  blogStyle: string;
+  homeStyle: string;
+  projectStyle: string;
+  projectTypeStyle: string;
+  messagesStyle: string;
+  isMessageCollapsed: boolean = false;
+  offerCount: number;
+  offerByFilterBg: string;
+  offerBg: string;
+  currentDate: Date = new Date();
+  transformCurrentDate: string;
 
-  model: NgbDateStruct;
-  date: { year: number; month: number };
-  Times: TimeList[] = [];
-  public isCollapsed = false;
-  constructor() {
 
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {}
+
+  logOut() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/home']);
   }
 
-  ngOnInit(): void {
-    this.loadTimeList();
+  getBg(url: any) {
+    if (url.includes('/project-operations')) {
+      this.projectStyle = '#0d6efd';
+      this.blogStyle = 'transparent';
+      this.homeStyle = 'transparent';
+      this.projectTypeStyle = 'transparent';
+      this.messagesStyle = 'transparent';
+    } else if (url.includes('/blog-operations')) {
+      this.projectStyle = 'transparent';
+      this.blogStyle = '#0d6efd';
+      this.homeStyle = 'transparent';
+      this.messagesStyle = 'transparent';
+      this.projectTypeStyle = 'transparent';
+    } else if (url.includes('/project-type-operations')) {
+      this.projectStyle = 'transparent';
+      this.blogStyle = 'transparent';
+      this.homeStyle = 'transparent';
+      this.projectTypeStyle = '#0d6efd';
+      this.messagesStyle = 'transparent';
+    } else if (url.includes('/messages')) {
+      this.projectStyle = 'transparent';
+      this.blogStyle = 'transparent';
+      this.homeStyle = 'transparent';
+      this.projectTypeStyle = 'transparent';
+      this.messagesStyle = '#0d6efd';
+    } 
+    else if(url.includes('/offers')){
+      this.projectStyle = 'transparent';
+      this.blogStyle = 'transparent';
+      this.homeStyle = 'transparent';
+      this.projectTypeStyle = 'transparent';
+      this.messagesStyle = 'transparent';
+    }
+    else {
+      this.projectStyle = 'transparent';
+      this.blogStyle = 'transparent';
+      this.homeStyle = '#0d6efd';
+      this.projectTypeStyle = 'transparent';
+      this.messagesStyle = 'transparent';
+    }
   }
 
-  loadTimeList() {
-    this.Times = [
-      { id: 1, hour: '00', minute: '00' },
-      { id: 2, hour: '00', minute: '30' },
-      { id: 1, hour: '01', minute: '00' },
-      { id: 2, hour: '01', minute: '30' },
-      { id: 1, hour: '02', minute: '00' },
-      { id: 2, hour: '02', minute: '30' },
-      { id: 1, hour: '03', minute: '00' },
-      { id: 2, hour: '03', minute: '30' },
-      { id: 1, hour: '04', minute: '00' },
-      { id: 2, hour: '04', minute: '30' },
-      { id: 1, hour: '05', minute: '00' },
-      { id: 2, hour: '05', minute: '30' },
-      { id: 1, hour: '06', minute: '00' },
-      { id: 2, hour: '06', minute: '30' },
-      { id: 1, hour: '07', minute: '00' },
-      { id: 2, hour: '07', minute: '30' },
-      { id: 1, hour: '08', minute: '00' },
-      { id: 2, hour: '08', minute: '30' },
-      { id: 1, hour: '09', minute: '00' },
-      { id: 2, hour: '09', minute: '30' },
-      { id: 1, hour: '10', minute: '00' },
-      { id: 2, hour: '10', minute: '30' },
-      { id: 1, hour: '11', minute: '00' },
-      { id: 2, hour: '11', minute: '30' },
-      { id: 1, hour: '12', minute: '00' },
-      { id: 2, hour: '12', minute: '30' },
-      { id: 1, hour: '13', minute: '00' },
-      { id: 2, hour: '13', minute: '30' },
-      { id: 1, hour: '14', minute: '00' },
-      { id: 2, hour: '14', minute: '30' },
-      { id: 1, hour: '15', minute: '00' },
-      { id: 2, hour: '15', minute: '30' },
-      { id: 1, hour: '16', minute: '00' },
-      { id: 2, hour: '16', minute: '30' },
-      { id: 1, hour: '17', minute: '00' },
-      { id: 2, hour: '17', minute: '30' },
-      { id: 1, hour: '18', minute: '00' },
-      { id: 2, hour: '18', minute: '30' },
-      { id: 1, hour: '19', minute: '00' },
-      { id: 2, hour: '19', minute: '30' },
-      { id: 1, hour: '20', minute: '00' },
-      { id: 2, hour: '20', minute: '30' },
-      { id: 1, hour: '21', minute: '00' },
-      { id: 2, hour: '21', minute: '30' },
-      { id: 1, hour: '22', minute: '00' },
-      { id: 2, hour: '22', minute: '30' },
-      { id: 1, hour: '23', minute: '00' },
-      { id: 2, hour: '23', minute: '30' },
-    ];
+  goToMessages() {
+    this.router.navigate(['/profile/messages']);
+  }
+
+
+  getMessages() {
+ 
+  }
+
+  
+  getOffersByFilter() {
+    // this.offerService.getAllOffer().subscribe((response) => {
+    //   this.offers = response.data.filter((o) => o.isActive === false).slice(-5);
+    // });
+
+    // this.offerByFilterBg = 'background-color:#818896;color:#fff;';
+    // this.offerBg = 'background-color:transparent;color:#212529';
+  }
+  getOffers() {
+    // this.offerService.getAllOffer().subscribe((response) => {
+    //   this.offerCount = response.data.filter(
+    //     (o) => o.isActive === false
+    //   ).length;
+    //   this.offers = response.data;
+    //   this.myevent.emit({ offer: this.offers});
+    // });
+    // this.offerByFilterBg = 'background-color:transparent;color:#212529';
+    // this.offerBg = 'background-color:#818896;color:#fff;';
+  }
+
+  isReadNotification(isActive: any) {
+    if (isActive) {
+      return 'none';
+    } else {
+      return 'block';
+    }
+  }
+
+  markAsReadNotification(offerId: number) {
+    // this.transformCurrentDate = this.transformDate(this.currentDate);
+    // this.offerService.getOfferById(offerId).subscribe((response) => {
+    //   const updatedOffer = response.data;
+    //   if (updatedOffer.isActive === false) {
+    //     updatedOffer.isActive = true;
+    //     this.offerService.updateOffer(updatedOffer).subscribe(
+    //       (response) => {
+    //         if (response.success) {
+    //           this.getOffers();
+    //         }
+    //       },
+    //       (responseError) => {
+    //         if (responseError.error.Errors.length > 0) {
+    //           for (let i = 0; i < responseError.error.Errors.length; i++) {
+    //             this.toastrService.error(
+    //               responseError.error.Errors[i].ErrorMessage,
+    //               'Doğrulama Hatası'
+    //             );
+    //           }
+    //         }
+    //       }
+    //     );
+    //   }
+    // });
+  }
+  goToAllOffers() {
+    // this.router.navigate(['/bk-panel/offers']);
+  }
+
+  transformDate(date: any) {
+    // return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
   }
 }

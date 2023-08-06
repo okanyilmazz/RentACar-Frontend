@@ -1,0 +1,26 @@
+<div class="register-page">
+    <div class="register-page-content col-md-12">
+        <div class="form-block mx-auto my-auto">
+            <form [formGroup]="registerForm">
+                <div class="mb-3">
+                    <label for="InputFirstName" class="form-label">Ad</label>
+                    <input type="text" class="form-control" id="InputFirstName" aria-describedby="firstNameHelp" formControlName="firstName">
+                  </div>
+                  <div class="mb-3">
+                    <label for="InputLastName" class="form-label">Soyad</label>
+                    <input type="text" class="form-control" id="InputLastName" aria-describedby="lastNameHelp" formControlName="lastName">
+                  </div>
+                <div class="mb-3">
+                  <label for="InputMail" class="form-label">Email</label>
+                  <input type="text" class="form-control" id="InputMail" aria-describedby="mailHelp" formControlName="email">
+                </div>
+                <div class="mb-3">
+                  <label for="ForInputPassword" class="form-label">Şifre</label>
+                  <input type="password" class="form-control" id="InputPassword" formControlName="password">
+                </div>
+                <button class="btn col-md-12" (click)="register()">Kayıt Ol</button>
+              </form>
+
+        </div>
+    </div>
+</div>

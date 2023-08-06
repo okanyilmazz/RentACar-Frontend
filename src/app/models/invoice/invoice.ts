@@ -1,10 +1,11 @@
 export interface Invoice {
   id: number;
+  userId:number;
   countryId:number;
   cityId:number;
-  countieId:number;
+  countyId:number;
   address: string;
   companyTitle: string;
-  taxAdministration: number;
+  taxAdministration: string;
   taxNumber: number;
 }

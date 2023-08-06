@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
 } from '@angular/core';
 import { BodyType } from 'src/app/models/body-type/body-type';
@@ -30,7 +29,6 @@ export class BodyComponent implements OnChanges {
   getBody() {
     this.bodyService.getBody().subscribe((response) => {
       this.bodies = response.data;
-      console.log(this.bodies)
     });
   }
 

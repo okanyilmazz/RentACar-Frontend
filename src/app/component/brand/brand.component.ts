@@ -35,7 +35,6 @@ export class BrandComponent implements OnChanges {
     });
   }
   setCurrentBrand(brand: Brand) {
-
     this.isOpenBrand = false;
     this.BrandEvent.emit(this.isOpenBrand);
     this.currentBrand = brand;

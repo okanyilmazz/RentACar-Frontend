@@ -1,20 +1,14 @@
 import { DatePipe } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  LOCALE_ID,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { NgbDateStruct, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { TrDatepickerI18n } from 'src/app/directives/trDatepickerI18n';
-
-
 import { LocationDetailDto } from 'src/app/models/location/locationDetailsDto';
+import { Rental } from 'src/app/models/rental/rental';
 import { RentalDetail } from 'src/app/models/rental/rentalDetail';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { LocationService } from 'src/app/services/location/location.service';
 
 @Component({
@@ -24,21 +18,20 @@ import { LocationService } from 'src/app/services/location/location.service';
   providers: [
     {
       provide: NgbDatepickerI18n,
-      useClass: TrDatepickerI18n
-    }
-  ]
+      useClass: TrDatepickerI18n,
+    },
+  ],
 })
 export class DateMenuComponent implements OnInit {
   constructor(
     private locationService: LocationService,
     private datePipe: DatePipe,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     @Inject(LOCALE_ID) private locale: string
-  ) {}
-  @Output() RentalEvent = new EventEmitter<boolean>();
-  @Output() DateEvent = new EventEmitter<boolean>();
-  @Output() DateDetailEvent = new EventEmitter<RentalDetail>();
+  ) {
+    localStorage.removeItem('rentalValue');
+  }
+
   arrowIcon = faAngleDoubleRight;
   filterRentalText: string;
   filterReturnText: string;
@@ -48,16 +41,28 @@ export class DateMenuComponent implements OnInit {
   isDifferentLocation = false;
   selectedRentalLocation: LocationDetailDto;
   selectedReturnLocation: LocationDetailDto;
-  selectedRentalLocationId: number;
-  selectedReturnLocationId: number;
+  selectedRentalLocationId: number = 0;
+  selectedReturnLocationId: number = 0;
   isRentalText: string;
   isReturnText: string;
-  rentalDate: string="";
-  rentalTime: string="--:--";
-  returnDate: string="";
-  returnTime: string="--:--";
+  rentalDate: string = '';
+  rentalTime: string = '--:--';
+  returnDate: string = '';
+  returnTime: string = '--:--';
   loadTimes: string[] = [];
-  testId: number;
+  rentalInfo: Rental = {
+    id: null,
+    carId: null,
+    userId: null,
+    rentDate: null,
+    rentTime: null,
+    rentLocationId: null,
+    returnDate: null,
+    returnTime: null,
+    returnLocationId: null,
+    rentDay: null,
+    totalPrice: null,
+  };
   rentMinDate: NgbDateStruct = {
     year: this.currentDate().year,
     month: this.currentDate().month,
@@ -69,54 +74,64 @@ export class DateMenuComponent implements OnInit {
     day: this.rentMinDate.day + 1,
   };
 
+  dateAddForm: FormGroup;
+
   ngOnInit(): void {
     this.getLocationDetails();
     this.isRentalText = this.filterRentalText;
     this.isReturnText = this.filterReturnText;
     this.loadTimeList();
     this.activatedRoute.params.subscribe((params) => {
+      const {
+        rentalDate,
+        rentalTime,
+        returnDate,
+        returnTime,
+        selectedRentalLocationId,
+        selectedReturnLocationId,
+      } = params;
       if (
-        params['rentalDate'] &&
-        params['rentalTime'] &&
-        params['returnDate'] &&
-        params['returnTime'] &&
-        params['selectedRentalLocationId'] &&
-        params['selectedReturnLocationId']
+        rentalDate &&
+        rentalTime &&
+        returnDate &&
+        returnTime &&
+        selectedRentalLocationId &&
+        selectedReturnLocationId
       ) {
         this.getRentalLocationDetailsById(params['selectedRentalLocationId']);
         this.getReturnLocationDetailsById(params['selectedReturnLocationId']);
 
-        let newRental: RentalDetail = {
+        this.rentalInfo = {
           id: null,
+          carId: null,
+          userId: null,
           rentDate: params['rentalDate'],
           rentTime: params['rentalTime'],
+          rentLocationId: params['selectedRentalLocationId'],
           returnDate: params['returnDate'],
           returnTime: params['returnTime'],
-          brandName: null,
-          firstName: null,
-          lastName: null,
-          rentLocationId: params['selectedRentalLocationId'],
           returnLocationId: params['selectedReturnLocationId'],
-          rentDay: this.findDay(params['rentalDate'], params['returnDate']),
+          rentDay: null,
           totalPrice: null,
         };
 
-        this.checkDate(true);
-        localStorage.removeItem('newRental');
-        localStorage.setItem('newRental', JSON.stringify(newRental));
-        this.createNewRentalModel(newRental);
-      } else if (this.rentalDate !== null && this.returnDate !== null) {
+        this.selectedRentalLocationId = params['selectedRentalLocationId'];
+        this.selectedReturnLocationId = params['selectedReturnLocationId'];
+        this.getRentalInfoByParameters(this.rentalInfo);
       } else {
-        this.checkDate(false);
+        // this.createDateAddForm();
       }
     });
   }
 
-  createNewRentalModel(newRental: RentalDetail) {
-    this.rentalDate = newRental.rentDate;
-    this.rentalTime = newRental.rentTime;
-    this.returnDate = newRental.returnDate;
-    this.returnTime = newRental.returnTime;
+  getRentalInfoByParameters(rentalInfo: any) {
+    this.rentalDate = rentalInfo.rentDate;
+    this.rentalTime = rentalInfo.rentTime;
+    this.returnDate = rentalInfo.returnDate;
+    this.returnTime = rentalInfo.returnTime;
+    this.selectedRentalLocationId = rentalInfo.rentLocationId;
+    this.selectedReturnLocationId = rentalInfo.returnLocationId;
+    this.setLocalStorage('rentalValue', rentalInfo);
   }
 
   getLocationDetails() {
@@ -162,6 +177,7 @@ export class DateMenuComponent implements OnInit {
     this.filterRentalText = this.selectedRentalLocation.title;
     this.isRentalText = '';
     this.selectedRentalLocationId = this.selectedRentalLocation.id;
+    this.checkAllInfo();
   }
 
   selectReturnLocation(location: LocationDetailDto) {
@@ -169,6 +185,7 @@ export class DateMenuComponent implements OnInit {
     this.filterReturnText = this.selectedReturnLocation.title;
     this.isReturnText = '';
     this.selectedReturnLocationId = this.selectedReturnLocation.id;
+    this.checkAllInfo();
   }
 
   findDay(rentalDate: string, returnDate: string): any {
@@ -179,48 +196,98 @@ export class DateMenuComponent implements OnInit {
     let rentalDay: number = +rentalDateSplit[0];
     let returnMonth: number = +returnDateSplit[1];
     let rentalMonth: number = +rentalDateSplit[1];
+    let returnYear: number = +returnDateSplit[2];
+    let rentalYear: number = +returnDateSplit[2];
 
     let dayDifference: number = returnDay - rentalDay;
     let monthDifference: number = returnMonth - rentalMonth;
-    dayDifference = dayDifference + monthDifference * 30;
+    let yearDifference: number = returnYear - rentalYear;
+    dayDifference = dayDifference + monthDifference * 30 + yearDifference * 365;
     return dayDifference;
   }
 
-  checkDate(isExistDate: boolean) {
-    this.RentalEvent.emit(isExistDate);
-  }
+  // checkAllInfo() {
+  //   console.log("çalıştı")
+  //   let rentalValue = this.dateAddForm.value;
+  //   rentalValue.rentLocationId = this.selectedRentalLocationId;
+  //   rentalValue.returnLocationId = this.selectedReturnLocationId;
+
+  //   console.log(this.dateAddForm.value);
+
+  //   if (this.dateAddForm.valid) {
+  //     console.log("girdi")
+  //   }
+  //   else{
+  //     console.log(this.dateAddForm.value);
+  //   }
+  // }
 
   checkAllInfo() {
+    localStorage.removeItem('rentalValue');
     if (
-      this.rentalDate !== undefined &&
-      this.returnDate !== undefined &&
-      this.rentalTime !== undefined &&
-      this.returnTime !== undefined &&
-      this.filterRentalText !== undefined &&
-      this.filterReturnText !== undefined
+      this.rentalDate &&
+      this.returnDate &&
+      this.rentalTime &&
+      this.returnTime &&
+      this.filterRentalText &&
+      this.filterReturnText
     ) {
-      this.checkDateDetail();
-      this.DateEvent.emit(true);
+      this.rentalInfo = {
+        id: null,
+        carId: null,
+        userId: null,
+        rentDate: this.rentalDate,
+        rentTime: this.rentalTime,
+        rentLocationId: this.selectedRentalLocationId,
+        returnDate: this.returnDate,
+        returnTime: this.returnTime,
+        returnLocationId: this.selectedReturnLocationId,
+        rentDay: null,
+        totalPrice: null,
+      };
+      this.setLocalStorage('rentalValue', this.rentalInfo);
     }
   }
-  checkDateDetail() {
 
-    let filterRental: RentalDetail = {
-      id: null,
-      rentDate: this.rentalDate,
-      rentTime: this.rentalTime,
-      returnDate: this.returnDate,
-      returnTime: this.returnTime,
-      brandName: null,
-      firstName: null,
-      lastName: null,
-      rentLocationId: this.selectedRentalLocationId,
-      returnLocationId: this.selectedReturnLocationId,
-      rentDay: null,
-      totalPrice: null,
+  onRentDateSelect(event: any) {
+    this.returnMinDate.year = event.year;
+    this.returnMinDate.month = event.month;
+    this.returnMinDate.day = event.day + 1;
+    this.returnDate = '';
+    this.rentalDate = this.dateTransform(event);
+    // this.dateAddForm.patchValue({ returnDate: '' });
+    this.checkAllInfo();
+  }
+
+  onReturnDateSelect(event: any) {
+    this.returnDate = this.dateTransform(event);
+    this.checkAllInfo();
+  }
+
+  dateTransform(event: any) {
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;
+    let day = event.day <= 9 ? '0' + event.day : event.day;
+    let finalDate = day + '.' + month + '.' + year;
+    return finalDate;
+  }
+
+  stringToDateTransfrom(date: string): any {
+    const dateArray = date.split('.');
+    const day = parseInt(dateArray[0], 10);
+    const month = parseInt(dateArray[1], 10) - 1;
+    const year = parseInt(dateArray[2], 10);
+
+    const dateObject = { year: year, month: month, day: day };
+    return dateObject;
+  }
+  private currentDate() {
+    var todayDate = new Date();
+    return {
+      year: todayDate.getFullYear(),
+      month: todayDate.getMonth() + 1,
+      day: todayDate.getDate(),
     };
-
-    this.DateDetailEvent.emit(filterRental);
   }
 
   transformDate(date: any) {
@@ -278,85 +345,11 @@ export class DateMenuComponent implements OnInit {
       '23:00',
       '23:30',
     ];
-
-    // this.Times = [
-    //   { hour: 0, minute: 0 },
-    //   { hour: 0, minute: 30 },
-    //   { hour: 1, minute: 0 },
-    //   { hour: 1, minute: 30 },
-    //   { hour: 2, minute: 0 },
-    //   { hour: 2, minute: 30 },
-    //   { hour: 3, minute: 0 },
-    // { hour: '03', minute: '30' },
-    // { hour: '04', minute: '00' },
-    // { hour: '04', minute: '30' },
-    // { hour: '05', minute: '00' },
-    // { hour: '05', minute: '30' },
-    // { hour: '06', minute: '00' },
-    // { hour: '06', minute: '30' },
-    // { hour: '07', minute: '00' },
-    // { hour: '07', minute: '30' },
-    // { hour: '08', minute: '00' },
-    // { hour: '08', minute: '30' },
-    // { hour: '09', minute: '00' },
-    // { hour: '09', minute: '30' },
-    // { hour: '10', minute: '00' },
-    // { hour: '10', minute: '30' },
-    // { hour: '11', minute: '00' },
-    // { hour: '11', minute: '30' },
-    // { hour: '12', minute: '00' },
-    // { hour: '12', minute: '30' },
-    // { hour: '13', minute: '00' },
-    // { hour: '13', minute: '30' },
-    // { hour: '14', minute: '00' },
-    // { hour: '14', minute: '30' },
-    // { hour: '15', minute: '00' },
-    // { hour: '15', minute: '30' },
-    // { hour: '16', minute: '00' },
-    // { hour: '16', minute: '30' },
-    // { hour: '17', minute: '00' },
-    // { hour: '17', minute: '30' },
-    // { hour: '18', minute: '00' },
-    // { hour: '18', minute: '30' },
-    // { hour: '19', minute: '00' },
-    // { hour: '19', minute: '30' },
-    // { hour: '20', minute: '00' },
-    // { hour: '20', minute: '30' },
-    // { hour: '21', minute: '00' },
-    // { hour: '21', minute: '30' },
-    // { hour: '22', minute: '00' },
-    // { hour: '22', minute: '30' },
-    // { hour: '23', minute: '00' },
-    // { hour: '23', minute: '30' },
-    //];
   }
 
-  onRentDateSelect(event: any) {
-    this.returnMinDate.year = event.year;
-    this.returnMinDate.month = event.month;
-    this.returnMinDate.day = event.day + 1;
-    this.rentalDate = this.dateTransform(event);
-    this.returnDate = '';
-  }
-  onReturnDateSelect(event: any) {
-    this.returnDate = this.dateTransform(event);
+  setLocalStorage(storageName: string, storageData: any) {
+    localStorage.setItem(storageName, JSON.stringify(storageData));
   }
 
-  dateTransform(event: any) {
-    let year = event.year;
-    let month = event.month <= 9 ? '0' + event.month : event.month;
-    let day = event.day <= 9 ? '0' + event.day : event.day;
-    let finalDate = day + '.' + month + '.' + year;
-    return finalDate;
-  }
 
-  private currentDate() {
-    var todayDate = new Date();
-
-    return {
-      year: todayDate.getFullYear(),
-      month: todayDate.getMonth() + 1,
-      day: todayDate.getDate(),
-    };
-  }
 }

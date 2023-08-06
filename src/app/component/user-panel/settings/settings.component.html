@@ -1,0 +1,25 @@
+<div class="sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+  
+
+  <div class="settings container" >
+    <form [formGroup]="settingsSendForm">
+        <div class="mb-3">
+            <label for="firstName" class="form-label">İsim</label>
+            <input type="firstName" class="form-control" id="firstName" formControlName="firstName" [(ngModel)]="firstName">
+          </div>
+    
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Soyisim</label>
+            <input type="lastName" class="form-control" id="lastName" formControlName="lastName" [(ngModel)]="lastName">
+          </div>
+    
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email" [(ngModel)]="email">
+          </div> 
+          <button id="update" (click)="update()">Güncelle</button>
+    </form>
+
+  </div>

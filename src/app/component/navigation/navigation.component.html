@@ -1,15 +1,17 @@
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <div class="navigation container">
   <div class="logo">
-    <img class="navbar-brand" src="assets/image/rent-logo.png" href="#">
-    <img class="navbar-brand-transparent" src="assets/image/logo-transparent.png" href="#">
-
+    <img class="navbar-brand" src="assets/image/rent-logo.png" href="#" />
+    <img
+      class="navbar-brand-transparent"
+      src="assets/image/logo-transparent.png"
+      href="#"
+    />
   </div>
 
   <div class="menu">
-
     <div class="top-menu row m-0 p-0">
       <div class="top-menu-link">
         <ul>
@@ -23,51 +25,116 @@
         </ul>
         <div class="search-tablet">
           <div class="search-form">
-            <form class="form-inline collapse" [ngbCollapse]="isSearchCollapsed">
-              <input class="form-control" type="search" placeholder="Arama yap..." aria-label="Seach">
+            <form
+              class="form-inline collapse"
+              [ngbCollapse]="isSearchCollapsed"
+            >
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Arama yap..."
+                aria-label="Seach"
+              />
             </form>
           </div>
           <div class="search-button">
-            <button class="btn" type="button" (click)="isSearchCollapsed = !isSearchCollapsed">
-              <fa-icon [icon]="searchIcon" style="font-size:small; color:rgb(41, 41, 41)"> <span
-                  class="search-toggler-icon"></span></fa-icon>
+            <button
+              class="btn"
+              type="button"
+              (click)="isSearchCollapsed = !isSearchCollapsed"
+            >
+              <fa-icon
+                [icon]="searchIcon"
+                style="font-size: small; color: rgb(41, 41, 41)"
+              >
+                <span class="search-toggler-icon"></span
+              ></fa-icon>
             </button>
           </div>
         </div>
-
       </div>
-
 
       <div class="social-media">
         <button type="button" class="btn">
-          <fa-icon [icon]="twitterIcon" style="font-size:medium; color:gray"></fa-icon>
+          <fa-icon
+            [icon]="twitterIcon"
+            style="font-size: medium; color: gray"
+          ></fa-icon>
         </button>
         <button type="button" class="btn">
-          <fa-icon [icon]="youtubeIcon" style="font-size:medium; color:gray"></fa-icon>
+          <fa-icon
+            [icon]="youtubeIcon"
+            style="font-size: medium; color: gray"
+          ></fa-icon>
         </button>
         <button type="button" class="btn">
-          <fa-icon [icon]="googlePlusIcon" style="font-size:medium; color:gray"></fa-icon>
+          <fa-icon
+            [icon]="googlePlusIcon"
+            style="font-size: medium; color: gray"
+          ></fa-icon>
         </button>
         <button type="button" class="btn">
-          <fa-icon [icon]="instagramIcon" style="font-size:medium; color:gray"></fa-icon>
+          <fa-icon
+            [icon]="instagramIcon"
+            style="font-size: medium; color: gray"
+          ></fa-icon>
         </button>
       </div>
 
       <div class="lang">
-        <select #selectLang class="language-select border-0 " style="font-size: small;" aria-label="...">
+        <select
+          #selectLang
+          class="language-select border-0"
+          style="font-size: small"
+          aria-label="..."
+        >
           <option selected value="default">TR</option>
           <option>EN</option>
         </select>
       </div>
-      <div class="login-btn">
-        <button class="btn btn-light" type="button">Giriş Yap</button>
+      <div
+        ngbDropdown
+        class="user-settings dropdown-menu-user-settings dropdown"
+        *ngIf="isLogin"
+      >
+        <div class="d-flex">
+          <div
+            class="user-info d-flex"
+            ngbDropdownToggle
+            aria-controls="dropdown-animated"
+          >
+            <div class="user-photo d-flex">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/4128/4128176.png"
+                width="32"
+                height="32"
+                class="rounded-circle me-2"
+              />
+            </div>
+            <div class="info">
+              <span id="userName">{{firstName}} {{lastName}}</span>
+            </div>
+          </div>
+          <ul
+            id="dropdown-animated"
+            ngbDropdownMenu
+            aria-labelledby="button-animated"
+          >
+            <li ngbDropdownItem (click)="goToProfilePage()">Profil</li>
+            <li ngbDropdownItem (click)="signOut()">Çıkış</li>
+          </ul>
+        </div>
       </div>
-
+      <div class="login-btn" *ngIf="!isLogin">
+        <button class="btn btn-light"  routerLink="/login" (click)="getCurrentUrl()" type="button">
+          Giriş Yap
+        </button>
+      </div>
     </div>
     <div class="bottom-menu">
       <div class="nav-menu">
         <ul>
-          <li><a href="">ANASAYFA</a> </li>
+          <li><a href="">ANASAYFA</a></li>
           <li><a routerLink="/cars">ARAÇLAR</a></li>
           <li><a href="">SICAK FIRSATLAR</a></li>
           <li><a href="">KONUMLAR</a></li>
@@ -77,13 +144,26 @@
       </div>
       <div class="search-form">
         <form class="form-inline collapse" [ngbCollapse]="isSearchCollapsed">
-          <input class="form-control mr-sm-2" type="search" placeholder="Arama yap..." aria-label="Seach">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Arama yap..."
+            aria-label="Seach"
+          />
         </form>
       </div>
       <div class="search-button">
-        <button class="btn" type="button" (click)="isSearchCollapsed = !isSearchCollapsed">
-          <fa-icon [icon]="searchIcon" style="font-size:large; color:rgb(41, 41, 41)"> <span
-              class="search-toggler-icon"></span></fa-icon>
+        <button
+          class="btn"
+          type="button"
+          (click)="isSearchCollapsed = !isSearchCollapsed"
+        >
+          <fa-icon
+            [icon]="searchIcon"
+            style="font-size: large; color: rgb(41, 41, 41)"
+          >
+            <span class="search-toggler-icon"></span
+          ></fa-icon>
         </button>
       </div>
     </div>
@@ -91,24 +171,52 @@
 
   <!--  -->
   <div class="menu-bar" id="test">
-    <i *ngIf="isMenuCollapsed" (click)="isMenuCollapsed=!isMenuCollapsed" class=" fa-solid fa-bars"></i>
+    <i
+      *ngIf="isMenuCollapsed"
+      (click)="isMenuCollapsed = !isMenuCollapsed"
+      class="fa-solid fa-bars"
+    ></i>
 
-
-    <i *ngIf="!isMenuCollapsed" (click)="isMenuCollapsed=!isMenuCollapsed" class="fa fa-times"></i>
+    <i
+      *ngIf="!isMenuCollapsed"
+      (click)="isMenuCollapsed = !isMenuCollapsed"
+      class="fa fa-times"
+    ></i>
   </div>
 </div>
 
-<div class="dropdown-menu" id="dropdown-menu" [ngbCollapse]="isMenuCollapsed">
+<div
+  class="mobile-dropdown-menu"
+  id="dropdown-menu"
+  [ngbCollapse]="isMenuCollapsed"
+>
   <div class="dropdown-menu-title">
-    <div class="dropdown-menu-register">
-      <fa-icon [icon]="userIcon"></fa-icon>
-      <span>Üye Ol</span>
+    <div class="dropdown-menu-membership-operations" *ngIf="!isLogin">
+      <div class="dropdown-menu-register">
+        <fa-icon [icon]="userIcon"></fa-icon>
+        <span>Üye Ol</span>
+      </div>
+  
+      <div class="dropdown-menu-login" routerLink="/login">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#deaa4f" viewBox="0 0 256 256"><path d="M144.49,136.49l-40,40a12,12,0,0,1-17-17L107,140H24a12,12,0,0,1,0-24h83L87.51,96.49a12,12,0,0,1,17-17l40,40A12,12,0,0,1,144.49,136.49ZM192,28H136a12,12,0,0,0,0,24h52V204H136a12,12,0,0,0,0,24h56a20,20,0,0,0,20-20V48A20,20,0,0,0,192,28Z"></path></svg>
+        <span>Üye Girişi</span>
+      </div>
     </div>
-    <div class="dropdown-menu-login" (click)="login()">
-      <span>Üye Girişi</span>
+    
+    <div class="user-first-name" ngbDropdown  *ngIf="isLogin">
+      <span ngbDropdownToggle> <u> Okan YILMAZ </u> Hoş geldin!</span>
+      <ul
+      id="dropdown-animated"
+      ngbDropdownMenu
+      aria-labelledby="button-animated"
+    >
+      <li ngbDropdownItem>Profil</li>
+      <li ngbDropdownItem (click)="signOut()">Çıkış</li> 
+    </ul>
     </div>
+
     <div class="dropdown-lang">
-      <select #selectLang class="language-select border-0 " aria-label="...">
+      <select #selectLang class="language-select border-0" aria-label="...">
         <option selected value="default">TR</option>
         <option>EN</option>
       </select>
@@ -117,7 +225,12 @@
 
   <div class="dropdown-menu-search">
     <form class="form-inline">
-      <input class="form-control" type="search" placeholder="Rent'te Ara ..." aria-label="Seach">
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Rent'te Ara ..."
+        aria-label="Seach"
+      />
       <button type="submit">
         <fa-icon [icon]="searchIcon"></fa-icon>
       </button>
@@ -167,7 +280,9 @@
       </div>
       <fa-icon [icon]="rightArrowIcon"></fa-icon>
     </div>
-    <button type="button" class="sign-out" *ngIf="!isLogin" (click)="signOut()">Çıkış Yap</button>
+    <button type="button" class="sign-out" *ngIf="isLogin" (click)="signOut()">
+      Çıkış Yap
+    </button>
   </div>
   <div class="dropdown-footer">
     <fa-icon [icon]="twitterIcon"></fa-icon>

@@ -1,6 +1,7 @@
 export interface Payment{
   id:number;
-  cardNumber:number;
+  userId:number;
+  cardNumber:string;
   cardName:string;
   cardMonth:number;
   cardYear:number;

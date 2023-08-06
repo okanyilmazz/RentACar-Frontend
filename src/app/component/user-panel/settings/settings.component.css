@@ -1,0 +1,41 @@
+.sidebar {
+  float: left;
+}
+.settings {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+#update {
+  width: 100%;
+  height: 2.2rem;
+  border: 0;
+  border-radius: 0.5rem;
+  font-family: Roboto;
+  font-size: .8rem;
+  outline: 1px solid rgba(0, 119, 255, 0.295);
+}
+#update:hover{
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+  color:#fff;
+}
+
+form label{
+    font-size: .8rem;
+    font-weight: 500; 
+}
+form input{
+    font-size: .8rem;
+}
+@media screen and (min-width: 1440px) {
+  .sidebar {
+    width: 15rem;
+  }
+  .settings {
+    width: 35rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+  }
+}

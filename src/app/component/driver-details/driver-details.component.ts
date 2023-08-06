@@ -2,7 +2,10 @@ import { Driver } from './../../models/driver/driver';
 import { LocationService } from './../../services/location/location.service';
 import { RentalDetail } from 'src/app/models/rental/rentalDetail';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDoubleRight,
+  faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarDetail } from 'src/app/models/car/carDetailDto';
@@ -14,13 +17,19 @@ import { Country } from 'src/app/models/country/country';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { NgbModule,NgbDatepickerI18n, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { TrDatepickerI18n  } from 'src/app/directives/trDatepickerI18n';
+import {
+  NgbModule,
+  NgbDatepickerI18n,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
+import { TrDatepickerI18n } from 'src/app/directives/trDatepickerI18n';
+import { User } from 'src/app/models/user/user';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-driver-details',
   templateUrl: './driver-details.component.html',
-  styleUrls: ['./driver-details.component.css']
+  styleUrls: ['./driver-details.component.css'],
 })
 export class DriverDetailsComponent implements OnInit {
   carDetails: CarDetail[];
@@ -30,20 +39,21 @@ export class DriverDetailsComponent implements OnInit {
   rentDetail: RentalDetail;
   rentalLocationTitle: string;
   returnLocationTitle: string;
-  selectedCountryId: string;
+  selectedCountryId: number=0;
   driverFirstName: string;
   driverLastName: string;
   driverPhoneNumber: string;
-  driverBirthday: string="";
+  driverBirthday: string = '';
   driverNationalId: string;
   driverPassportNumber: string;
   driverCountryCode: string;
   carId: number;
   imageUrl = 'https://webservis.geziyoskii.site/';
   rightArrowIcon = faAngleDoubleRight;
+  infoIcon = faInfoCircle;
   userIcon = faUser;
   isActive = true;
-
+  isSaveDriverActive = false;
   driverAddForm: FormGroup;
 
   constructor(
@@ -55,20 +65,18 @@ export class DriverDetailsComponent implements OnInit {
     private toastrService: ToastrService,
     private driverService: DriverService,
     private locationService: LocationService,
-    private carImageService: CarImageService,
-
-  ) {
-
-  }
+    private authService: AuthService,
+    private carImageService: CarImageService
+  ) {}
 
   birthdateMaxDate: NgbDateStruct = {
-    year: this.currentDate().year-18,
+    year: this.currentDate().year - 18,
     month: this.currentDate().month,
     day: this.currentDate().day,
   };
 
-
   ngOnInit(): void {
+    localStorage.removeItem('driverDetails');
     this.createDriverAddForm();
     this.activatedRoute.params.subscribe((params) => {
       this.getCarDetailByCarId(params['carId']);
@@ -118,7 +126,7 @@ export class DriverDetailsComponent implements OnInit {
     });
   }
   changeCountry(event: any) {
-    this.selectedCountryId  = event.target?.value;
+    this.selectedCountryId = event.target?.value;
   }
   getRentalLocationDetailsById(locationId: number): any {
     this.locationService
@@ -136,42 +144,45 @@ export class DriverDetailsComponent implements OnInit {
   }
   goToPaymentDetails() {
     let driverModel = Object.assign({}, this.driverAddForm.value);
-    if(this.driverAddForm.valid){
+
+    console.dir(driverModel)
+    if (this.driverAddForm.valid) {
       localStorage.removeItem('driverDetails');
+
       localStorage.setItem('driverDetails', JSON.stringify(driverModel));
 
       this.router.navigate([
         `reservation/details/car-id/${this.carId}/rent-date/${this.rentDetail.rentDate}/rent-time/${this.rentDetail.rentTime}/return-date/${this.rentDetail.returnDate}/return-time/${this.rentDetail.returnTime}/rental-location/${this.rentDetail.rentLocationId}/return-location/${this.rentDetail.returnLocationId}/driver-details/payment-details`,
       ]);
-    }
-    else{
+    } else {
       this.toastrService.error('Gerekli alanları doldurmalısınız.', 'Dikkat');
     }
   }
 
   createDriverAddForm() {
     this.driverAddForm = this.formBuilder.group({
+      userId: [],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       birthDate: [this.driverBirthday, Validators.required],
       nationalId: [''],
-      passportNumber: [''],
-      selectedCountryId: [this.selectedCountryId],
+      passportNumber: [],
+      countryCodeId: [this.selectedCountryId],
     });
   }
 
   add() {
     if (this.driverAddForm.valid) {
       let driverModel = Object.assign({}, this.driverAddForm.value);
-      this.driverService.add(driverModel).subscribe(response=>{
-        this.toastrService.success("Ürün eklendi","Başarılı");
-      })
-    
+      this.driverService.add(driverModel).subscribe((response) => {
+        this.toastrService.success('Ürün eklendi', 'Başarılı');
+      });
     } else {
       this.toastrService.error('Formunuz eksik', 'Dikkat');
     }
   }
+
 
   validateInput(event: KeyboardEvent): void {
     const inputChar = String.fromCharCode(event.keyCode);
@@ -179,7 +190,7 @@ export class DriverDetailsComponent implements OnInit {
     if (!pattern.test(inputChar)) {
       event.preventDefault();
     }
-  }  
+  }
 
   limitCharacterCount(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
@@ -189,8 +200,9 @@ export class DriverDetailsComponent implements OnInit {
     }
   }
 
-  selectBirthday(event:any){
+  selectBirthday(event: any) {
     this.driverBirthday = this.dateTransform(event);
+  
   }
 
   dateTransform(event: any) {
@@ -200,6 +212,7 @@ export class DriverDetailsComponent implements OnInit {
     let finalDate = day + '.' + month + '.' + year;
     return finalDate;
   }
+
   private currentDate() {
     var todayDate = new Date();
 
@@ -208,5 +221,21 @@ export class DriverDetailsComponent implements OnInit {
       month: todayDate.getMonth() + 1,
       day: todayDate.getDate(),
     };
+  }
+
+  turkishCitizenChecked(event: any) {
+    if (event) {
+      this.selectedCountryId = null;
+      this.driverPassportNumber = null;
+    }
+  }
+
+  checkDriverSave() {
+    if (this.isSaveDriverActive) {
+      let user: User = this.authService.getUserInfo();
+      const userId = Number(user.id);
+      this.driverAddForm.patchValue({ userId: userId });
+    }
+    this.goToPaymentDetails();
   }
 }

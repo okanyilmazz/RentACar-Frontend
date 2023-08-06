@@ -12,6 +12,7 @@
   box-shadow: 0px 2px 20px 2px rgba(163, 163, 163, 0.808);
   display: grid;
   grid-template-rows: 60px 280px 10px auto;
+  grid-template-rows: 60px 230px 10px auto;
   grid-template-columns: 1fr;
   background-color: #f8f9fa;
   border-radius: 10px;
@@ -121,7 +122,7 @@
   align-self: center;
   /* padding: 10px; */
   width: 100%;
-    padding: 5px;
+  padding: 5px;
 }
 
 .info-right {
@@ -290,6 +291,7 @@
 .payment-options {
   display: grid;
   grid-template-rows: 30px auto;
+  grid-row-start: 5;
 }
 
 .payment-options #title {
@@ -343,6 +345,156 @@
   margin-bottom: 0;
 }
 
+.credit-card {
+  border-radius: 0.4rem;
+  background: rgb(222, 170, 79);
+  background: linear-gradient(
+    16deg,
+    rgba(222, 170, 79, 1) 0%,
+    rgba(98, 64, 52, 1) 29%,
+    rgba(117, 80, 56, 1) 52%,
+    rgba(222, 170, 79, 1) 100%
+  );
+  display: grid;
+  box-shadow: -1px 4px 7px 0px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: -1px 4px 7px 0px rgb(0, 0, 0, 1);
+  -moz-box-shadow: -1px 4px 7px 0px rgba(0, 0, 0, 1);
+  grid-template-rows: auto 3rem auto 2rem;
+}
+.credit-top-content {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
+
+.credit-bottom-content {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 1rem;
+}
+#credit-number span {
+  font-size: 1.5rem;
+  font-family: Roboto-Bold;
+  text-shadow: -2px -2px 2px rgba(255, 255, 255, 1),
+    1px 1px 1px rgba(0, 0, 0, 0.9), 2px -2px 4px rgba(255, 255, 255, 1),
+    -2px -2px 2px rgba(0, 0, 0, 0.9), -2px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.41);
+}
+#bank-name {
+  padding: 1rem;
+}
+#bank-name span {
+  font-family: Roboto;
+  text-shadow: -2px -2px 2px rgba(255, 255, 255, 1),
+    1px 1px 1px rgba(0, 0, 0, 0.9), 2px -2px 4px rgba(255, 255, 255, 1),
+    -2px -2px 2px rgba(0, 0, 0, 0.9), -2px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 2px rgb(136 136 136 / 25%);
+}
+#credit-card-name {
+  padding: 1rem;
+  align-self: end;
+  justify-self: end;
+}
+#credit-card-name span {
+  font-family: Roboto;
+  text-shadow: -2px -2px 2px rgba(255, 255, 255, 1),
+    1px 1px 1px rgba(0, 0, 0, 0.9), 2px -2px 4px rgba(255, 255, 255, 1),
+    -2px -2px 2px rgba(0, 0, 0, 0.9), -2px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 2px rgb(136 136 136 / 25%);
+}
+#expiration-date {
+  padding: 0.5rem;
+  align-self: end;
+  justify-self: end;
+  text-align: center;
+  display: grid;
+  grid-template-rows: 1.5rem 1rem;
+}
+#expiration-date span {
+  font-size: 0.8rem;
+  font-family: Roboto;
+  text-shadow: -2px -2px 2px rgba(255, 255, 255, 1),
+    1px 1px 1px rgba(0, 0, 0, 0.9), 2px -2px 4px rgba(255, 255, 255, 1),
+    -2px -2px 2px rgba(0, 0, 0, 0.9), -2px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.14);
+}
+#cvv-code {
+  padding: 0.5rem;
+  align-self: end;
+  justify-self: start;
+  text-align: center;
+  display: grid;
+    grid-template-rows: 1.5rem 1rem;
+}
+#cvv-code span {
+  font-size: 0.8rem;
+  font-family: Roboto;
+  text-shadow: -2px -2px 2px rgba(255, 255, 255, 1),
+    1px 1px 1px rgba(0, 0, 0, 0.9), 2px -2px 4px rgba(255, 255, 255, 1),
+    -2px -2px 2px rgba(0, 0, 0, 0.9), -2px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.14);
+}
+#credit-name {
+  padding: 0.5rem;
+  align-self: end;
+  justify-self: start;
+  text-align: center;
+}
+#credit-name span {
+  font-size: 0.8rem;
+  font-family: Roboto;
+  text-shadow: -2px -2px 2px rgba(255, 255, 255, 1),
+    1px 1px 1px rgba(0, 0, 0, 0.9), 2px -2px 4px rgba(255, 255, 255, 1),
+    -2px -2px 2px rgba(0, 0, 0, 0.9), -2px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 2px rgb(136 136 136 / 25%);
+}
+.credit-card span {
+  font-family: Roboto;
+  font-size: 1rem;
+  color: #fff;
+  cursor:default;
+}
+.credit-middle-content {
+  align-self: center;
+  text-align: center;
+}
+.form-check-input:checked{
+  background-color: #deaa4f;
+    border-color: #deaa4f;
+}
+.form-check-input:focus{
+  box-shadow: 0 0 0 0.25rem #ffc10721;
+}
+
+.card-name input{
+  text-transform: uppercase;
+}
+
+.credit-card-modal-body {
+  padding: 2rem;
+}
+.credit-card-modal-body p {
+  font-family: Roboto;
+}
+.credit-card-modal-body button {
+  font-family: Roboto;
+}
+#btn-yes {
+  padding: 10px;
+  margin-right: 1rem;
+  background-color: green;
+  color: #fff;
+}
+#btn-yes:hover {
+  background-color: #17a917;
+}
+#btn-no {
+  padding: 10px;
+  color: #000;
+}
+#btn-no:hover {
+  background-color: #7c0404;
+  color: #fff;
+}
 
 @media screen and (max-width: 1440px) {
   .payment-info {
@@ -354,7 +506,7 @@
   }
 
   /*Left */
-  .left-title fa-icon{
+  .left-title fa-icon {
     font-size: large;
   }
   .left-title span {
@@ -366,7 +518,7 @@
   .info-content div {
     grid-template-columns: repeat(3, 120px);
   }
-  .info-content div select{
+  .info-content div select {
     font-size: small;
   }
   .info-content div input {
@@ -383,7 +535,7 @@
   }
 
   .security-code {
-    grid-template-columns:  repeat(3, 120px) !important;
+    grid-template-columns: repeat(3, 120px) !important;
   }
   .info-bottom {
     display: block;
@@ -454,7 +606,7 @@
   }
 
   /*Left */
-  .left-title fa-icon{
+  .left-title fa-icon {
     font-size: large;
   }
   .left-title span {
@@ -466,7 +618,7 @@
   .info-content div {
     grid-template-columns: repeat(3, 120px);
   }
-  .info-content div select{
+  .info-content div select {
     font-size: small;
   }
   .info-content div input {
@@ -476,19 +628,35 @@
     width: 65px;
     margin-top: 5px;
   }
-  .info-left {
+  /* .info-left {
     grid-template-columns: 100%;
     height: 820px;
     grid-template-rows: 60px 550px auto;
+  } */
+
+  .info-left{
+    grid-template-columns: 100%;
+    height: 820px;
+    grid-template-rows: 60px 230px 238px auto;
   }
 
   .security-code {
-    grid-template-columns:  repeat(3, 120px) !important;
+    grid-template-columns: repeat(3, 120px) !important;
   }
-  .info-bottom {
+  /* .info-bottom {
     display: block;
     align-self: end;
+  } */
+
+   .info-bottom {
+    display: block;
+    align-self: end;
+    grid-row-start: 3;
   }
+
+  .credit-card{
+    grid-row-start: 3;
+    }
   /*#endregion*/
 
   /*Right */

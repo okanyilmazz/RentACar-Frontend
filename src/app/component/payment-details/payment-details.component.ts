@@ -14,6 +14,9 @@ import { CarImageService } from 'src/app/services/car-image/car-image.service';
 import { CarService } from 'src/app/services/car/car.service';
 import { Payment } from 'src/app/models/payment/payment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { User } from 'src/app/models/user/user';
 
 @Component({
   selector: 'app-payment-details',
@@ -29,22 +32,26 @@ export class PaymentDetailsComponent implements OnInit {
   currentYear = new Date().getFullYear();
   rentalLocationTitle: string;
   returnLocationTitle: string;
-  cardNumber: number;
-  cardName: string;
+  cardNumber: any = '0000 - 0000 - 0000 - 0000';
+  cardName: string = '';
+  cardNameUpper: string = '';
   cardMonth: number;
   cardYear: number;
-  cardSecurityCode: number;
+  cardSecurityCode: any = 0;
   payment: Payment;
-  monthBase:string="Ay";
-  yearBase:string="Yıl";
+  monthBase: any = 'Ay';
+  yearBase: any = 'Yıl';
   months = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
   years = new Array();
-
+  installment: string = 'none';
+  installmentInfo: string = 'block';
   imageUrl = 'https://webservis.geziyoskii.site/';
   rightArrowIcon = faAngleDoubleRight;
   cardIcon = faCreditCard;
   infoIcon = faInfoCircle;
   paymentAddForm: FormGroup;
+  paymentOptionsRow: number;
+  isConfirmed: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private carService: CarService,
@@ -52,11 +59,14 @@ export class PaymentDetailsComponent implements OnInit {
     private locationService: LocationService,
     private router: Router,
     private carImageService: CarImageService,
-    private toastrService: ToastrService
+    private modalService: NgbModal,
+    private toastrService: ToastrService,
+    private authService: AuthService
   ) {}
 
   isActive = true;
   ngOnInit(): void {
+    localStorage.removeItem('paymentDetails');
     this.activatedRoute.params.subscribe((params) => {
       this.carId = params['carId'];
       this.getCarDetailByCarId(params['carId']);
@@ -100,7 +110,7 @@ export class PaymentDetailsComponent implements OnInit {
     }
   }
   totalPrice(dailyPrice: number) {
-    return dailyPrice * 3;
+    return dailyPrice * this.rentDetail.rentDay;
   }
 
   LoadData() {
@@ -127,64 +137,101 @@ export class PaymentDetailsComponent implements OnInit {
         this.returnLocationTitle = response.data.title;
       });
   }
-  goToOrderConfirmation() {
-
-    let paymentModel = Object.assign({}, this.paymentAddForm.value);
-    if(this.paymentAddForm.valid){
-
-      localStorage.removeItem('paymentDetails');
-      localStorage.setItem('paymentDetails', JSON.stringify(paymentModel));
-  
-      this.router.navigate([
-        `reservation/details/car-id/${this.carId}/rent-date/${this.rentDetail.rentDate}/rent-time/${this.rentDetail.rentTime}/return-date/${this.rentDetail.returnDate}/return-time/${this.rentDetail.returnTime}/rental-location/${this.rentDetail.rentLocationId}/return-location/${this.rentDetail.returnLocationId}/driver-details/payment-details/order-confirmation`,
-      ]);
-    }
-    else{
-      this.toastrService.error('Gerekli alanları doğru bir şekilde doldurmalısınız.', 'Dikkat');
-    }
-    // let newPayment: Payment = {
-    //   id: null,
-    //   cardMonth: this.cardMonth,
-    //   cardName: this.cardName,
-    //   cardNumber: this.cardNumber,
-    //   cardSecurityCode: this.cardSecurityCode,
-    //   cardYear: this.cardYear,
-    // };
-    // this.payment = newPayment;
-
-  }
-
-
-
-  createPaymentAddForm() {
-    this.paymentAddForm = this.formBuilder.group({
-      cardNumber: ['', Validators.required],
-      cardName: ['', Validators.required],
-      expirationYear: ['', Validators.required],
-      expirationMonth: ['',Validators.required],
-      securityCode: ['',Validators.required]
+  openModal(content: any) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      windowClass: 'credit-card-modal',
     });
   }
 
-  changeExpirationYear(event:any){
-    this.cardYear  = event.target?.value;
-  }
-  changeExpirationMonth(event:any){
-    this.cardMonth  = event.target?.value;
-  }
-  cardNumberLimitCharacterCount(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const maxLength = 16; // Maksimum karakter sayısı
-    if (inputElement.value.length > maxLength) {
-      inputElement.value = inputElement.value.slice(0, maxLength); // Maksimum karakter sayısını aşanları kes
+  goToOrderConfirmation() {
+    let paymentModel = Object.assign({}, this.paymentAddForm.value);
+    paymentModel.cardYear = Number(paymentModel.cardYear);
+    paymentModel.cardMonth = Number(paymentModel.cardMonth);
+
+    if (this.paymentAddForm.valid) {
+      localStorage.setItem('paymentDetails', JSON.stringify(paymentModel));
+
+
+      console.log(localStorage.getItem('paymentDetails'))
+      this.router.navigate([
+        `reservation/details/car-id/${this.carId}/rent-date/${this.rentDetail.rentDate}/rent-time/${this.rentDetail.rentTime}/return-date/${this.rentDetail.returnDate}/return-time/${this.rentDetail.returnTime}/rental-location/${this.rentDetail.rentLocationId}/return-location/${this.rentDetail.returnLocationId}/driver-details/payment-details/order-confirmation`,
+      ]);
+    } else {
+      this.toastrService.error(
+        'Gerekli alanları doğru bir şekilde doldurmalısınız.',
+        'Dikkat'
+      );
     }
   }
+
+  createPaymentAddForm() {
+    this.paymentAddForm = this.formBuilder.group({
+      userId: [],
+      cardNumber: ['', Validators.required],
+      cardName: ['', Validators.required],
+      cardYear: [Number(this.cardYear), Validators.required],
+      cardMonth: [Number(this.cardMonth), Validators.required],
+      cardSecurityCode: [0, Validators.required],
+    });
+  }
+
+  changeExpirationYear(event: any) {
+    this.cardYear = Number(event.target?.value);
+  }
+  changeExpirationMonth(event: any) {
+    this.cardMonth = Number(event.target?.value);
+  }
+
+  formatCardNumber(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value.replace(/\D/g, '');
+    const formattedValue = this.formatCardNumberWithDashes(inputValue);
+    this.cardNumber = formattedValue;
+    if (
+      this.cardNumber.length >= 4 &&
+      this.cardNumber.substring(0, 4) !== '0000'
+    ) {
+      this.installment = 'block';
+      this.installmentInfo = 'none';
+      this.paymentOptionsRow = 8;
+    } else {
+      this.installment = 'none';
+      this.installmentInfo = 'block';
+      this.paymentOptionsRow = 5;
+    }
+  }
+
+  formatCardNumberWithDashes(cardNumber: string): string {
+    const groups = cardNumber.match(/(\d{1,4})/g);
+    if (groups) {
+      return groups.join('-');
+    }
+    return cardNumber;
+  }
+
   securityCodeLimitCharacterCount(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const maxLength = 3; // Maksimum karakter sayısı
 
     if (inputElement.value.length > maxLength) {
-      inputElement.value = inputElement.value.slice(0, maxLength); // Maksimum karakter sayısını aşanları kes
+      inputElement.value = inputElement.value.slice(0, maxLength - 1); // Maksimum karakter sayısını aşanları kes
+      this.cardSecurityCode = inputElement.value;
     }
+  }
+
+  onValueChange(value: string) {
+    this.cardName = value.toUpperCase();
+  }
+
+  addCardToUser() {
+    let user: User = this.authService.getUserInfo();
+    const userId = Number(user.id);
+    this.paymentAddForm.patchValue({ userId: userId });
+    this.decline();
+  }
+  decline() {
+    this.modalService.dismissAll();
+    this.goToOrderConfirmation();
   }
 }

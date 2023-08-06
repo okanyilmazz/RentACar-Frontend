@@ -55,7 +55,7 @@
   margin-top: 8px;
 }
 .login-btn {
-  margin-top: 8px;
+  margin-top: 5px;
 }
 .login-btn .btn {
   font-family: Roboto;
@@ -110,7 +110,17 @@
   display: none;
 }
 
-.dropdown-menu {
+.dropdown-menu-user-settings .dropdown-menu{
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(242, 242, 242, 1) 77%
+  );
+  inset:0px auto auto -6px;
+}
+
+.mobile-dropdown-menu{
   z-index: 3 !important;
   width: 100%;
   height: 100%;
@@ -127,6 +137,48 @@
   position: fixed;
 }
 
+.dropdown-menu-user-settings  .dropdown-item{
+  color:#522100;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.user-settings{
+  cursor: pointer;
+  align-self: center;
+  z-index: 3;
+}
+.info{
+  align-self: center;
+}
+
+.dropdown-menu-user-settings .dropdown-toggle::after,
+.user-first-name .dropdown-toggle::after {
+  display: none;
+}
+
+.user-first-name .dropdown-menu{
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(242, 242, 242, 1) 77%
+  );
+}
+
+.user-first-name .dropdown-item{
+  font-size: small;
+  margin-left: 10px;
+  color: #ababab;
+  font-family: Roboto-Bold;
+  width: 90%;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+}
+.user-first-name .dropdown-item:active{
+  background-color: transparent;
+}
 @media screen and (max-width: 1440px) {
   .container {
     max-width: 1440px;
@@ -315,20 +367,31 @@
 
   .dropdown-menu-title {
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(2, auto);
     align-items: center;
     padding-bottom: 10px;
     border-bottom: 1px solid #deaa4f;
   }
+  .dropdown-menu-membership-operations{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+  }
   .dropdown-menu-title fa-icon {
     color: #deaa4f;
   }
+
 
   .dropdown-menu-register {
     border-right: 1px solid #deaa4f;
   }
   .dropdown-menu-login {
     justify-self: center;
+  }
+  .user-first-name{
+
+    font-size: small;
+    color: #ababab;
+    font-family: Roboto-Bold;
   }
   .dropdown-menu-title span {
     font-size: small;
@@ -468,10 +531,14 @@
 
   .dropdown-menu-title {
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(2, auto);
     align-items: center;
     padding-bottom: 10px;
     border-bottom: 1px solid #deaa4f;
+  }
+  .dropdown-menu-membership-operations{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
   }
   .dropdown-menu-title fa-icon {
     color: #deaa4f;
@@ -622,10 +689,14 @@
 
   .dropdown-menu-title {
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(2, auto);
     align-items: center;
     padding-bottom: 10px;
     border-bottom: 1px solid #deaa4f;
+  }
+  .dropdown-menu-membership-operations{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
   }
   .dropdown-menu-title fa-icon {
     color: #deaa4f;

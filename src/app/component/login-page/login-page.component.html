@@ -1,0 +1,32 @@
+<div class="login-page">
+    <div class="login-page-content col-md-12">
+        <div class="form-block mx-auto my-auto">
+            <div class="title mb-5 text-center">
+                <h3>Sisteme Giriş Yapın</h3>
+            </div>
+
+            <form [formGroup]="loginForm">
+                <div class="mb-3">
+                  <label for="ForInputUsername" class="form-label">Kullanıcı Adı</label>
+                  <input type="text" class="form-control" id="InputUsername" aria-describedby="usernameHelp" formControlName="email">
+                  <div id="usernameHelp" class="form-text">Kullanıcı adınızı kimseyle paylaşmayın.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="ForInputPassword" class="form-label">Şifre</label>
+                  <input type="password" class="form-control" id="InputPassword" formControlName="password">
+                </div>
+                <div class="mb-3" style="display:grid; grid-template-columns: repeat(2,auto);">
+                    <div class="register">
+                        <label routerLink="/register" >Kayıt Ol</label>
+                      </div>
+                    <div class="forgot-password">
+                      <label >Şifremi Unuttum</label>
+                    </div>
+                </div>
+
+                <button class="btn col-md-12" (click)="login()">Giriş Yap</button>
+              </form>
+
+        </div>
+    </div>
+</div>

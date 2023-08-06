@@ -103,9 +103,7 @@
   font-size: 15px;
 }
 
-.citizenship input {
-  margin-right: 12px;
-}
+
 
 .info-bottom .input-group {
   display: grid;
@@ -340,6 +338,24 @@ input[type="number"] {
   margin: 0;
   margin-right: 0.5rem;
   fill: gray;
+}
+
+.save-driver-group .save-driver{
+  grid-template-columns: 30px auto auto !important;
+}
+
+.save-driver fa-icon {
+  font-size: small;
+  color: #adadad;
+  align-self: start;
+  margin-left: 0.4rem;
+}
+
+.save-driver span{
+  font-size: 15px;
+}
+.citizenship-group{
+  margin-bottom: 0 !important;
 }
 
 @media screen and (max-width: 1440px) {

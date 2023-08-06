@@ -1,0 +1,67 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="drivers container">
+  <div class="drivers-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Sürücü Bilgileri">
+        <ng-template ngbPanelContent>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>İsim</th>
+                <th>Soyisim</th>
+                <th>Telefon Numarası</th>
+                <th>Kimlik Numarası</th>
+                <th>Doğum Tarihi</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let driver of userDrivers; let i = index">
+                <th>{{ driver.firstName }}</th>
+                <th>{{ driver.lastName }}</th>
+                <th>{{ driver.phoneNumber }}</th>
+                <th>{{ driver.nationalId | hiddenNumber : 5 }}</th>
+                <th>{{ driver.birthDate }}</th>
+                <th>
+                  <div id="updateDeleteButtons">
+                    <button
+                      id="updateButton"
+                      class="btn btn-success"
+                      (click)="alert()"> Güncelle </button>
+                    <button
+                      id="deleteButton"
+                      class="btn btn-danger"
+                      (click)="openModal(questionContent)"> Sil </button>
+                  </div>
+                </th>
+                <!--MODAL DELETE -->
+                <ng-template #questionContent>
+                  <div class="question-modal-body text-center">
+                    <p>
+                      {{ driver.firstName }} {{ driver.lastName }} isimli
+                      kartınızı silmek istediğinize emin misiniz?
+                    </p>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="btn-yes"
+                      (click)="deleteDriver(driver)">Evet</button>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="btn-no"
+                      (click)="decline()"> Hayır</button>
+                  </div>
+                </ng-template>
+                <!-- #endregion -->
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

@@ -35,7 +35,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
-import { NgbModule, NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbAccordionModule,
+  NgbModule,
+  NgbTypeaheadModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { TestPageComponent } from './component/test-page/test-page.component';
 import { TestPagesNewComponent } from './component/test-page-2/test-pages-new/test-pages-new.component';
@@ -43,6 +47,17 @@ import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 import { StepsComponent } from './component/steps/steps/steps.component';
 import { BodyComponent } from './component/body/body/body.component';
 import { CreditCardFormatPipe } from './pipes/credit-card-format.pipe';
+import { LoginPageComponent } from './component/login-page/login-page.component';
+import { RegisterPageComponent } from './component/register-page/register-page.component';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { SidebarComponent } from './component/user-panel/sidebar/sidebar.component';
+import { SettingsComponent } from './component/user-panel/settings/settings.component';
+import { RentalsComponent } from './component/user-panel/rentals/rentals.component';
+import { DriversComponent } from './component/user-panel/drivers/drivers.component';
+import { PaymentsComponent } from './component/user-panel/payments/payments.component';
+import { AddressesComponent } from './component/user-panel/addresses/addresses.component';
+import { HiddenNumberPipe } from './pipes/hidden-number.pipe';
+import { HiddenCardNumberPipe } from './pipes/hidden-card-number.pipe';
 
 @NgModule({
   declarations: [
@@ -78,6 +93,16 @@ import { CreditCardFormatPipe } from './pipes/credit-card-format.pipe';
     StepsComponent,
     BodyComponent,
     CreditCardFormatPipe,
+    LoginPageComponent,
+    RegisterPageComponent,
+    SidebarComponent,
+    SettingsComponent,
+    RentalsComponent,
+    DriversComponent,
+    PaymentsComponent,
+    AddressesComponent,
+    HiddenNumberPipe,
+    HiddenCardNumberPipe,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +116,7 @@ import { CreditCardFormatPipe } from './pipes/credit-card-format.pipe';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgbTypeaheadModule,
+    NgbAccordionModule,
     JsonPipe,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
@@ -98,7 +124,8 @@ import { CreditCardFormatPipe } from './pipes/credit-card-format.pipe';
       timeOut: 1000000,
     }),
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, JwtHelperService,
+  {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,0 +1,60 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="payments container">
+  <div class="payments-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Kart Bilgileri">
+        <ng-template ngbPanelContent>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Kart Numarası</th>
+                <th>Kart Üzerindeki İsim</th>
+                <th>Geçerlilik Tarihi</th>
+                <th>Kart Güvenlik Kodu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let payment of userPayments; let i = index">
+                <th>{{ payment.cardNumber | hiddenCardNumber:8 }}</th>
+                <th>{{ payment.cardName }}</th>
+                <th>{{ payment.cardMonth }} / {{payment.cardYear}} </th>
+                <th>{{ payment.cardSecurityCode  | hiddenNumber:1}}</th>
+                <th>
+                  <div id="updateDeleteButtons">
+                    <button id="updateButton" class="btn btn-success" (click)="alert()">Güncelle</button>
+                    <button id="deleteButton" class="btn btn-danger" (click)="openModal(questionContent)">Sil</button>
+                  </div>
+                </th>
+             <!--MODAL DELETE -->
+             <ng-template #questionContent>
+              <div class="question-modal-body text-center">
+                <p>
+                  {{ payment.cardName }} isimli kartınızı silmek
+                  istediğinize emin misiniz?
+                </p>
+                <button
+                  type="button"
+                  class="btn"
+                  id="btn-yes"
+                  (click)="deletePayment(payment)">Evet
+                </button>
+                <button
+                  type="button"
+                  class="btn"
+                  id="btn-no"
+                  (click)="decline()">Hayır
+                </button>
+              </div>
+            </ng-template>
+             <!-- #endregion -->
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion> 
+  </div>
+</div>

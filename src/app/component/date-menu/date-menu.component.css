@@ -15,6 +15,12 @@
   outline: 0;
   box-shadow: none;
 }
+#rentLocation:hover{
+  cursor:pointer;
+}
+#returnLocation:hover{
+  cursor:pointer;
+}
 #rentalDate:hover {
   cursor: pointer;
 }
