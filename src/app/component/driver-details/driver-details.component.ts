@@ -40,7 +40,7 @@ export class DriverDetailsComponent implements OnInit {
   rentDetail: RentalDetail;
   rentalLocationTitle: string;
   returnLocationTitle: string;
-  selectedCountryId: number=0;
+  selectedCountryId: number = 0;
   driverFirstName: string;
   driverLastName: string;
   driverPhoneNumber: string;
@@ -49,6 +49,7 @@ export class DriverDetailsComponent implements OnInit {
   driverPassportNumber: string;
   driverCountryCode: string;
   carId: number;
+  userId: number;
   imageUrl = 'https://webservis.geziyoskii.site/';
   rightArrowIcon = faAngleDoubleRight;
   infoIcon = faInfoCircle;
@@ -68,7 +69,7 @@ export class DriverDetailsComponent implements OnInit {
     private locationService: LocationService,
     private authService: AuthService,
     private carImageService: CarImageService,
-    private localStorageService:LocalStorageService
+    private localStorageService: LocalStorageService
   ) {}
 
   birthdateMaxDate: NgbDateStruct = {
@@ -79,13 +80,15 @@ export class DriverDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.localStorageService.removeItem('driverDetails');
-
+    this.getUserId();
     this.createDriverAddForm();
     this.activatedRoute.params.subscribe((params) => {
       this.getCarDetailByCarId(params['carId']);
       this.getImageByCarId(params['carId']);
       this.carId = params['carId'];
-      this.rentDetail = this.localStorageService.getItem('newRental');
+      this.rentDetail = this.localStorageService.getItem('rentalValue');
+      this.rentDetail.userId = this.userId;
+      this.localStorageService.setItem('rentalValue', this.rentDetail);
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
     });
@@ -147,11 +150,9 @@ export class DriverDetailsComponent implements OnInit {
   }
   goToPaymentDetails() {
     let driverModel = Object.assign({}, this.driverAddForm.value);
-
-    console.dir(driverModel)
     if (this.driverAddForm.valid) {
       this.localStorageService.removeItem('driverDetails');
-      this.localStorageService.setItem('driverDetails',driverModel)
+      this.localStorageService.setItem('driverDetails', driverModel);
 
       this.router.navigate([
         `reservation/details/car-id/${this.carId}/rent-date/${this.rentDetail.rentDate}/rent-time/${this.rentDetail.rentTime}/return-date/${this.rentDetail.returnDate}/return-time/${this.rentDetail.returnTime}/rental-location/${this.rentDetail.rentLocationId}/return-location/${this.rentDetail.returnLocationId}/driver-details/payment-details`,
@@ -174,18 +175,6 @@ export class DriverDetailsComponent implements OnInit {
     });
   }
 
-  add() {
-    if (this.driverAddForm.valid) {
-      let driverModel = Object.assign({}, this.driverAddForm.value);
-      this.driverService.add(driverModel).subscribe((response) => {
-        this.toastrService.success('Ürün eklendi', 'Başarılı');
-      });
-    } else {
-      this.toastrService.error('Formunuz eksik', 'Dikkat');
-    }
-  }
-
-
   validateInput(event: KeyboardEvent): void {
     const inputChar = String.fromCharCode(event.keyCode);
     const pattern = /[a-zA-Z]/;
@@ -204,7 +193,6 @@ export class DriverDetailsComponent implements OnInit {
 
   selectBirthday(event: any) {
     this.driverBirthday = this.dateTransform(event);
-  
   }
 
   dateTransform(event: any) {
@@ -234,10 +222,13 @@ export class DriverDetailsComponent implements OnInit {
 
   checkDriverSave() {
     if (this.isSaveDriverActive) {
-      let user: User = this.authService.getUserInfo();
-      const userId = Number(user.id);
-      this.driverAddForm.patchValue({ userId: userId });
+      this.driverAddForm.patchValue({ userId: this.userId });
     }
     this.goToPaymentDetails();
+  }
+
+  getUserId() {
+    let user: User = this.authService.getUserInfo();
+    this.userId = Number(user.id);
   }
 }

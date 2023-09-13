@@ -1,0 +1,117 @@
+.sidebar {
+  float: left;
+}
+
+.brands {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+.brands-content {
+  overflow-y: auto;
+  height: 98vh;
+}
+
+table {
+  table-layout: fixed;
+}
+table tbody th {
+  font-weight: normal !important;
+}
+table tbody tr:last-child {
+  text-align: center;
+  font-family: Roboto-Bold !important;
+  padding: 0;
+}
+table tbody tr:last-child th {
+  border-bottom: 0;
+}
+table tbody tr:last-child th button {
+  background-color: #663399da;
+  cursor: pointer;
+  color: #fff;
+}
+table tbody tr:last-child th button:hover {
+  background-color: #663399;
+}
+
+#updateDeleteButtons {
+  text-align: end;
+}
+button {
+  font-size: 0.7rem;
+}
+button:last-child {
+  margin-left: 1rem;
+}
+.question-modal-body {
+  padding: 2rem;
+}
+.question-modal-body p {
+  font-family: Roboto-Medium;
+}
+.question-modal-body button {
+  font-family: Roboto-Medium;
+}
+#btn-yes {
+  padding: 10px;
+  background-color: green;
+  color: #fff;
+  font-size: 0.8rem;
+}
+#btn-yes:hover {
+  background-color: #17a917;
+}
+#btn-no {
+  padding: 10px;
+  color: #000;
+  font-size: 0.8rem;
+}
+#btn-no:hover {
+  background-color: #7c0404;
+  color: #fff;
+}
+
+/*ADD - UPDATE Modal*/
+.new-brand-modal-body,
+.update-brand-modal-body {
+  font-family: Roboto-Medium;
+  padding: 2rem;
+}
+#addNewBrand,
+#updateNewBrand {
+  font-family: Roboto-Medium;
+  background-color: #c18863;
+  padding: 0.5rem;
+  width: 100%;
+  color: #fff;
+  margin: 0 !important;
+}
+#addNewBrand:focus,
+#updateNewBrand:focus,
+#addNewBrand:hover,
+#updateNewBrand:hover {
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgb(195 100 34);
+}
+
+#addNewBrand:hover,
+#updateNewBrand {
+  background-color: #c59574;
+}
+.new-brand-modal-body {
+  padding: 1rem;
+}
+
+/* #endregion */
+
+@media screen and (min-width: 1440px) {
+  .sidebar {
+    width: 15rem;
+  }
+  .brands {
+    width: 50%;
+    padding-left: 1rem;
+    padding-top: 1rem;
+  }
+}

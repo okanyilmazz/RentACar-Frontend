@@ -29,7 +29,7 @@ export class RentalsComponent implements OnInit {
     this.rentalService.getRentalDetailsByUserId(userId).subscribe((response) => {
       this.userRentals = response.data;
       if (!Array.isArray(this.userRentals) || this.userRentals.length === 0) {
-        this.toastrService.warning('Boş');
+        this.toastrService.info('Daha önce rezervasyon yapmadınız.');
       }
     });
   }

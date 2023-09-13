@@ -19,21 +19,21 @@ export class BodyComponent implements OnChanges {
   emptyBody: BodyType;
   @Output() BodyEvent = new EventEmitter<boolean>();
   @Input() isOpenBody: boolean;
-  constructor(private bodyService: BodyTypeService) {}
+  constructor(private bodyService: BodyTypeService) { }
 
   ngOnInit(): void {
     this.getBody();
   }
-  ngOnChanges() {}
+  ngOnChanges() { }
 
   getBody() {
-    this.bodyService.getBody().subscribe((response) => {
+    this.bodyService.getAllBodies().subscribe((response) => {
       this.bodies = response.data;
     });
   }
 
   setCurrentBody(body: BodyType) {
-    this.isOpenBody = false; 
+    this.isOpenBody = false;
     this.BodyEvent.emit(this.isOpenBody);
     this.currentBody = body;
   }

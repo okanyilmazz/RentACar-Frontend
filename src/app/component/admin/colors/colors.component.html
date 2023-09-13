@@ -1,0 +1,140 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="colors container">
+  <div class="colors-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Renk Seçenekleri">
+        <ng-template ngbPanelContent>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let color of colors; let i = index">
+                <th>{{ color.colorName }}</th>
+                <th>
+                  <div id="updateDeleteButtons">
+                    <button
+                      id="updateButton"
+                      class="btn btn-success"
+                      (click)="
+                        openModal(
+                          updatecolorContent,
+                          'update-color-modal',
+                          color
+                        )
+                      "
+                    >
+                      Güncelle
+                    </button>
+                    <button
+                      id="deleteButton"
+                      class="btn btn-danger"
+                      (click)="
+                        openModal(questionContent, 'question-modal', color)
+                      "
+                    >
+                      Sil
+                    </button>
+                  </div>
+                </th>
+                <!--MODAL DELETE -->
+                <ng-template #questionContent>
+                  <div class="question-modal-color text-center">
+                    <p>
+                      {{ color.colorName }} isimli rengi silmek istediğinize
+                      emin misiniz?
+                    </p>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="btn-yes"
+                      (click)="deleteColor(color)"
+                    >
+                      Evet
+                    </button>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="btn-no"
+                      (click)="decline()"
+                    >
+                      Hayır
+                    </button>
+                  </div>
+                </ng-template>
+                <!-- #endregion -->
+                <!--Update Modal-->
+                <ng-template #updatecolorContent>
+                  <form [formGroup]="colorUpdateForm">
+                    <div class="update-color-modal-color">
+                      <div class="mb-3">
+                        <label for="colorName" class="form-label"
+                          >Kasa Adı</label
+                        >
+                        <input
+                          tabindex="1"
+                          type="text"
+                          class="form-control"
+                          id="colorName"
+                          formControlName="colorName"
+                          [(ngModel)]="colorName"
+                        />
+                      </div>
+                      <button
+                        tabindex="2"
+                        type="submit"
+                        class="btn"
+                        id="updateNewColor"
+                        (click)="updateColor(color.id)"
+                      >
+                        Kasa Ekle
+                      </button>
+                    </div>
+                  </form>
+                </ng-template>
+              </tr>
+              <tr (click)="newOpenModal(newcolorContent)">
+                <th colspan="2">
+                  <button tyle="button" class="btn">Yeni renk ekle</button>
+                </th>
+              </tr>
+
+              <!--New Project Modal-->
+              <ng-template #newcolorContent>
+                <form [formGroup]="colorSendForm">
+                  <div class="new-color-modal-color">
+                    <div class="mb-3">
+                      <label for="colorName" class="form-label">Renk Adı</label>
+                      <input
+                        tabindex="1"
+                        type="text"
+                        class="form-control"
+                        id="colorName"
+                        formControlName="colorName"
+                      />
+                    </div>
+                    <button
+                      tabindex="2"
+                      type="submit"
+                      class="btn"
+                      id="addNewColor"
+                      (click)="addColor()"
+                    >
+                      Renk Ekle
+                    </button>
+                  </div>
+                </form>
+              </ng-template>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

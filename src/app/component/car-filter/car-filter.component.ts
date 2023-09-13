@@ -8,6 +8,7 @@ import { BrandService } from 'src/app/services/brand/brand.service';
 import { ToastrService } from 'ngx-toastr';
 import { BodyTypeService } from 'src/app/services/body-type/body-type.service';
 
+
 @Component({
   selector: 'app-car-filter',
   templateUrl: './car-filter.component.html',
@@ -36,14 +37,14 @@ export class CarFilterComponent implements OnInit {
     private toastrService: ToastrService,
     private bodyTypeService: BodyTypeService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
-    if( this.router.url.includes('/cars')){
-      this.isExistCarsUrl=true
-    }else{
-      this.isExistCarsUrl=false
+    if (this.router.url.includes('/cars')) {
+      this.isExistCarsUrl = true
+    } else {
+      this.isExistCarsUrl = false
     }
     this.getBrand();
     this.getColor();
@@ -51,18 +52,18 @@ export class CarFilterComponent implements OnInit {
   }
 
   getBrand() {
-    this.brandService.getBrand().subscribe((response) => {
+    this.brandService.getAllBrand().subscribe((response) => {
       this.brands = response.data;
     });
   }
   getColor() {
-    this.colorService.getColor().subscribe((response) => {
+    this.colorService.getAllColors().subscribe((response) => {
       this.colors = response.data;
 
     });
   }
   getBody() {
-    this.bodyTypeService.getBody().subscribe((response) => {
+    this.bodyTypeService.getAllBodies().subscribe((response) => {
       this.bodies = response.data;
     });
   }
@@ -108,16 +109,16 @@ export class CarFilterComponent implements OnInit {
       if (this.isExistCarsUrl) {
         this.router.navigate([
           'cars/brand/' +
-            this.selectedBrandId +
-            '/color/' +
-            this.selectedColorId,
+          this.selectedBrandId +
+          '/color/' +
+          this.selectedColorId,
         ]);
       } else {
         this.router.navigate([
           'home/cars/brand/' +
-            this.selectedBrandId +
-            '/color/' +
-            this.selectedColorId,
+          this.selectedBrandId +
+          '/color/' +
+          this.selectedColorId,
         ]);
       }
     }
@@ -129,9 +130,9 @@ export class CarFilterComponent implements OnInit {
       } else {
         this.router.navigate([
           'home/cars/brand/' +
-            this.selectedBrandId +
-            '/body/' +
-            this.selectedBodyId,
+          this.selectedBrandId +
+          '/body/' +
+          this.selectedBodyId,
         ]);
       }
     }
@@ -143,9 +144,9 @@ export class CarFilterComponent implements OnInit {
       } else {
         this.router.navigate([
           'home/cars/color/' +
-            this.selectedColorId +
-            '/body/' +
-            this.selectedBodyId,
+          this.selectedColorId +
+          '/body/' +
+          this.selectedBodyId,
         ]);
       }
     }
@@ -157,40 +158,40 @@ export class CarFilterComponent implements OnInit {
       if (this.isExistCarsUrl) {
         this.router.navigate([
           'cars/brand/' +
-            this.selectedBrandId +
-            '/color/' +
-            this.selectedColorId +
-            '/body/' +
-            this.selectedBodyId,
-        ]);
-      } else {
-        this.router.navigate([
-          'home/cars/brand/' +
-            this.selectedBrandId +
-            '/color/' +
-            this.selectedColorId +
-            '/body/' +
-            this.selectedBodyId,
-        ]);
-      }
-
-      this.router.navigate([
-        'home/cars/brand/' +
           this.selectedBrandId +
           '/color/' +
           this.selectedColorId +
           '/body/' +
           this.selectedBodyId,
+        ]);
+      } else {
+        this.router.navigate([
+          'home/cars/brand/' +
+          this.selectedBrandId +
+          '/color/' +
+          this.selectedColorId +
+          '/body/' +
+          this.selectedBodyId,
+        ]);
+      }
+
+      this.router.navigate([
+        'home/cars/brand/' +
+        this.selectedBrandId +
+        '/color/' +
+        this.selectedColorId +
+        '/body/' +
+        this.selectedBodyId,
       ]);
     } else if (
       this.selectedBrandId == 'default' &&
       this.selectedColorId == 'default' &&
       this.selectedBodyId == 'default'
     ) {
-      if(this.isExistCarsUrl){
+      if (this.isExistCarsUrl) {
         this.router.navigate(['/cars']);
       }
-      else{
+      else {
         this.router.navigate(['/home']);
       }
 

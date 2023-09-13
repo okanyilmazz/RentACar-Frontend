@@ -1,0 +1,218 @@
+.sidebar {
+  float: left;
+}
+
+.cars {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cars-content {
+  overflow-y: auto;
+  height: 98vh;
+}
+
+table {
+  table-layout: fixed;
+}
+
+table tbody tr:last-child {
+  text-align: center;
+  font-family: Roboto-Bold !important;
+  padding: 0;
+}
+
+table tbody tr th {
+  width: 10px !important;
+}
+
+table tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+table tbody tr:last-child th button {
+  background-color: #663399da;
+  cursor: pointer;
+  color: #fff;
+}
+
+table tbody tr:last-child th button:hover {
+  background-color: #663399;
+}
+
+#updateDeleteButtons {
+  text-align: end;
+  text-wrap: nowrap;
+}
+
+button {
+  font-size: 0.7rem;
+}
+
+button:last-child {
+  margin-left: 1rem;
+}
+
+#add-new-image {
+  margin: 0;
+}
+
+.question-modal-car {
+  padding: 2rem;
+}
+
+.question-modal-car p {
+  font-family: Roboto-Medium;
+}
+
+.question-modal-car button {
+  font-family: Roboto-Medium;
+}
+
+#btn-yes {
+  padding: 10px;
+  background-color: green;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+#btn-yes:hover {
+  background-color: #17a917;
+}
+
+#btn-no {
+  padding: 10px;
+  color: #000;
+  font-size: 0.8rem;
+}
+
+#btn-no:hover {
+  background-color: #7c0404;
+  color: #fff;
+}
+
+
+/*ADD - UPDATE Modal*/
+.new-car-modal-body,
+.update-car-modal-body {
+  font-family: Roboto-Medium;
+  padding: 2rem;
+}
+
+
+#addNewCar,
+#updateNewCar {
+  font-family: Roboto-Medium;
+  background-color: #c18863;
+  padding: 0.5rem;
+  width: 100%;
+  color: #fff;
+  margin: 0 !important;
+}
+
+#addNewCar:focus,
+#updateNewCar:focus,
+#addNewCar:hover,
+#updateNewCar:hover {
+  background-color: #337ab7;
+}
+
+#addNewCar:hover,
+#updateNewCar {
+  background-color: #337ab7;
+}
+
+.new-car-modal-body {
+  padding: 1rem;
+
+}
+
+
+
+.c {
+  display: grid;
+}
+
+.c-2 {
+  grid-template-columns: repeat(2, 50%);
+}
+
+.c-3 {
+  grid-template-columns: repeat(3, 33%);
+}
+
+.c-4 {
+  grid-template-columns: repeat(4, 25%);
+}
+
+.new-car-modal-body .input-group {
+  max-width: 15rem;
+}
+
+#img-table tr td img {
+  width: 100%;
+}
+
+#img-table-title span {
+  font-family: Roboto-Medium;
+  font-weight: 700;
+}
+
+#img-table tr td {
+  position: relative;
+}
+
+.select-images {
+  position: absolute;
+  width: 1vw;
+  height: 1vw;
+  top: 1rem;
+  right: 1rem;
+}
+
+.delete-image {
+  text-align: center;
+  font-family: Roboto-Medium;
+
+}
+
+.upload-image-form {
+  font-family: Roboto-Medium;
+}
+
+.delete-image button {
+  background-color: #C18863;
+  width: 100%;
+  padding: 0.5rem;
+  border: 0;
+  margin: 0;
+}
+
+.upload-image-form button {
+  background-color: #C18863;
+  width: 100%;
+  padding: 0.5rem;
+  border: 0;
+}
+
+.delete-image button:hover,
+.upload-image-form button:hover {
+  background-color: #337ab7;
+
+}
+
+
+/* #endregion */
+
+@media screen and (min-width: 1440px) {
+  .sidebar {
+    width: 15rem;
+  }
+
+  .cars {
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 1rem;
+  }
+}

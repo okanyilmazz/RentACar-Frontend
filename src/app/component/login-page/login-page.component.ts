@@ -22,7 +22,7 @@ export class LoginPageComponent implements OnInit {
     private authService: AuthService,
     private toastrService: ToastrService,
     private router: Router,
-    private localStorageService:LocalStorageService,
+    private localStorageService: LocalStorageService
   ) {}
   ngOnInit(): void {
     this.createLoginForm();
@@ -40,10 +40,9 @@ export class LoginPageComponent implements OnInit {
       let loginModel = Object.assign({}, this.loginForm.value);
       this.authService.login(loginModel).subscribe(
         (response) => {
-          this.localStorageService.setItem('token',response.data.token);
+          this.localStorageService.setItem('token', response.data.token);
           this.getUserInfo();
           if (this.localStorageService.getItem('lastUrl')) {
-
             this.router.navigate([this.localStorageService.getItem('lastUrl')]);
           } else {
             this.router.navigate(['home']);
@@ -59,6 +58,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.authService.getUserInfo();
+
   }
 }

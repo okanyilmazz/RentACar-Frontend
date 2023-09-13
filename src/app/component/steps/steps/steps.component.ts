@@ -48,7 +48,7 @@ export class StepsComponent implements OnInit {
   driverLastName: string = '';
   driverAge: number;
 
-  rentCarName: string = '';
+  rentCarModel: string = '';
   rentBrandName: string = '';
   rentFuelName: string = '';
   rentTransmissionName: string = '';
@@ -58,8 +58,8 @@ export class StepsComponent implements OnInit {
     private locationService: LocationService,
     private carService: CarService,
     private activatedRoute: ActivatedRoute,
-    private localStorageService:LocalStorageService
-  ) {}
+    private localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.firstChild.params.subscribe((params) => {
@@ -74,8 +74,8 @@ export class StepsComponent implements OnInit {
       this.carStepClass = 'step';
       this.carRightSeperatorClass = 'step-seperator';
 
-      this.rentDetail =this.localStorageService.getItem('newRental')
-      
+      this.rentDetail = this.localStorageService.getItem('rentalValue')
+
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
     }
@@ -86,7 +86,7 @@ export class StepsComponent implements OnInit {
       this.driverStepClass = 'step';
       this.driverRightSeperatorClass = 'step-seperator';
     }
-    
+
     if (this.router.url.includes('payment-details')) {
       this.driverTooltip = true;
       this.driver = this.localStorageService.getItem('driverDetails');
@@ -127,7 +127,7 @@ export class StepsComponent implements OnInit {
     this.carService.getCarDetailById(carId).subscribe((response) => {
       this.carDetails = response.data;
       this.carDetails.forEach((car) => {
-        this.rentCarName = car.carName;
+        this.rentCarModel = car.modelName;
         this.rentBrandName = car.brandName;
         this.rentFuelName = car.fuelType;
         this.rentTransmissionName = car.transmissionType;
@@ -135,7 +135,7 @@ export class StepsComponent implements OnInit {
       });
     });
   }
-   totalPrice(dailyPrice: number) {
+  totalPrice(dailyPrice: number) {
     return dailyPrice * this.rentDetail.rentDay;
   }
   getDriverAge(birthDate: any) {

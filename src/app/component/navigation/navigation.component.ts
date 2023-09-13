@@ -30,8 +30,17 @@ export class NavigationComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private localStorageService:LocalStorageService
-  ) {}
+    private localStorageService: LocalStorageService
+  ) {
+    if (this.localStorageService.getItem('token') !== null) {
+      this.getUserInfo();
+      this.firstName = this.localStorageService.getItem('userFirstName');
+      this.lastName = this.localStorageService.getItem('userLastName');
+      this.isLogin = true;
+    } else {
+      this.isLogin = false;
+    }
+  }
   searchIcon = faSearch;
   homeIcon = faHome;
   carIcon = faCar;
@@ -48,19 +57,12 @@ export class NavigationComponent implements OnInit {
   isLogin: boolean;
   firstName: string;
   lastName: string;
-  userId: number;
 
   ngOnInit(): void {
-    if (this.localStorageService.getItem('token') !== null) {
-      this.getUserId();
-      this.isLogin = true;
-    } else {
-      this.isLogin = false;
-    }
   }
 
   signOut() {
-    this.localStorageService.removeAll()
+    this.localStorageService.removeAll();
     window.location.href = '/home';
     this.refreshPage();
   }
@@ -81,18 +83,20 @@ export class NavigationComponent implements OnInit {
 
   getCurrentUrl() {
     const currentUrl = this.router.url;
-    this.localStorageService.setItem('lastUrl',currentUrl);
-  }
-  getUserId() {
-    let userInfo = this.authService.getUserInfo();
-    this.userId = userInfo.id;
-    this.getUserInfoById(this.userId);
+    this.localStorageService.setItem('lastUrl', currentUrl);
   }
 
-  getUserInfoById(userId: number) {
-    this.userService.getUserById(userId).subscribe((response) => {
-      this.firstName=response.data.firstName
-      this.lastName=response.data.lastName
-    });
+  CheckLoginStatus(){
+    if(this.authService.isAuthenticated())
+    {
+      console.log("giriş yapılmış")
+    }
+    else{
+      console.log("giriş yapılmamış")
+    }
+  }
+
+  getUserInfo(){
+    this.authService.getUserInfo();
   }
 }

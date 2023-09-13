@@ -17,6 +17,10 @@ import { RentalsComponent } from './component/user-panel/rentals/rentals.compone
 import { DriversComponent } from './component/user-panel/drivers/drivers.component';
 import { AddressesComponent } from './component/user-panel/addresses/addresses.component';
 import { PaymentsComponent } from './component/user-panel/payments/payments.component';
+import { BodiesComponent } from './component/admin/bodies/bodies.component';
+import { ColorsComponent } from './component/admin/colors/colors.component';
+import { BrandsComponent } from './component/admin/brands/brands.component';
+import { CarsComponent } from './component/admin/cars/cars.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomePageComponent },
@@ -124,6 +128,28 @@ const routes: Routes = [
   },{
     path:'profile/address',
     component:AddressesComponent
+  },
+  {
+    path: 'admin',
+    component: SettingsComponent
+  },
+  {
+    path:'admin/cars',
+    component:CarsComponent
+  }
+  ,
+  {
+    path:'admin/colors',
+    component:ColorsComponent
+  }
+  ,
+  {
+    path:'admin/brands',
+    component:BrandsComponent
+  },
+  {
+    path:'admin/bodies',
+    component:BodiesComponent
   }
 ];
 

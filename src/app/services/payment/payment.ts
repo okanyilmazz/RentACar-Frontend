@@ -6,6 +6,7 @@ import { Driver } from 'src/app/models/driver/driver';
 import { ListResponseModel } from 'src/app/models/listResponseModel';
 import { NonListResponseModel } from 'src/app/models/nonListResponseModel';
 import { Payment } from 'src/app/models/payment/payment';
+import { PaymentPay } from 'src/app/models/payment/paymentPay';
 import { ResponseModel } from 'src/app/models/responseModel';
 
 @Injectable({
@@ -41,6 +42,15 @@ export class PaymentService {
     return this.httpClient.post<ResponseModel>(
       this.apiUrl + 'Payments/add',
       payment
+    );
+  }
+  
+  pay(
+    paymentWithTotalPrice: PaymentPay
+  ): Observable<NonListResponseModel<Payment>> {
+    return this.httpClient.post<NonListResponseModel<Payment>>(
+      this.apiUrl + 'Payments/pay',
+      paymentWithTotalPrice
     );
   }
 }

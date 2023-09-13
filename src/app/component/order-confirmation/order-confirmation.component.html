@@ -11,14 +11,12 @@
       <div class="info-center">
         <div class="bill-type">
           <label class="custom-control-label radio-inline">
-            <input type="radio" name="bill-type" checked class="bill-personal custom-control-input" (change)="testA()"
-             >
+            <input type="radio" name="bill-type" checked class="bill-personal custom-control-input" (change)="testA()">
             Bireysel
           </label>
           <label class="custom-control-label radio-inline">
-            <input type="radio" name="bill-type" class="bill-corporate custom-control-input" (change)="testB()"
-            >
-            Kurumsal 
+            <input type="radio" name="bill-type" class="bill-corporate custom-control-input" (change)="testB()">
+            Kurumsal
           </label>
         </div>
 
@@ -33,18 +31,19 @@
           </div>
           <div [(ngbCollapse)]="isCollapsed">
             <span>Vergi No</span>
-            <input type="number"   formControlName="taxNumber">
+            <input type="number" formControlName="taxNumber">
           </div>
           <div>
             <span>Ülke Seçimi</span>
-            <select class="form-select" formControlName="countryId" [(ngModel)]="countryBase" (change)="changeCountry($event)">
+            <select class="form-select" formControlName="countryId" [(ngModel)]="countryBase"
+              (change)="changeCountry($event)">
               <option selected>Ülke seç</option>
               <option *ngFor="let country of countries" [value]="country.id">{{country.countryName}} </option>
             </select>
           </div>
           <div>
             <span>Şehir Seçimi</span>
-            <select class="form-select" formControlName="cityId"  [disabled]="isCitySelected" [(ngModel)]="cityBase"
+            <select class="form-select" formControlName="cityId" [disabled]="isCitySelected" [(ngModel)]="cityBase"
               (change)="changeCity($event)">
               <option selected>Şehir seç</option>
               <option *ngFor="let city of cities" [value]="city.id">{{city.cityName}}</option>
@@ -52,7 +51,8 @@
           </div>
           <div>
             <span>İlçe Seçimi</span>
-            <select class="form-select" formControlName="countieId"  [disabled]="isCountySelected" [(ngModel)]="countyBase">
+            <select class="form-select" formControlName="countyId" [disabled]="isCountySelected"
+              [(ngModel)]="countyBase">
               <option selected>İlçe seç</option>
               <option *ngFor="let county of counties" [value]="county.id">{{county.countyName}}</option>
             </select>
@@ -60,12 +60,13 @@
           <div class="payment-options">
             <div class="form-group content">
               <label for="address">Adres</label>
-              <textarea maxlength="255" formControlName="address" class="form-control" id="address" rows="3" [(ngModel)]="billingAddress"></textarea>
+              <textarea maxlength="255" formControlName="address" class="form-control" id="address" rows="3"
+                [(ngModel)]="billingAddress"></textarea>
             </div>
           </div>
           <div class="mobile-btn">
-            <button type="button" (click)="finishTheOrder(content)" routerLinkActive="active">Siparişi Bitir <fa-icon
-              [icon]="rightArrowIcon"></fa-icon></button>
+            <button type="button" (click)="checkPay(content)" routerLinkActive="active">Siparişi Bitir <fa-icon
+                [icon]="rightArrowIcon"></fa-icon></button>
           </div>
         </form>
       </div>
@@ -83,32 +84,38 @@
     <div class="seperator"></div>
     <div class="info-right" *ngFor="let car of carDetails">
       <div class="title">
-        <span>{{car.carName}}</span>
+        <span>{{car.brandName}} - {{car.modelName}}</span>
       </div>
       <div class="feature">
         <div class="content">
           <div class="feature-top">
             <div id="icon"><img src="assets/image/icon-fuel.png">
-              <span>{{car.fuelType}}</span></div>
+              <span>{{car.fuelType}}</span>
+            </div>
             <div>
               <div id="icon"><img src="assets/image/icon-group.png">
-                <span>{{car.numberOfPassengers}} Kişi</span></div>
+                <span>{{car.numberOfPassengers}} Kişi</span>
+              </div>
             </div>
             <div>
               <div id="icon"><img src="assets/image/icon-gearbox.png">
-                <span>{{car.transmissionType}}</span></div>
+                <span>{{car.transmissionType}}</span>
+              </div>
             </div>
           </div>
           <div class="feature-bottom">
             <div id="icon"><img src="assets/image/icon-suv.png">
-              <span>{{car.bodyType}}</span></div>
+              <span>{{car.bodyType}}</span>
+            </div>
             <div>
               <div id="icon"><img src="assets/image/icon-color.png">
-                <span>{{car.colorName}}</span></div>
+                <span>{{car.colorName}}</span>
+              </div>
             </div>
             <div>
               <div id="icon"><img src="assets/image/air-conditioner.png">
-                <span>{{isExistAirConditioner(car.airConditioning)}}</span></div>
+                <span>{{isExistAirConditioner(car.airConditioning)}}</span>
+              </div>
             </div>
 
           </div>
@@ -187,7 +194,7 @@
       </div>
 
       <div class="submit-form mt-3">
-        <button type="button" id="btnFinish" routerLinkActive="active" (click)="finishTheOrder(content)">Siparişi Bitir
+        <button type="button" id="btnFinish" routerLinkActive="active" (click)="checkPay(content)">Siparişi Bitir
           <fa-icon [icon]="rightArrowIcon"></fa-icon></button>
       </div>
     </div>
@@ -204,34 +211,40 @@
     <div class="modal-body">
       <div class="info-right" *ngFor="let car of carDetails">
         <div class="title">
-          <span>{{car.brandName}} - {{car.carName}}</span>
+          <span>{{car.brandName}} - {{car.modelName}}</span>
         </div>
         <div class="modal-feature mt-4">
-          <div >
+          <div>
             <div class="right"> <img [src]="getImagePath(car.carImages[0].imagePath)"> </div>
           </div>
           <div class="content mt-3">
             <div class="modal-feature-top">
               <div id="icon"><img src="assets/image/icon-fuel.png">
-                <span>{{car.fuelType}}</span></div>
+                <span>{{car.fuelType}}</span>
+              </div>
 
               <div id="icon">
                 <i class="fa-solid fa-users fa-xl"></i>
 
-                <span>{{car.numberOfPassengers}} Kişi</span></div>
+                <span>{{car.numberOfPassengers}} Kişi</span>
+              </div>
 
 
               <div id="icon"><img src="assets/image/icon-gearbox.png">
-                <span>{{car.transmissionType}}</span></div>
+                <span>{{car.transmissionType}}</span>
+              </div>
 
             </div>
             <div class="modal-feature-bottom">
               <div id="icon"><img src="assets/image/icon-suv.png">
-                <span>{{car.bodyType}}</span></div>
+                <span>{{car.bodyType}}</span>
+              </div>
               <div id="icon"><img src="assets/image/icon-color.png">
-                <span>{{car.colorName}}</span></div>
+                <span>{{car.colorName}}</span>
+              </div>
               <div id="icon"><img src="assets/image/air-conditioner.png">
-                <span>{{isExistAirConditioner(car.airConditioning)}}</span></div>
+                <span>{{isExistAirConditioner(car.airConditioning)}}</span>
+              </div>
             </div>
           </div>
 

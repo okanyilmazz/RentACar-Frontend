@@ -1,0 +1,376 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="cars container">
+  <div class="cars-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Araç Filosu">
+        <ng-template ngbPanelContent>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Marka</th>
+                <th>Model</th>
+                <th>Yakıt Türü</th>
+                <th>Kasa Tipi</th>
+                <th>Şanzıman Tipi</th>
+                <th>Model Yılı</th>
+                <th>Günlük Fiyat</th>
+                <th>Kredi Puanı</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let car of carDetails; let i = index">
+                <th>{{ car.description }}</th>
+                <th>{{ car.brandName }}</th>
+                <th>{{ car.fuelType }}</th>
+                <th>{{ car.bodyType }}</th>
+                <th>{{ car.transmissionType }}</th>
+                <th>{{ car.modelYear }}</th>
+                <th>{{ car.dailyPrice | currency : "₺" }}</th>
+                <th>{{ car.creditScore }}</th>
+                <th>
+                  <div id="updateDeleteButtons">
+                    <button id="updateButton" class="btn btn-success" (click)="
+                    
+                        openModal(updateCarContent, 'new-car-modal', car)
+                      ">
+                      Güncelle
+                    </button>
+                    <button id="deleteButton" class="btn btn-danger" (click)="
+                        openModal(questionContent, 'question-modal', car)
+                      ">
+                      Sil
+                    </button>
+                  </div>
+                </th>
+                <!--MODAL DELETE -->
+                <ng-template #questionContent>
+                  <div class="question-modal-car text-center">
+                    <p>
+                      {{ car.brandName }} - {{ car.modelName }} markalı aracı silmek istediğinize emin misiniz?
+                    </p>
+                    <button type="button" class="btn" id="btn-yes" (click)="deleteCar(car.carId)">
+                      Evet
+                    </button>
+                    <button type="button" class="btn" id="btn-no" (click)="decline()">
+                      Hayır
+                    </button>
+                  </div>
+                </ng-template>
+                <!-- #endregion -->
+
+                <!--Update Modal-->
+                <ng-template #updateCarContent>
+                  <form [formGroup]="carSendForm">
+                    <div class="new-car-modal-body">
+                      <!-- <div class="mb-3">
+                                                          <label for="carName" class="form-label">Araç Adı</label>
+                                                          <input tabindex="1" type="text" class="form-control" id="carName">
+                                                        </div> -->
+                      <h1>Araç Özellikleri</h1>
+                      <div class="car-brand-model c c-4">
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="newCarBrand">Marka</label>
+                          <select class="form-select" id="newCarBrand" tabindex="2" (change)="changeBrandType($event)">
+                            <option *ngFor="let brand of brands" [value]="brand.id" [selected]="brand.id===carBrandId">
+                              {{brand.name}} </option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="newCarModel">Model</label>
+                          <select class="form-select" id="newCarModel" tabindex="3" (change)="changeModel($event)">
+                            <option *ngFor="let model of models" [value]="model.id"
+                              [selected]="model.id === carModelId">
+                              {{model.name}} </option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="newCarBody">Kasa</label>
+                          <select class="form-select" id="newCarBody" tabindex="4" (change)="changeBodyType($event)">
+                            <option *ngFor="let body of bodies" [value]="body.id" [selected]="body.id === carBodyId">
+                              {{body.type}} </option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-3 col-md-6">
+                          <label class="input-group-text" for="newCarTransmission">Şanzıman</label>
+                          <select class="form-select" id="newCarTransmission" tabindex="5"
+                            (change)="changeTransmissionType($event)">
+                            <option *ngFor="let transmission of transmissions" [value]="transmission.id"
+                              [selected]="transmission.id === carTransmissionId">
+                              {{transmission.transmissionType}} </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="c c-4">
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="newCarColor">Renk</label>
+                          <select class="form-select" id="newCarColor" tabindex="6" (change)="changeColor($event)">
+                            <option *ngFor="let color of colors" [value]="color.id" [selected]="color.id===carColorId">
+                              {{color.colorName}} </option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="newCarFuel">Yakıt</label>
+                          <select class="form-select" id="newCarFuel" tabindex="7" (change)="changeFuel($event)">
+                            <option>Seçiniz</option>
+                            <option *ngFor="let fuel of fuels" [value]="fuel.id" [selected]="fuel.id===carFuelId">
+                              {{fuel.fuelType}} </option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="newCarAirConditioning">Klima</label>
+                          <select class="form-select" id="newCarAirConditioning" tabindex="8"
+                            (change)="changeAirConditioning($event)" [(ngModel)]="isAirConditioning"
+                            [ngModelOptions]="{standalone: true}">
+                            <option [value]="null">Seçiniz</option>
+                            <option [value]="true">Var</option>
+                            <option [value]="false">Yok</option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="newCarPassengers">Kişi Kapasitesi</label>
+                          <select class="form-select" id="newCarPassengers" tabindex="9"
+                            (change)="changePassengers($event)" [(ngModel)]="carNumberOfPassengers"
+                            [ngModelOptions]="{standalone: true}">
+                            <option>Seçiniz</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="5+">5+</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="c c-4">
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="modelYear">Yıl</label>
+                          <input tabindex="10" type="number" class="form-control" id="modelYear"
+                            formControlName="modelYear" placeholder="2021"
+                            [value]="carSendForm.get('modelYear').value" />
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="dailyPrice">Günlük Fiyat</label>
+                          <input tabindex="11" type="number" class="form-control" id="dailyPrice"
+                            formControlName="dailyPrice" placeholder="1500"
+                            [value]="carSendForm.get('dailyPrice').value" />
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="deposit">Depozito</label>
+                          <input tabindex="12" type="number" class="form-control" id="deposit" formControlName="deposit"
+                            placeholder="1500" [value]="carSendForm.get('deposit').value" />
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="kilometerLimit">Kilometre Limiti</label>
+                          <input tabindex="13" type="number" class="form-control" id="kilometerLimit"
+                            formControlName="kilometerLimit" placeholder="750"
+                            [value]="carSendForm.get('kilometerLimit').value" />
+                        </div>
+                        <div class="input-group mb-3">
+                          <label class="input-group-text" for="creditScore">Kredi Skoru</label>
+                          <input tabindex="14" type="number" class="form-control" id="creditScore"
+                            formControlName="creditScore" placeholder="750"
+                            [value]="carSendForm.get('creditScore').value" />
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="modalCarDescription" class="form-label">Araç Detayları</label>
+                        <textarea tabindex="15" class="form-control" id="modalCarDescription" rows="4"
+                          formControlName="description" [value]="carSendForm.get('description').value">  </textarea>
+                      </div>
+                      <!-- <div class="new-car-image-form mb-3">
+                        <input type="file" multiple (change)="getFile($event)" class="form-control mb-3"
+                          id="addCarImage" accept=".jpeg,.png,.jpg" tabindex="16">
+                      </div> -->
+                      <div id="img-table-title" class="mb-3 text-center" style="width:100%">
+                        <span>Görseller</span>
+                      </div>
+                      <table class="table table-striped">
+                        <tbody id="img-table">
+                          <tr>
+                            <td *ngIf="dataImageLoaded == false" class="mt-5">
+                              <div class="spinner-border image-spinner" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                            </td>
+                            <td *ngFor="let carImage of selectedCarImages">
+                              <img [src]="imageBaseUrl+carImage.imagePath">
+                              <input type="checkbox" class="form-check-input select-images"
+                                (change)="onChangeCheckImage(carImage, $event)" [value]="carImage.id">
+                              <!-- <img [src]="projectImage.imagePath"> -->
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="form-check mb-md-3">
+                        <input class="form-check-input" type="checkbox" id="addImage"
+                          (change)="onChangeCheckNewImage($event)">
+                        <label class="form-check-label" for="addImage">
+                          Resim eklemek istiyorum.
+                        </label>
+                      </div>
+                      <div class="upload-image-form mb-3" [ngbCollapse]="isAddImageCollapse">
+                        <input type="file" multiple (change)="getMultiFile($event)" class="form-control mb-3"
+                          id="addProjectImage" accept=".jpeg,.png,.jpg">
+                        <button class="btn-primary btn" id="add-new-image" type="button"
+                          (click)="addCarImage(car.carId)">Resim/leri
+                          Ekle</button>
+                      </div>
+                      <div class="delete-image mb-3" [ngbCollapse]="isDeleteImageCollapse">
+                        <button class="btn btn-primary" type="button" (click)="deleteCarImage()">Resimleri Sil</button>
+                      </div>
+                      <button tabindex="17" type="submit" class="btn" id="addNewCar" (click)="updateCar()">Aracı
+                        Güncelle</button>
+                    </div>
+                  </form>
+                </ng-template>
+              </tr>
+
+
+              <tr (click)="newOpenModal(newCarContent)">
+                <th colspan="9">
+                  <button tyle="button" class="btn">Yeni araç ekle</button>
+                </th>
+              </tr>
+
+              <!--New Car Modal-->
+              <ng-template #newCarContent>
+                <form [formGroup]="carSendForm">
+                  <div class="new-car-modal-body">
+                    <!-- <div class="mb-3">
+                      <label for="carName" class="form-label">Araç Adı</label>
+                      <input tabindex="1" type="text" class="form-control" id="carName">
+                    </div> -->
+                    <h1>Araç Özellikleri</h1>
+                    <div class="car-brand-model c c-4">
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="newCarBrand">Marka</label>
+                        <select class="form-select" id="newCarBrand" formControlName="brandId" tabindex="2"
+                          [formControl]="newCarSelectDefaultText" (change)="changeBrandType($event)">
+                          <option>Seçiniz</option>
+                          <option *ngFor="let brand of brands" [value]="brand.id">
+                            {{brand.name}} </option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="newCarModel">Model</label>
+                        <select class="form-select" id="newCarModel" formControlName="modelId" tabindex="3"
+                          [formControl]="newCarSelectDefaultText" (change)="changeModel($event)">
+                          <option>Seçiniz</option>
+                          <option *ngFor="let model of models" [value]="model.id">
+                            {{model.name}} </option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="newCarBody">Kasa</label>
+                        <select class="form-select" id="newCarBody" formControlName="bodyId" tabindex="4"
+                          [formControl]="newCarSelectDefaultText" (change)="changeBodyType($event)">
+                          <option>Seçiniz</option>
+                          <option *ngFor="let body of bodies" [value]="body.id">
+                            {{body.type}} </option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-3 col-md-6">
+                        <label class="input-group-text" for="newCarTransmission">Şanzıman</label>
+                        <select class="form-select" id="newCarTransmission" formControlName="transmissionId"
+                          tabindex="5" [formControl]="newCarSelectDefaultText"
+                          (change)="changeTransmissionType($event)">
+                          <option>Seçiniz</option>
+                          <option *ngFor="let transmission of transmissions" [value]="transmission.id">
+                            {{transmission.transmissionType}} </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="c c-4">
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="newCarColor">Renk</label>
+                        <select class="form-select" id="newCarColor" formControlName="colorId" tabindex="6"
+                          [formControl]="newCarSelectDefaultText" (change)="changeColor($event)">
+                          <option>Seçiniz</option>
+                          <option *ngFor="let color of colors" [value]="color.id">
+                            {{color.colorName}} </option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="newCarFuel">Yakıt</label>
+                        <select class="form-select" id="newCarFuel" formControlName="fuelId" tabindex="7"
+                          [formControl]="newCarSelectDefaultText" (change)="changeFuel($event)">
+                          <option>Seçiniz</option>
+                          <option *ngFor="let fuel of fuels" [value]="fuel.id">
+                            {{fuel.fuelType}} </option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="newCarAirConditioning">Klima</label>
+                        <select class="form-select" id="newCarAirConditioning" formControlName="airConditioning"
+                          tabindex="8" [formControl]="newCarSelectDefaultText" (change)="changeAirConditioning($event)">
+                          <option>Seçiniz</option>
+                          <option [value]="true">Var</option>
+                          <option [value]="false">Yok</option>
+                        </select>
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="newCarPassengers">Kişi Kapasitesi</label>
+                        <select class="form-select" id="newCarPassengers" formControlName="numberOfPassengers"
+                          tabindex="9" [formControl]="newCarSelectDefaultText" (change)="changePassengers($event)">
+                          <option>Seçiniz</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="5+">5+</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="c c-4">
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="modelYear">Yıl</label>
+                        <input tabindex="10" type="number" class="form-control" id="modelYear"
+                          formControlName="modelYear" placeholder="2021" />
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="dailyPrice">Günlük Fiyat</label>
+                        <input tabindex="11" type="number" class="form-control" id="dailyPrice"
+                          formControlName="dailyPrice" placeholder="1500" />
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="deposit">Depozito</label>
+                        <input tabindex="12" type="number" class="form-control" id="deposit" formControlName="deposit"
+                          placeholder="1500" />
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="kilometerLimit">Kilometre Limiti</label>
+                        <input tabindex="13" type="number" class="form-control" id="kilometerLimit"
+                          formControlName="kilometerLimit" placeholder="750" />
+                      </div>
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="creditScore">Kredi Skoru</label>
+                        <input tabindex="14" type="number" class="form-control" id="creditScore"
+                          formControlName="creditScore" placeholder="750" />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="modalCarDescription" class="form-label">Araç Detayları</label>
+                      <textarea tabindex="15" class="form-control" id="modalCarDescription" rows="4"
+                        formControlName="description">  </textarea>
+                    </div>
+                    <div class="new-car-image-form mb-3">
+                      <input type="file" multiple (change)="getFile($event)" class="form-control mb-3" id="addCarImage"
+                        accept=".jpeg,.png,.jpg" tabindex="16">
+                    </div>
+                    <button tabindex="17" type="submit" class="btn" id="addNewCar" (click)="addCar()">Araç
+                      Ekle</button>
+                  </div>
+                </form>
+              </ng-template>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

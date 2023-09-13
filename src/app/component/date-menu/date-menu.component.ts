@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
@@ -33,6 +33,7 @@ export class DateMenuComponent implements OnInit {
   ) {
     this.localStorageService.removeItem('rentalValue');
   }
+
 
   arrowIcon = faAngleDoubleRight;
   filterRentalText: string;
@@ -77,7 +78,8 @@ export class DateMenuComponent implements OnInit {
   };
 
   dateAddForm: FormGroup;
-
+  @Output() rentDate: EventEmitter<string> = new EventEmitter<string>();
+  @Output() retDate: EventEmitter<string> = new EventEmitter<string>();
   ngOnInit(): void {
     this.getLocationDetails();
     this.isRentalText = this.filterRentalText;
@@ -248,6 +250,7 @@ export class DateMenuComponent implements OnInit {
         totalPrice: null,
       };
       this.localStorageService.setItem('rentalValue',this.rentalInfo);
+    
     }
   }
 
@@ -258,11 +261,13 @@ export class DateMenuComponent implements OnInit {
     this.returnDate = '';
     this.rentalDate = this.dateTransform(event);
     // this.dateAddForm.patchValue({ returnDate: '' });
+    this.rentDate.emit(this.rentalDate);
     this.checkAllInfo();
   }
 
   onReturnDateSelect(event: any) {
     this.returnDate = this.dateTransform(event);
+    this.retDate.emit(this.returnDate);
     this.checkAllInfo();
   }
 

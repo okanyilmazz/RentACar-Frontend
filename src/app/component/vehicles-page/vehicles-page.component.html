@@ -4,11 +4,12 @@
   </div>
 
   <div class="vehicles-date container">
-    <app-date-menu></app-date-menu>
+    <app-date-menu (rentDate)="rentDate = $event" 
+    (retDate)="retDate = $event"></app-date-menu>
   </div>
 
   <div class="cars">
-    <app-car></app-car>
+    <app-car [rentDate]="rentDate" [retDate]="retDate"></app-car>
   </div>
 
   <div class="vehicles-filter">

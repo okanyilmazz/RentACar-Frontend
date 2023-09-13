@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CreditScoreService } from 'src/app/services/credit-score/credit-score.service';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -14,6 +15,7 @@ export class SidebarComponent implements OnInit {
   lastName: string = '';
   email: string;
   userId: number = 0;
+creditScore:number;
 
   blogStyle: string;
   homeStyle: string;
@@ -26,18 +28,20 @@ export class SidebarComponent implements OnInit {
   offerBg: string;
   currentDate: Date = new Date();
   transformCurrentDate: string;
-
+role:string="Admin";
   constructor(
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private localStorageService:LocalStorageService
+    private localStorageService:LocalStorageService,
+    private creditScoreService:CreditScoreService  
   ) {
   
   }
 
   ngOnInit(): void {
     this.getUserId();
+    this.getUserCreditScore(this.userId);
   }
 
   logOut() {
@@ -155,6 +159,12 @@ export class SidebarComponent implements OnInit {
     // return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
   }
 
+
+  getUserCreditScore(userId:number){
+    this.creditScoreService.getScoreByUserId(userId).subscribe(response=>{
+      this.creditScore = response.data.score
+    })
+  }
   getUserId() {
     let userInfo = this.authService.getUserInfo();
     if (userInfo) {
@@ -162,6 +172,7 @@ export class SidebarComponent implements OnInit {
       this.getUserInfoById(this.userId);
     }
   }
+
   getUserInfoById(userId: number) {
     this.userService.getUserById(userId).subscribe((response) => {
       this.firstName = response.data.firstName;

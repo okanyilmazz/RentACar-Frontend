@@ -11,43 +11,24 @@
       <div class="info-content">
         <div class="card-number infos">
           <span>Kart Numarası </span>
-          <input
-            type="text"
-            formControlName="cardNumber"
-            (input)="formatCardNumber($event)"
-            [value]="cardNumber"
-            [(ngModel)]="cardNumber"
-            maxlength="19"
-          />
+          <input type="text" formControlName="cardNumber" (input)="formatCardNumber($event)" [value]="cardNumber"
+            [(ngModel)]="cardNumber" maxlength="19" />
         </div>
         <div class="card-name infos">
           <span>Kart Üzerindeki İsim </span>
-          <input
-            formControlName="cardName"
-            type="text"
-            maxlength="20"
-            (ngModelChange)="onValueChange($event)"
-            [(ngModel)]="cardName"
-          />
+          <input formControlName="cardName" type="text" maxlength="20" (ngModelChange)="onValueChange($event)"
+            [(ngModel)]="cardName" />
         </div>
         <div class="expiration-date infos">
           <span>Son Kullanma Tarihi </span>
           <div>
-            <select
-              class="form-select"
-              formControlName="cardMonth"
-              [(ngModel)]="monthBase"
-            >
+            <select class="form-select" formControlName="cardMonth" [(ngModel)]="monthBase">
               <option selected>Ay</option>
               <option *ngFor="let month of months" [value]="month">
                 {{ month }}
               </option>
             </select>
-            <select
-              class="form-select"
-              formControlName="cardYear"
-              [(ngModel)]="yearBase"
-            >
+            <select class="form-select" formControlName="cardYear" [(ngModel)]="yearBase">
               <option selected>Yıl</option>
               <option *ngFor="let year of years" [value]="year">
                 {{ year }}
@@ -56,30 +37,15 @@
           </div>
         </div>
         <div class="security-code infos">
-          <span
-            >Güvenlik Kodu
-            <fa-icon
-              [icon]="infoIcon"
-              ngbTooltip="Güvenlik kodu, kartın arkasında bulunan 3 haneli rakamdan oluşur"
-              placement="top"
-            >
-            </fa-icon
-          ></span>
-          <input
-            [(ngModel)]="cardSecurityCode"
-            formControlName="cardSecurityCode"
-            type="number"
-            (input)="securityCodeLimitCharacterCount($event)"
-            min="1"
-            max="999"
-          />
+          <span>Güvenlik Kodu
+            <fa-icon [icon]="infoIcon" ngbTooltip="Güvenlik kodu, kartın arkasında bulunan 3 haneli rakamdan oluşur"
+              placement="top">
+            </fa-icon></span>
+          <input [(ngModel)]="cardSecurityCode" formControlName="cardSecurityCode" type="number"
+            (input)="securityCodeLimitCharacterCount($event)" min="1" max="999" />
         </div>
         <div class="mobile-btn">
-          <button
-            type="button"
-            (click)="openModal(addCard)"
-            routerLinkActive="active"
-          >
+          <button type="button" (click)="openModal(addCard)" routerLinkActive="active">
             Devam Et <fa-icon [icon]="rightArrowIcon"></fa-icon>
           </button>
         </div>
@@ -101,11 +67,10 @@
               <span>UNTIL END</span>
               <span>
                 {{ monthBase }}/{{
-                  yearBase === "Yıl"
-                    ? yearBase
-                    : yearBase.slice(2, yearBase.length)
-                }}</span
-              >
+                yearBase === "Yıl"
+                ? yearBase
+                : yearBase.slice(2, yearBase.length)
+                }}</span>
             </div>
             <div id="cvv-code">
               <span>CVV</span>
@@ -119,20 +84,13 @@
         </div>
         <div class="payment-options" [style.grid-row-start]="paymentOptionsRow">
           <span id="title">Taksit Seçenekleri</span>
-          <span id="content" [style.display]="installmentInfo"
-            >Taksit seçenekleri kart bilgileri girildikten sonra
-            görüntülenecektir.</span
-          >
+          <span id="content" [style.display]="installmentInfo">Taksit seçenekleri kart bilgileri girildikten sonra
+            görüntülenecektir.</span>
           <div class="installment-content" [style.display]="installment">
             <span>Kartınıza özel 9 Ay Taksit imkanı bulunmaktadır.</span>
             <div class="form-check">
               <span>Taksit yapmak istiyorum.</span>
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckChecked"
-              />
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
             </div>
           </div>
           <span id="content-installment"></span>
@@ -150,7 +108,7 @@
     <div class="seperator"></div>
     <div class="info-right" *ngFor="let car of carDetails">
       <div class="title">
-        <span>{{ car.carName }}</span>
+        <span>{{car.brandName}} - {{car.modelName}}</span>
       </div>
       <div class="feature">
         <div class="content">
@@ -255,9 +213,7 @@
               <span>{{ returnLocationTitle }}</span>
             </div>
             <div>
-              <span
-                >{{ rentDetail.returnDate }} - {{ rentDetail.returnTime }}</span
-              >
+              <span>{{ rentDetail.returnDate }} - {{ rentDetail.returnTime }}</span>
             </div>
           </div>
         </div>
@@ -281,8 +237,7 @@
           <div><span id="title">Toplam Fiyat</span></div>
           <div><span>:</span></div>
           <div>
-            <span
-              >{{ totalPrice(car.dailyPrice) | currency : "TRY" : "₺" }}
+            <span>{{ totalPrice(car.dailyPrice) | currency : "TRY" : "₺" }}
             </span>
           </div>
         </div>
@@ -300,11 +255,7 @@
       </div>
 
       <div class="submit-form mt-3">
-        <button
-          type="button"
-          (click)="openModal(addCard)"
-          routerLinkActive="active"
-        >
+        <button type="button" (click)="openModal(addCard)" routerLinkActive="active">
           Ödemeyi Tamamla <fa-icon [icon]="rightArrowIcon"></fa-icon>
         </button>
       </div>
@@ -315,22 +266,12 @@
   <ng-template #addCard>
     <div class="credit-card-modal-body text-center">
       <p>
-       Kredi kartını daha sonra kullanmak için kaydetmek ister misiniz?
+        Kredi kartını daha sonra kullanmak için kaydetmek ister misiniz?
       </p>
-      <button
-        type="button"
-        class="btn"
-        id="btn-yes"
-        (click)="addCardToUser()"
-      >
+      <button type="button" class="btn" id="btn-yes" (click)="addCardToUser()">
         Evet
       </button>
-      <button
-        type="button"
-        class="btn"
-        id="btn-no"
-        (click)="decline()"
-      >
+      <button type="button" class="btn" id="btn-no" (click)="decline()">
         Hayır
       </button>
     </div>

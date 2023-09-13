@@ -52,6 +52,8 @@ export class ReservationDateComponent implements OnInit {
     month: this.rentMinDate.month,
     day: this.rentMinDate.day + 1,
   };
+
+  
   transformDate(date: any) {
     return this.datePipe.transform(date, 'dd.MM.YYYY', this.locale);
   }

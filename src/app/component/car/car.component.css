@@ -14,6 +14,8 @@
 .card-body {
   display: grid;
   grid-template-rows: 30px 50px auto;
+  padding-left: 0;
+    padding-right: 0;
 }
 .card-img-top {
   width: 100%;
@@ -50,13 +52,14 @@ span.cardDetail {
 }
 .card-body-icon {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-
+  grid-template-columns: repeat(4,1fr);
+  padding: 0;
   justify-items: center;
 }
 .card-body-text {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4,1fr);
+  padding: 0;
   align-items: center;
 }
 #card-body-icon {
@@ -81,6 +84,9 @@ span.cardDetail {
   font-family: Roboto-Bold;
   font-size: small;
   color: white;
+}
+::ng-deep .tooltip-inner{
+  background-color: #e2a742;
 }
 
 /* @media only screen and (max-width: 998px) {
@@ -109,6 +115,7 @@ span.cardDetail {
   .card-body .card-title {
     font-size: medium !important;
   }
+
 }
 
 @media screen and (max-width: 1024px) {

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CreditScore } from 'src/app/models/credit-score/creditScore';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CreditScoreService } from 'src/app/services/credit-score/credit-score.service';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
@@ -16,8 +18,9 @@ export class RegisterPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private creditScoreService: CreditScoreService,
     private toastrService: ToastrService,
-    private localStorageService:LocalStorageService
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +41,20 @@ export class RegisterPageComponent implements OnInit {
       let registerModel = Object.assign({}, this.registerForm.value);
       this.authService.register(registerModel).subscribe(
         (response) => {
-          this.localStorageService.setItem('token',response.data.token);
+          this.localStorageService.setItem('token', response.data.token);
           this.toastrService.success('Tebrikler! başarıyla kayıt olundu.');
-          this.router.navigate(["home"]);
+          this.authService.getUserInfo();
+
+          /*Add default credit score */
+          let creditScore: CreditScore = {
+            id: 0,
+            score: 100,
+            userId: this.localStorageService.getItem('userId'),
+          };
+          this.addCreditScore(creditScore);
+          /*end region */
+
+          this.router.navigate(['home']);
         },
         (responseError) => {
           this.toastrService.error(responseError.error);
@@ -49,5 +63,10 @@ export class RegisterPageComponent implements OnInit {
     } else {
       this.toastrService.error('Tüm alanları doldurmalısınız.');
     }
+  }
+  addCreditScore(creditScore: CreditScore) {
+    this.creditScoreService.add(creditScore).subscribe(response=>{
+      
+    })
   }
 }

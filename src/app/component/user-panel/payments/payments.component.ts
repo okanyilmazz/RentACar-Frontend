@@ -35,7 +35,7 @@ export class PaymentsComponent implements OnInit {
     this.paymentService.getPaymentsByUserId(userId).subscribe((response) => {
       this.userPayments = response.data;
       if (!Array.isArray(this.userPayments) || this.userPayments.length === 0) {
-        this.toastrService.warning('Boş');
+        this.toastrService.info('Kayıtlı ödeme bilgileriniz bulunmamaktadır.');
       }
     });
   }

@@ -16,14 +16,14 @@ export class ColorComponent implements OnInit {
   @Output() ColorEvent = new EventEmitter<boolean>();
   @Input() isOpenColor: boolean;
 
-  constructor(private colorService: ColorService) {}
+  constructor(private colorService: ColorService) { }
 
   ngOnInit(): void {
     this.getColor();
   }
 
   getColor() {
-    this.colorService.getColor().subscribe((response) => {
+    this.colorService.getAllColors().subscribe((response) => {
       this.colors = response.data;
     });
   }

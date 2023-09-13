@@ -1,22 +1,26 @@
 import { CarImage } from './carImage';
-export interface CarDetail{
+export interface CarDetail {
   carId: number;
-  brandId:number;
-  colorId:number;
-  fuelId:number;
-  bodyId:number;
-  colorName:string;
-  brandName:string;
-  fuelType:string;
-  bodyType:string;
-  transmissionType:string;
-  carName:string;
-  modelYear:number;
-  dailyPrice:number;
-  numberOfPassengers:number;
-  airConditioning:boolean;
-  deposit:number;
-  kilometerLimit:number;
-  availability:boolean;
-  carImages:CarImage[];
+  brandId: number;
+  colorId: number;
+  fuelId: number;
+  bodyId: number;
+  modelId: number;
+  transmissionId: number;
+  colorName: string;
+  brandName: string;
+  modelName: string;
+  fuelType: string;
+  bodyType: string;
+  transmissionType: string;
+  description: string;
+  modelYear: number;
+  dailyPrice: number;
+  numberOfPassengers: string;
+  airConditioning: boolean;
+  deposit: number;
+  kilometerLimit: number;
+  availability: boolean;
+  creditScore: number;
+  carImages: CarImage[];
 }

@@ -8,6 +8,8 @@ import { TokenModel } from 'src/app/models/token/tokenModel';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, last } from 'rxjs';
 import { User } from 'src/app/models/user/user';
+import { LocalStorageService } from '../local-storage/local-storage.service';
+import { UpdatePasswordDto } from 'src/app/models/user/updatePasswordDto';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +17,10 @@ import { User } from 'src/app/models/user/user';
 export class AuthService {
   constructor(
     private httpClient: HttpClient,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private localStorageService: LocalStorageService
   ) {}
-  
+
   decodedToken: any;
   apiUrl = new BaseUrl().apiUrl;
   user: User;
@@ -36,19 +39,18 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    if (localStorage.getItem('token')) {
+    if (this.localStorageService.getItem('token')) {
       return true;
     } else {
       return false;
     }
   }
 
+
   getUserInfo(): User {
-
-    let tokenDetails = this.jwtHelper.decodeToken(
-      localStorage.getItem('token')
+    const tokenDetails = this.jwtHelper.decodeToken(
+      this.localStorageService.getItem('token')
     );
-
     const {
       'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier':
         userId,
@@ -69,9 +71,22 @@ export class AuthService {
       id: userId,
       firstName: firstname,
       lastName: lastname,
-      email: email,
+      email: email
     };
 
+    this.localStorageService.setItem('userFirstName', firstname);
+    this.localStorageService.setItem('userLastName', lastname);
+    this.localStorageService.setItem('userId', userId);
+
     return user;
+  }
+
+  updatePassword(
+    updatePasswordModel: UpdatePasswordDto
+  ): Observable<NonListResponseModel<UpdatePasswordDto>> {
+    return this.httpClient.post<NonListResponseModel<UpdatePasswordDto>>(
+      this.apiUrl + 'Auth/updatepassword',
+      updatePasswordModel
+    );
   }
 }

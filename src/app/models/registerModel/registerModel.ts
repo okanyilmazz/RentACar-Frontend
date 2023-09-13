@@ -3,5 +3,6 @@ export interface RegisterModel {
     lastName:string;
     email: string;
     password: string;
+    creditScore:number;
   }
   

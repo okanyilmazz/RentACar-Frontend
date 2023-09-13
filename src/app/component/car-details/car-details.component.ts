@@ -2,19 +2,16 @@ import { CarImageService } from './../../services/car-image/car-image.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarDetail } from './../../models/car/carDetailDto';
 import { CarService } from 'src/app/services/car/car.service';
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  LOCALE_ID,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { CarImage } from 'src/app/models/car/carImage';
 import { DatePipe } from '@angular/common';
-import { RentalDetail } from 'src/app/models/rental/rentalDetail';
+
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { User } from 'src/app/models/user/user';
+import { UserService } from 'src/app/services/user/user.service';
+import { CreditScoreService } from 'src/app/services/credit-score/credit-score.service';
 
 @Component({
   selector: 'app-car-details',
@@ -24,7 +21,6 @@ import { LocalStorageService } from 'src/app/services/local-storage/local-storag
 export class CarDetailsComponent implements OnInit {
   carDetails: CarDetail[];
   carDetail: CarDetail;
-  rentDetail: RentalDetail;
   carImages: CarImage[];
   carId: number;
   rentDay: number;
@@ -34,6 +30,9 @@ export class CarDetailsComponent implements OnInit {
   returnTime: string;
   selectedRentalLocationId: number;
   selectedReturnLocationId: number;
+  carCreditScore: number;
+  userCreditScore: number;
+  userId: number;
 
   imageUrl = 'https://webservis.geziyoskii.site/';
   constructor(
@@ -42,7 +41,10 @@ export class CarDetailsComponent implements OnInit {
     private datePipe: DatePipe,
     private router: Router,
     private carImageService: CarImageService,
-    private localStorageService:LocalStorageService,
+    private localStorageService: LocalStorageService,
+    private toastrService: ToastrService,
+    private authService: AuthService,
+    private creditScoreService: CreditScoreService,
     @Inject(LOCALE_ID) private locale: string
   ) {}
 
@@ -59,43 +61,33 @@ export class CarDetailsComponent implements OnInit {
       ) {
         this.getCarDetailByCarId(params['carId']);
         this.getImageByCarId(params['carId']);
-        this.rentDetail = this.localStorageService.getItem('newRental');
-
-        this.rentDay = this.rentDetail.rentDay;
+        const rentDetail = this.localStorageService.getItem('rentalValue');
+        this.rentDay = rentDetail.rentDay;
       }
     });
-  }
 
-  findDay(rentalDate: string, returnDate: string): any {
-    let rentalDateSplit = rentalDate.split('.');
-    let returnDateSplit = returnDate.split('.');
+    if(this.authService.isAuthenticated())
+    {
+      this.getUserId();
+      this.getUserCreditScore(this.userId);
+    }
 
-    let returnDay: number = +returnDateSplit[0];
-    let rentalDay: number = +rentalDateSplit[0];
-    let returnMonth: number = +returnDateSplit[1];
-    let rentalMonth: number = +rentalDateSplit[1];
-
-    let dayDifference: number = returnDay - rentalDay;
-    let monthDifference: number = returnMonth - rentalMonth;
-    dayDifference = dayDifference + monthDifference * 30;
-    return dayDifference;
   }
 
   transformDate(date: any) {
     return this.datePipe.transform(date, 'dd.MM.yyyy', this.locale);
   }
+
   getCarDetailByCarId(carId: number) {
-    const storedData = this.localStorageService.getItem('newRental');
-    const rentalData = JSON.parse(storedData);
-    let updatedData = JSON.stringify(rentalData);
+    const storedData = this.localStorageService.getItem('rentalValue');
     this.carService.getCarDetailByClick(carId).subscribe((response) => {
       this.carDetails = response.data;
       this.carDetails.forEach((car) => {
-        rentalData.totalPrice = this.totalPrice(car.dailyPrice);
-        rentalData.carId=carId;
-        updatedData = JSON.stringify(rentalData);
-        this.localStorageService.removeItem('newRental');
-        this.localStorageService.setItem('newRental', updatedData);
+        this.carCreditScore = car.creditScore;
+        storedData.carId = Number(carId);
+        storedData.totalPrice = this.totalPrice(car.dailyPrice);
+        this.localStorageService.removeItem('rentalValue');
+        this.localStorageService.setItem('rentalValue', storedData);
       });
     });
   }
@@ -122,9 +114,31 @@ export class CarDetailsComponent implements OnInit {
   }
 
   goToDriverDetails() {
-    this.router.navigate([
-      `reservation/details/car-id/${this.carId}/rent-date/${this.rentalDate}/rent-time/${this.rentalTime}/return-date/${this.returnDate}/return-time/${this.returnTime}/rental-location/${this.selectedRentalLocationId}/return-location/${this.selectedRentalLocationId}/driver-details`,
-    ]);
+    let currentUrl = this.router.url;
+    if (this.authService.isAuthenticated()) {
+      if (this.carCreditScore <= this.userCreditScore) {
+        this.router.navigate([
+          currentUrl+'/driver-details/'
+        ]);
+      } else {
+        this.toastrService.error(
+          'Findeks puanınız bu araç için yeterli değildir. Findeks puanınızı görmek için Profil kısmına gidebilirsiniz.'
+        );
+      }
+    }
+    else{
+      this.toastrService.warning('Devam etmek için giriş yapmalısınız.');
+      this.router.navigate(['/login']);
+    }
+  }
+  getUserId() {
+    const user: User = this.authService.getUserInfo();
+    this.userId = user.id;
+  }
+  getUserCreditScore(userId:number){
+    this.creditScoreService.getScoreByUserId(userId).subscribe(response=>{
+      this.userCreditScore = response.data.score
+    })
   }
   totalPrice(dailyPrice: number) {
     return dailyPrice * this.rentDay;

@@ -37,7 +37,8 @@ export class VehiclesPageComponent implements OnInit {
   dateDetail: RentalDetail;
   upArrow = faAngleDoubleUp;
   downArrow = faAngleDoubleDown;
-
+  rentDate: string | undefined;
+  retDate: string | undefined;
   constructor(
     private datePipe: DatePipe,
     private router: Router,

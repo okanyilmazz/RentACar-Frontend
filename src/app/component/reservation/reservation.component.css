@@ -65,6 +65,11 @@ body {
   display: grid;
   grid-template-rows: 1fr;
   box-shadow: 2px 2px 5px 2px rgba(163, 163, 163, 0.808);
+  
+}
+.reservation .content{
+  padding-left: 0;
+    padding-right: 0;
 }
 .footer {
   margin-top: 3rem;

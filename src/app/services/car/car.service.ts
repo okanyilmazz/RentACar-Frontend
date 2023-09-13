@@ -22,11 +22,30 @@ export class CarService {
     return this.httpClient.get<ListResponseModel<CarDetail>>(newPath);
   }
 
+  addCar(car: Car): Observable<NonListResponseModel<Car>> {
+    return this.httpClient.post<NonListResponseModel<Car>>(
+      this.apiUrl + 'Cars/Add',
+      car
+    );
+  }
+  deleteCar(car: Car): Observable<NonListResponseModel<Car>> {
+    return this.httpClient.post<NonListResponseModel<Car>>(
+      this.apiUrl + 'Cars/delete',
+      car
+    );
+  }
+  updateCar(car: Car): Observable<NonListResponseModel<Car>> {
+    return this.httpClient.post<NonListResponseModel<Car>>(
+      this.apiUrl + 'Cars/update',
+      car
+    );
+  }
+
   getById(id: number): Observable<NonListResponseModel<Car>> {
     let newPath = this.apiUrl + 'Cars/GetById?id=' + id;
     return this.httpClient.get<NonListResponseModel<Car>>(newPath);
   }
-  
+
   getCarDetailByBrand(
     brandId: number
   ): Observable<ListResponseModel<CarDetail>> {

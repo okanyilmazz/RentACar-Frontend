@@ -21,7 +21,7 @@ export class BrandComponent implements OnChanges {
   @Input() isOpenBrand: boolean;
   dataLoaded = false;
   downArrow = faAngleDoubleDown;
-  constructor(private brandService: BrandService) {}
+  constructor(private brandService: BrandService) { }
 
   ngOnInit(): void {
     this.getBrand();
@@ -29,7 +29,7 @@ export class BrandComponent implements OnChanges {
   ngOnChanges() {
   }
   getBrand() {
-    this.brandService.getBrand().subscribe((response) => {
+    this.brandService.getAllBrand().subscribe((response) => {
       this.brands = response.data;
       this.dataLoaded = true;
     });

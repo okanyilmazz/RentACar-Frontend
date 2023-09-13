@@ -40,7 +40,7 @@ export class DriversComponent implements OnInit {
     this.driverService.getDriverByUserId(userId).subscribe((response) => {
       this.userDrivers = response.data;
       if (!Array.isArray(this.userDrivers) || this.userDrivers.length === 0) {
-        this.toastrService.warning('Boş');
+        this.toastrService.info('Kayıtlı sürücünüz bulunmamaktadır.');
       }
     });
   }

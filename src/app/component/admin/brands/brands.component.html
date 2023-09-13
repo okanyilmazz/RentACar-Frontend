@@ -1,0 +1,98 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="brands container">
+  <div class="brands-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Marka Seçenekleri">
+        <ng-template ngbPanelContent>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let brand of brands; let i = index">
+                <th>{{ brand.name }}</th>
+                <th>
+                  <div id="updateDeleteButtons">
+                    <button id="updateButton" class="btn btn-success" (click)="
+                          openModal(
+                            updatebrandContent,
+                            'update-brand-modal',
+                            brand
+                          )
+                        ">
+                      Güncelle
+                    </button>
+                    <button id="deleteButton" class="btn btn-danger" (click)="
+                          openModal(questionContent, 'question-modal', brand)
+                        ">
+                      Sil
+                    </button>
+                  </div>
+                </th>
+                <!--MODAL DELETE -->
+                <ng-template #questionContent>
+                  <div class="question-modal-body text-center">
+                    <p>
+                      {{ brand.name }} isimli markayı silmek istediğinize
+                      emin misiniz?
+                    </p>
+                    <button type="button" class="btn" id="btn-yes" (click)="deleteBrand(brand)">
+                      Evet
+                    </button>
+                    <button type="button" class="btn" id="btn-no" (click)="decline()">
+                      Hayır
+                    </button>
+                  </div>
+                </ng-template>
+                <!-- #endregion -->
+                <!--Update Modal-->
+                <ng-template #updatebrandContent>
+                  <form [formGroup]="brandUpdateForm">
+                    <div class="update-brand-modal-body">
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Marka Adı</label>
+                        <input tabindex="1" type="text" class="form-control" id="name" formControlName="name"
+                          [(ngModel)]="brandName" />
+                      </div>
+                      <button tabindex="2" type="submit" class="btn" id="updateNewBrand"
+                        (click)="updateBrand(brand.id)">
+                        Marka Ekle
+                      </button>
+                    </div>
+                  </form>
+                </ng-template>
+              </tr>
+              <tr (click)="newOpenModal(newbrandContent)">
+                <th colspan="2">
+                  <button tyle="button" class="btn">Yeni marka ekle</button>
+                </th>
+
+              </tr>
+
+              <!--New Project Modal-->
+              <ng-template #newbrandContent>
+                <form [formGroup]="brandSendForm">
+                  <div class="new-brand-modal-body">
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Marka Adı</label>
+                      <input tabindex="1" type="text" class="form-control" id="name" formControlName="name" />
+                    </div>
+                    <button tabindex="2" type="submit" class="btn" id="addNewBrand" (click)="addBrand()">
+                      Marka Ekle
+                    </button>
+                  </div>
+                </form>
+              </ng-template>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

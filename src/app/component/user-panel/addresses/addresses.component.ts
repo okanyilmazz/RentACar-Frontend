@@ -45,7 +45,7 @@ export class AddressesComponent implements OnInit {
           !Array.isArray(this.userInvoicesDetailsDto) ||
           this.userInvoicesDetailsDto.length === 0
         ) {
-          this.toastrService.warning('Boş');
+          this.toastrService.info('Kayıtlı adresiniz bulunmamaktadır.');
         }
       });
   }

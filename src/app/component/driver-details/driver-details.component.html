@@ -12,114 +12,69 @@
       <div class="info-content">
         <div class="card-number">
           <span> Sürücü Adı </span>
-          <input
-            type="text"
-            id="driver-infos"
-            (keypress)="validateInput($event)"
-            formControlName="firstName"
-          />
+          <input type="text" id="driver-infos" (keypress)="validateInput($event)" formControlName="firstName" />
         </div>
         <div class="card-name">
           <span> Sürücü Soyadı</span>
-          <input
-            id="driver-infos"
-            (keypress)="validateInput($event)"
-            formControlName="lastName"
-          />
+          <input id="driver-infos" (keypress)="validateInput($event)" formControlName="lastName" />
         </div>
         <div class="driver-phone">
           <span> Cep Telefonu</span>
-          <input
-            id="driver-infos"
-            formControlName="phoneNumber"
-          />
+          <input id="driver-infos" formControlName="phoneNumber" />
         </div>
         <div class="driver-birthday">
           <span>Doğum Tarihi</span>
-          <input
-            id="driver-infos"
-            type="text"
-            readonly="true"
-            ngbDatepicker
-            #rentDatePicker="ngbDatepicker"
-            (dateSelect)="selectBirthday($event)"
-            class="form-control"
-            (click)="rentDatePicker.toggle()"
-            [minDate]="{ year: 1900, month: 1, day: 1 }"
-            [maxDate]="birthdateMaxDate"
-            [value]="driverBirthday"
-            formControlName="birthDate"
-          />
+          <input id="driver-infos" type="text" readonly="true" ngbDatepicker #rentDatePicker="ngbDatepicker"
+            (dateSelect)="selectBirthday($event)" class="form-control" (click)="rentDatePicker.toggle()"
+            [minDate]="{ year: 1900, month: 1, day: 1 }" [maxDate]="birthdateMaxDate" [value]="driverBirthday"
+            formControlName="birthDate" />
           <div id="driver-info-icon" (click)="rentDatePicker.toggle()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 256 256"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
               <path
-                d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52a12,12,0,0,0,24,0h72a12,12,0,0,0,24,0h16V76H52V52ZM52,204V100H204V204Z"
-              ></path>
+                d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52a12,12,0,0,0,24,0h72a12,12,0,0,0,24,0h16V76H52V52ZM52,204V100H204V204Z">
+              </path>
             </svg>
           </div>
         </div>
         <div class="driver-citizenship-number">
           <span>TC Kimlik No</span>
-          <input
-            id="driver-infos"
-            (input)="limitCharacterCount($event)"
-            formControlName="nationalId"
-          />
+          <input id="driver-infos" (input)="limitCharacterCount($event)" formControlName="nationalId" />
         </div>
         <div class="expiration-date" *ngIf="!isActive">
-          <span
-            >Pasaport No <br />
+          <span>Pasaport No <br />
             Ülke Kodu
           </span>
-          <input
-            placeholder="Pasaport No"
-            formControlName="passportNumber"
-          />
+          <input placeholder="Pasaport No" formControlName="passportNumber" />
           <select class="form-select" (change)="changeCountry($event)" formControlName="countryCodeId">
             <option selected>Ülke Kodu</option>
-            <option
-              *ngFor="let country of countries"
-              ng-repeat="country in countries | orderBy:'countryCode'"
-              [value]="country.id"
-            >{{ country.countryCode }}
+            <option *ngFor="let country of countries" ng-repeat="country in countries | orderBy:'countryCode'"
+              [value]="country.id">{{ country.countryCode }}
             </option>
           </select>
         </div>
         <div class="citizenship-group">
           <div class="input-group citizenship">
-            <input
-              type="checkbox"
-              name="isActive"
-              [(ngModel)]="isActive"
-              [ngModelOptions]="{standalone: true}"
-              (ngModelChange)="turkishCitizenChecked($event)"
-              checked
-            />
+            <input type="checkbox" name="isActive" [(ngModel)]="isActive" [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="turkishCitizenChecked($event)" checked />
             <span>TC Vatandaşıyım</span>
           </div>
         </div>
 
         <div class="save-driver-group">
           <div class="input-group save-driver">
-            <input  type="checkbox" name="isSaveDriverActive" [(ngModel)]="isSaveDriverActive" [ngModelOptions]="{standalone: true}"/>
+            <input type="checkbox" name="isSaveDriverActive" [(ngModel)]="isSaveDriverActive"
+              [ngModelOptions]="{standalone: true}" />
             <span>Sürücüyü kaydet
-              <fa-icon [icon]="infoIcon" ngbTooltip="Sürücüyü kaydederseniz, daha sonrasında otomatik olarak kullanabilirsiniz." placement="right">
+              <fa-icon [icon]="infoIcon"
+                ngbTooltip="Sürücüyü kaydederseniz, daha sonrasında otomatik olarak kullanabilirsiniz."
+                placement="right">
               </fa-icon>
             </span>
           </div>
         </div>
 
         <div class="mobile-btn">
-          <button
-            type="button"
-            (click)="checkDriverSave()"
-            routerLinkActive="active"
-          >
+          <button type="button" (click)="checkDriverSave()" routerLinkActive="active">
             Devam Et <fa-icon [icon]="rightArrowIcon"></fa-icon>
           </button>
         </div>
@@ -137,7 +92,7 @@
     <div class="seperator"></div>
     <div class="info-right" *ngFor="let car of carDetails">
       <div class="title">
-        <span>{{ car.carName }}</span>
+        <span>{{car.brandName}} - {{car.modelName}}</span>
       </div>
       <div class="feature">
         <div class="content">
@@ -242,9 +197,7 @@
               <span>{{ returnLocationTitle }}</span>
             </div>
             <div>
-              <span
-                >{{ rentDetail.returnDate }} - {{ rentDetail.returnTime }}</span
-              >
+              <span>{{ rentDetail.returnDate }} - {{ rentDetail.returnTime }}</span>
             </div>
           </div>
         </div>
@@ -268,18 +221,14 @@
           <div><span id="title">Toplam Fiyat</span></div>
           <div><span>:</span></div>
           <div>
-            <span
-              >{{ totalPrice(car.dailyPrice) | currency : "TRY" : "₺" }}
+            <span>{{ totalPrice(car.dailyPrice) | currency : "TRY" : "₺" }}
             </span>
           </div>
         </div>
       </div>
 
       <div class="submit-form mt-3">
-        <button
-          type="button"
-          (click)="checkDriverSave()"
-          routerLinkActive="active">
+        <button type="button" (click)="checkDriverSave()" routerLinkActive="active">
           Devam Et <fa-icon [icon]="rightArrowIcon"></fa-icon>
         </button>
       </div>

@@ -96,15 +96,19 @@
   color: #fff;
 }
 
-#free-cancel-text {
+
+#free-cancel-text,
+#credit-score-text{
   font-family: Roboto;
   font-size: small;
   color: #8f8f8f;
   margin-left: 5px;
 }
-
+#credit-score-text{
+  font-family: Roboto-Medium;
+}
 .free-cancel {
-  grid-row-start: 6;
+  grid-row-start: 7;
 }
 .right span {
   align-self: center;
@@ -127,6 +131,7 @@
 }
 #content {
   font-size: small;
+  
 }
 
 .car-detail-bottom {

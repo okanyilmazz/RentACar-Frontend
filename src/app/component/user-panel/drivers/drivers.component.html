@@ -7,7 +7,7 @@
     <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
       <ngb-panel title="Sürücü Bilgileri">
         <ng-template ngbPanelContent>
-          <table class="table">
+          <table class="table table-hover" >
             <thead>
               <tr>
                 <th>İsim</th>
@@ -20,8 +20,8 @@
             </thead>
             <tbody>
               <tr *ngFor="let driver of userDrivers; let i = index">
-                <th>{{ driver.firstName }}</th>
-                <th>{{ driver.lastName }}</th>
+                <th>{{ driver.firstName | slice:0:15 }}</th>
+                <th>{{ driver.lastName  | slice:0:15 }}</th>
                 <th>{{ driver.phoneNumber }}</th>
                 <th>{{ driver.nationalId | hiddenNumber : 5 }}</th>
                 <th>{{ driver.birthDate }}</th>

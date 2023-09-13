@@ -1,0 +1,136 @@
+<div class="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+
+<div class="bodies container">
+  <div class="bodies-content">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel title="Araç Kasa Tipleri">
+        <ng-template ngbPanelContent>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let body of bodies; let i = index">
+                <th>{{ body.type }}</th>
+                <th>
+                  <div id="updateDeleteButtons">
+                    <button
+                      id="updateButton"
+                      class="btn btn-success"
+                      (click)="
+                        openModal(updateBodyContent, 'update-body-modal', body)
+                      "
+                    >
+                      Güncelle
+                    </button>
+                    <button
+                      id="deleteButton"
+                      class="btn btn-danger"
+                      (click)="
+                        openModal(questionContent, 'question-modal', body)
+                      "
+                    >
+                      Sil
+                    </button>
+                  </div>
+                </th>
+                <!--MODAL DELETE -->
+                <ng-template #questionContent>
+                  <div class="question-modal-body text-center">
+                    <p>
+                      {{ body.type }} isimli kasayı silmek istediğinize emin
+                      misiniz?
+                    </p>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="btn-yes"
+                      (click)="deleteBody(body)"
+                    >
+                      Evet
+                    </button>
+                    <button
+                      type="button"
+                      class="btn"
+                      id="btn-no"
+                      (click)="decline()"
+                    >
+                      Hayır
+                    </button>
+                  </div>
+                </ng-template>
+                <!-- #endregion -->
+                <!--Update Modal-->
+                <ng-template #updateBodyContent>
+                  <form [formGroup]="bodyUpdateForm">
+                    <div class="update-body-modal-body">
+                      <div class="mb-3">
+                        <label for="bodyName" class="form-label"
+                          >Kasa Adı</label
+                        >
+                        <input
+                          tabindex="1"
+                          type="text"
+                          class="form-control"
+                          id="bodyName"
+                          formControlName="type"
+                          [(ngModel)]="bodyName"
+                        />
+                      </div>
+                      <button
+                        tabindex="2"
+                        type="submit"
+                        class="btn"
+                        id="updateNewBody"
+                        (click)="updateBody(body.id)"
+                      >
+                        Kasa Ekle
+                      </button>
+                    </div>
+                  </form>
+                </ng-template>
+              </tr>
+              <tr (click)="newOpenModal(newBodyContent)">
+                <th colspan="2">
+                  <button tyle="button" class="btn">Yeni kasa tipi ekle</button>
+                </th>
+              </tr>
+
+              <!--New Project Modal-->
+              <ng-template #newBodyContent>
+                <form [formGroup]="bodySendForm">
+                  <div class="new-body-modal-body">
+                    <div class="mb-3">
+                      <label for="bodyName" class="form-label">Kasa Adı</label>
+                      <input
+                        tabindex="1"
+                        type="text"
+                        class="form-control"
+                        id="bodyName"
+                        formControlName="type"
+                      />
+                    </div>
+                    <button
+                      tabindex="2"
+                      type="submit"
+                      class="btn"
+                      id="addNewBody"
+                      (click)="addBody()"
+                    >
+                      Kasa Ekle
+                    </button>
+                  </div>
+                </form>
+              </ng-template>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

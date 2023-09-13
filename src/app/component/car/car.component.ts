@@ -8,7 +8,7 @@ import {
   faCarSide,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { Component, Inject, LOCALE_ID, OnChanges } from '@angular/core';
+import { Component, Inject, Input, LOCALE_ID, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from 'src/app/models/car/car';
 import { CarService } from 'src/app/services/car/car.service';
@@ -17,6 +17,7 @@ import { RentalDetail } from 'src/app/models/rental/rentalDetail';
 import { Rental } from 'src/app/models/rental/rental';
 import { DatePipe } from '@angular/common';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-car',
@@ -24,6 +25,7 @@ import { LocalStorageService } from 'src/app/services/local-storage/local-storag
   styleUrls: ['./car.component.css'],
 })
 export class CarComponent implements OnChanges {
+  imageBaseUrl = 'https://geziyoskii.site/';
   carDetails: CarDetail[];
   carDetail: CarDetail;
   filterCarDetail: CarDetail[] = [];
@@ -46,7 +48,6 @@ export class CarComponent implements OnChanges {
   selectedReturnLocationId: number;
   rentDay: number;
   dailyPrice: number;
-
   colorIcon = faPalette;
   fuelIcon = faGasPump;
   href: string = '';
@@ -54,7 +55,9 @@ export class CarComponent implements OnChanges {
   throttle = 0;
   distance = 2;
   page = 1;
-  imageBaseUrl = 'https://webservis.geziyoskii.site/';
+
+  @Input() rentDate: string | undefined;
+  @Input() retDate: string | undefined;
 
   constructor(
     private carService: CarService,
@@ -64,9 +67,11 @@ export class CarComponent implements OnChanges {
     private toastr: ToastrService,
     private rentalDetailService: RentalDetailService,
     private localStorageService: LocalStorageService,
+    private authService: AuthService,
     @Inject(LOCALE_ID) private locale: string
-  ) {}
+  ) { }
   ngOnInit(): void {
+
     this.href = this.router.url;
     this.activatedRoute.params.subscribe((params) => {
       if (params['brandId'] && params['colorId'] && params['bodyId']) {
@@ -112,7 +117,12 @@ export class CarComponent implements OnChanges {
       }
     });
   }
-  ngOnChanges() {}
+  ngOnChanges() {
+
+    if (this.rentDate !== undefined && this.rentDate !== null && this.retDate !== undefined && this.retDate !== null) {
+      this.getUnvaliableAllCar(this.rentDate, this.retDate);
+    }
+  }
 
   async getAllCarDetail() {
     try {
@@ -132,29 +142,29 @@ export class CarComponent implements OnChanges {
         );
       } else {
         const storedRental = this.localStorageService.getItem('rentalValue');
-        const rentalValue = JSON.parse(storedRental);
-        if (rentalValue !== undefined) {
+        if (storedRental !== undefined) {
           this.rentDay = this.findDay(
-            rentalValue.rentDate,
-            rentalValue.returnDate
+            storedRental.rentDate,
+            storedRental.returnDate
           );
           let newRental: Rental = {
             id: 0,
             carId: carId,
-            userId: 2,
-            rentDate: rentalValue.rentDate,
-            rentTime: rentalValue.rentTime,
-            rentLocationId: rentalValue.rentLocationId,
-            returnDate: rentalValue.returnDate,
-            returnTime: rentalValue.returnTime,
-            returnLocationId: rentalValue.returnLocationId,
+            userId: 0,
+            rentDate: storedRental.rentDate,
+            rentTime: storedRental.rentTime,
+            rentLocationId: Number(storedRental.rentLocationId),
+            returnDate: storedRental.returnDate,
+            returnTime: storedRental.returnTime,
+            returnLocationId: Number(storedRental.returnLocationId),
             rentDay: this.rentDay,
-            totalPrice: 0,
+            totalPrice: 0
           };
-          this.localStorageService.removeItem('newRental');
-          this.localStorageService.setItem('newRental', newRental);
+          this.localStorageService.removeItem('rentalValue');
+          this.localStorageService.setItem('rentalValue', newRental);
+
           this.router.navigate([
-            `reservation/details/car-id/${carId}/rent-date/${rentalValue.rentDate}/rent-time/${rentalValue.rentTime}/return-date/${rentalValue.returnDate}/return-time/${rentalValue.returnTime}/rental-location/${rentalValue.rentLocationId}/return-location/${rentalValue.returnLocationId}`,
+            `reservation/details/car-id/${carId}/rent-date/${storedRental.rentDate}/rent-time/${storedRental.rentTime}/return-date/${storedRental.returnDate}/return-time/${storedRental.returnTime}/rental-location/${storedRental.rentLocationId}/return-location/${storedRental.returnLocationId}`,
           ]);
         } else {
           this.router.navigate([
@@ -167,7 +177,13 @@ export class CarComponent implements OnChanges {
     }
   }
 
+  testA(rentDate: string, returnDate: string) {
+    console.log("RENTDATE= " + rentDate + " ----- " + "RETURN DATE = " + returnDate);
+  }
   async getUnvaliableAllCar(rentDate: string, returnDate: string) {
+    console.log("this.rentDate " + rentDate)
+    console.log("this.returnDate " + returnDate);
+
     await this.getAllCarDetail();
     const newRentDate = this.stringToDate(rentDate);
     const newReturnDate = this.stringToDate(returnDate);
@@ -249,8 +265,6 @@ export class CarComponent implements OnChanges {
     let dayDifference: number = Math.floor(
       (returnDate.getTime() - rentDate.getTime()) / (1000 * 60 * 60 * 24)
     );
-
-    console.log(dayDifference);
     return dayDifference;
   }
 
@@ -311,4 +325,5 @@ export class CarComponent implements OnChanges {
         this.carDetails = response.data;
       });
   }
+
 }

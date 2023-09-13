@@ -6,15 +6,14 @@
     <div class="step-top">
       <div>
         <span id="title"><i class="fa-solid fa-check"></i> Alış ve İade Ofisi </span>
-        <span id="content">{{rentDetail.rentDate}} {{rentDetail.rentTime}} > {{rentDetail.returnDate}} {{rentDetail.returnTime}}</span>
+        <span id="content">{{rentDetail.rentDate}} {{rentDetail.rentTime}} > {{rentDetail.returnDate}}
+          {{rentDetail.returnTime}}</span>
         <span id="content">{{rentalLocationTitle}} > {{returnLocationTitle}}</span>
       </div>
       <div>
         <span id="title"><i class="fa-solid fa-x"></i> Araç Bilgileri</span>
-        <span id="content">{{rentBrandName}} {{ rentCarName }}</span>
-        <span id="content"
-          >{{ rentFuelName }} - {{ rentTransmissionName }}</span
-        >
+        <span id="content">{{rentBrandName}} {{ rentCarModel }}</span>
+        <span id="content">{{ rentFuelName }} - {{ rentTransmissionName }}</span>
       </div>
       <div>
         <span id="title"><i class="fa-solid fa-x"></i>Sürücü Bilgileri</span>
@@ -46,11 +45,12 @@
         <div class="step-bottom-top">
 
           <ng-template #carList>
-            <span>{{car.carName}}</span><br>
+            <span>{{car.brandName}} - {{car.modelName}}</span><br>
             <span>{{car.fuelType}} - {{car.transmissionType}}</span>
           </ng-template>
 
-          <p [class]="carStepClass" ngbTooltip="Araç Seçimi" [ngbTooltip]="(carTooltip) ? carList :'Araç Bilgileri'"><i class="fa-solid fa-car"></i></p>
+          <p [class]="carStepClass" ngbTooltip="Araç Seçimi" [ngbTooltip]="(carTooltip) ? carList :'Araç Bilgileri'"><i
+              class="fa-solid fa-car"></i></p>
           <div class="seperator" [class]="carLeftSeperatorClass" id="left"></div>
           <div class="seperator" [class]="driverLeftSeperatorClass" id="right"></div>
         </div>
@@ -65,8 +65,8 @@
             <span>{{driver.firstName}} {{driver.lastName}}</span><br>
             <span>{{driver.phoneNumber}} - {{driver.birthDate}}</span>
           </ng-template>
-          <p [class]="driverStepClass"  [ngbTooltip]="(driverTooltip) ? driverList : 'Sürücü Bilgileri'" placement="right"><i
-              class="fa-solid fa-user"></i>
+          <p [class]="driverStepClass" [ngbTooltip]="(driverTooltip) ? driverList : 'Sürücü Bilgileri'"
+            placement="right"><i class="fa-solid fa-user"></i>
           </p>
           <div class="seperator" [class]="driverRightSeperatorClass" id="left"></div>
           <div class="seperator" [class]="paymentLeftSeperatorClass" id="right"></div>
@@ -81,9 +81,8 @@
             <span>Online Ödeme</span><br>
             <span>Toplam gün sayısı : {{rentDetail.rentDay}} <br> Toplam fiyat : {{rentDetail.totalPrice}}</span>
           </ng-template>
-          <p [class]="paymentStepClass"
-            [ngbTooltip]="(paymentTooltip) ? paymentList : 'Ödeme Bilgileri' " placement="right"><i
-              class="fa-solid fa-credit-card"></i></p>
+          <p [class]="paymentStepClass" [ngbTooltip]="(paymentTooltip) ? paymentList : 'Ödeme Bilgileri' "
+            placement="right"><i class="fa-solid fa-credit-card"></i></p>
           <div class="seperator" [class]="paymentRightSeperatorClass" id="left"></div>
           <div class="seperator" [class]="orderConfirmationLeftSeperatorClass" id="right"></div>
         </div>

@@ -134,3 +134,17 @@
   #userName{
     font-family: Roboto;
   }
+  .credit-score{
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    text-align: center;
+    color: #818896;
+    font-family: Roboto-Bold;
+  }
+  #credit-score-icon{
+    justify-self: center;
+  }
+  #credit-score-text{
+    
+    align-self: center;
+  }

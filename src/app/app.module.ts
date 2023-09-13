@@ -58,6 +58,10 @@ import { PaymentsComponent } from './component/user-panel/payments/payments.comp
 import { AddressesComponent } from './component/user-panel/addresses/addresses.component';
 import { HiddenNumberPipe } from './pipes/hidden-number.pipe';
 import { HiddenCardNumberPipe } from './pipes/hidden-card-number.pipe';
+import { BodiesComponent } from './component/admin/bodies/bodies.component';
+import { ColorsComponent } from './component/admin/colors/colors.component';
+import { CarsComponent } from './component/admin/cars/cars.component';
+import { BrandsComponent } from './component/admin/brands/brands.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +107,10 @@ import { HiddenCardNumberPipe } from './pipes/hidden-card-number.pipe';
     AddressesComponent,
     HiddenNumberPipe,
     HiddenCardNumberPipe,
+    BodiesComponent,
+    ColorsComponent,
+    CarsComponent,
+    BrandsComponent,
   ],
   imports: [
     BrowserModule,

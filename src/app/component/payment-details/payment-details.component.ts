@@ -39,6 +39,7 @@ export class PaymentDetailsComponent implements OnInit {
   cardMonth: number;
   cardYear: number;
   cardSecurityCode: any = 0;
+  cardBalanceLimit: number;
   payment: Payment;
   monthBase: any = 'Ay';
   yearBase: any = 'Yıl';
@@ -74,7 +75,7 @@ export class PaymentDetailsComponent implements OnInit {
       this.carId = params['carId'];
       this.getCarDetailByCarId(params['carId']);
       this.getImageByCarId(params['carId']);
-      this.rentDetail = this.localStorageService.getItem('newRental');
+      this.rentDetail = this.localStorageService.getItem('rentalValue');
       this.getRentalLocationDetailsById(this.rentDetail.rentLocationId);
       this.getReturnLocationDetailsById(this.rentDetail.returnLocationId);
     });
@@ -148,9 +149,12 @@ export class PaymentDetailsComponent implements OnInit {
   }
 
   goToOrderConfirmation() {
+    let totalPrice = this.rentDetail.totalPrice;
+
     let paymentModel = Object.assign({}, this.paymentAddForm.value);
     paymentModel.cardYear = Number(paymentModel.cardYear);
     paymentModel.cardMonth = Number(paymentModel.cardMonth);
+    this.cardBalanceLimit = paymentModel.usableBalanceLimit;
 
     if (this.paymentAddForm.valid) {
       this.localStorageService.setItem('paymentDetails', paymentModel);
@@ -173,6 +177,7 @@ export class PaymentDetailsComponent implements OnInit {
       cardYear: [Number(this.cardYear), Validators.required],
       cardMonth: [Number(this.cardMonth), Validators.required],
       cardSecurityCode: [0, Validators.required],
+      usableBalanceLimit: [20000, Validators.required],
     });
   }
 

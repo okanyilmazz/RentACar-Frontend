@@ -19,7 +19,7 @@
             <tbody>
               <tr *ngFor="let payment of userPayments; let i = index">
                 <th>{{ payment.cardNumber | hiddenCardNumber:8 }}</th>
-                <th>{{ payment.cardName }}</th>
+                <th>{{ payment.cardName  | slice:0:30  }}</th>
                 <th>{{ payment.cardMonth }} / {{payment.cardYear}} </th>
                 <th>{{ payment.cardSecurityCode  | hiddenNumber:1}}</th>
                 <th>

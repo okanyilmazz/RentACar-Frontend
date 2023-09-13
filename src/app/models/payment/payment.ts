@@ -6,4 +6,5 @@ export interface Payment{
   cardMonth:number;
   cardYear:number;
   cardSecurityCode:number;
+  usableBalanceLimit:number;
 }

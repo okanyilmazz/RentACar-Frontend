@@ -1,56 +1,71 @@
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <div class="car-details">
   <div class="detail-content container">
-
     <div class="car-detail-top" *ngFor="let car of carDetails">
-
       <div class="left">
-        <img [src]="getImagePath(car.carImages[0].imagePath)">
+        <img [src]="getImagePath(car.carImages[0].imagePath)" />
       </div>
 
       <div class="center">
-        <div class="car-title"><span>{{car.brandName}}</span></div>
+        <div class="car-title">
+          <span>{{ car.brandName }}</span>
+        </div>
 
         <div class="center-left">
           <div class="car-fuel" id="features">
-            <div id="icon"><img src="assets/image/icon-fuel.png"></div>
-            <div id="text">{{car.fuelType}}</div>
+            <div id="icon"><img src="assets/image/icon-fuel.png" /></div>
+            <div id="text">{{ car.fuelType }}</div>
           </div>
 
           <div class="car-body-type" id="features">
-            <div id="icon"><img src="assets/image/icon-suv.png"></div>
-            <div id="text">{{car.bodyType}}</div>
+            <div id="icon"><img src="assets/image/icon-suv.png" /></div>
+            <div id="text">{{ car.bodyType }}</div>
           </div>
           <div class="car-transmission-type" id="features">
-            <div id="icon"><img src="assets/image/icon-gearbox.png"></div>
-            <div id="text">{{car.transmissionType}}</div>
+            <div id="icon"><img src="assets/image/icon-gearbox.png" /></div>
+            <div id="text">{{ car.transmissionType }}</div>
           </div>
         </div>
 
         <div class="center-right">
           <div class="car-capacity" id="features">
-            <div id="icon"><img src="assets/image/icon-group.png"></div>
-            <div id="text">{{car.numberOfPassengers}} Kişilik</div>
+            <div id="icon"><img src="assets/image/icon-group.png" /></div>
+            <div id="text">{{ car.numberOfPassengers }} Kişilik</div>
           </div>
           <div class="car-color" id="features">
-            <div id="icon"><img src="assets/image/icon-color.png"></div>
-            <div id="text">{{car.colorName}}</div>
+            <div id="icon"><img src="assets/image/icon-color.png" /></div>
+            <div id="text">{{ car.colorName }}</div>
           </div>
           <div class="car-feature" id="features">
-            <div id="icon"><img src="assets/image/air-conditioner.png"></div>
-            <div id="text">{{isExistAirConditioner(car.airConditioning)}}</div>
+            <div id="icon"><img src="assets/image/air-conditioner.png" /></div>
+            <div id="text">
+              {{ isExistAirConditioner(car.airConditioning) }}
+            </div>
           </div>
         </div>
       </div>
 
       <div class="right">
-        <span id="total-day">{{rentDay}} Günlük Fiyat</span>
-        <span id="total-price">{{totalPrice(car.dailyPrice) | currency:"TRY":"₺"}} </span>
-        <span id="daily-price">Günlük Fiyat<strong> {{car.dailyPrice | currency:"TRY":"₺"}}</strong></span>
-        <div class="rent-button" routerLink="driver-details/"  routerLinkActive="active">
+        <span id="total-day">{{ rentDay }} Günlük Fiyat</span>
+        <span id="total-price"
+          >{{ totalPrice(car.dailyPrice) | currency : "TRY" : "₺" }}
+        </span>
+        <span id="daily-price"
+          >Günlük Fiyat<strong>
+            {{ car.dailyPrice | currency : "TRY" : "₺" }}</strong
+          ></span
+        >
+        <div
+          class="rent-button"
+          (click)="goToDriverDetails()">
           <span id="rent" >Kirala</span>
+        </div>
+        <div class="credit-score">
+          <span id="credit-score-text"
+            ><strong></strong>Araç Findeks Puanı : {{ car.creditScore }}</span
+          >
         </div>
         <div class="free-cancel">
           <i class="fa fa-check fa-sm"></i>
@@ -64,22 +79,29 @@
           <span id="title"><strong>Depozito</strong></span>
           <span id="subtitle"><strong>2000 TL</strong> </span>
           <span id="content">
-           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias, ullam perspiciatis optio aliquid aperiam.
-           Hic vitae accusantium quod commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae
+            accusantium quod commodi repellendus omnis quae. Cupiditate quae
+            dolorum, ipsam porro sunt iure reprehenderit alias, ullam
+            perspiciatis optio aliquid aperiam. Hic vitae accusantium quod
+            commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro
+            sunt iure.
           </span>
         </div>
         <div class="delivery rental-policy">
           <span id="title"><strong>Teslimat</strong></span>
           <span id="subtitle"><strong>Lorem ipsum</strong> </span>
           <span id="content">
-           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae
+            accusantium quod commodi repellendus omnis quae. Cupiditate quae
+            dolorum, ipsam porro sunt iure reprehenderit alias.
           </span>
         </div>
         <div class="kilometer-limit rental-policy">
           <span id="title"><strong>Kilometre Sınırı</strong></span>
           <span id="subtitle"><strong>Maksimum 350 km</strong> </span>
           <span id="content">
-           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus omnis quae.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae
+            accusantium quod commodi repellendus omnis quae.
           </span>
         </div>
       </div>
@@ -90,19 +112,26 @@
         <div class="driving-license rental-policy">
           <span id="title"><strong>Sürücü Ehliyeti</strong></span>
           <span id="content">
-           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias, ullam perspiciatis optio aliquid aperiam.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae
+            accusantium quod commodi repellendus omnis quae. Cupiditate quae
+            dolorum, ipsam porro sunt iure reprehenderit alias, ullam
+            perspiciatis optio aliquid aperiam.
           </span>
         </div>
         <div class="driver-age rental-policy">
           <span id="title"><strong>Sürücü Yaşı</strong></span>
           <span id="content">
-           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro sunt iure reprehenderit alias.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae
+            accusantium quod commodi repellendus omnis quae. Cupiditate quae
+            dolorum, ipsam porro sunt iure reprehenderit alias.
           </span>
         </div>
         <div class="cancellation-policy rental-policy">
           <span id="title"><strong>İptal Politikası</strong></span>
           <span id="content">
-           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae accusantium quod commodi repellendus omnis quae. Cupiditate quae dolorum, ipsam porro.
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic vitae
+            accusantium quod commodi repellendus omnis quae. Cupiditate quae
+            dolorum, ipsam porro.
           </span>
         </div>
       </div>
